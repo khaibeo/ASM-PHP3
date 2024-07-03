@@ -1,5 +1,12 @@
+
 @extends('Clients.layout')
-	@section('content')
+@section('stylesheet')
+    @include('Component.user.stylesheet')
+@endsection
+@section('script_footer')
+    @include('Component.user.script_footer')
+@endsection
+@section('content')
 	<main>
 		<div id="carousel-home">
 			<div class="owl-carousel owl-theme">
