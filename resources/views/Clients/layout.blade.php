@@ -25,12 +25,12 @@
     <link href="{{ asset('client/css/style.css')}}" rel="stylesheet">
 
 	<!-- SPECIFIC CSS -->
-    <link href="{{ asset('client/css/home_1.css')}}" rel="stylesheet">
+    @yield('stylesheets')
 
     <!-- YOUR CUSTOM CSS -->
     <link href="{{ asset('client/css/custom.css')}}" rel="stylesheet">
 
-    @yield('stylesheets')
+  
 
 </head>
 
@@ -56,8 +56,6 @@
 <script src="{{ asset('client/js/main.js')}}"></script>
 
 <!-- SPECIFIC SCRIPTS -->
-<script src="{{ asset('client/js/carousel-home.min.js')}}"></script>
-
     @yield('scripts')
 
 </body>

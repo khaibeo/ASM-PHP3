@@ -3,7 +3,13 @@
 @section('title')
 Trang chủ
 @endsection
+@section('stylesheets')
+<link href="{{ asset('client/css/home_1.css')}}" rel="stylesheet">
+@endsection
 
+@section('scripts')
+<script src="{{ asset('client/js/carousel-home.min.js')}}"></script>
+@endsection
 @section('content')
 	<main>
 		<div id="carousel-home">

@@ -5,7 +5,7 @@
 				<div class="row small-gutters">
 					<div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
 						<div id="logo">
-							<a href="index.html"><img src="{{ asset('client/img/logo.svg')}}" alt="" width="100" height="35"></a>
+							<a href="{{route('home.index')}}"><img src="{{ asset('client/img/logo.svg')}}" alt="" width="100" height="35"></a>
 						</div>
 					</div>
 					<nav class="col-xl-6 col-lg-7">
@@ -27,7 +27,7 @@
 									<a href="index.html">Home</a>
 								</li>
 								<li class="megamenu submenu">
-									<a href="javascript:void(0);" class="show-submenu-mega">Pages</a>
+									<a href="{{ route('product.index')}}" class="show-submenu-mega">Pages</a>
 									<div class="menu-wrapper">
 										<div class="row small-gutters">
 											<div class="col-lg-3">
@@ -200,7 +200,7 @@
 										</ul>
 										<div class="total_drop">
 											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-											<a href="cart.html" class="btn_1 outline">View Cart</a><a href="checkout.html" class="btn_1">Checkout</a>
+											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="checkout.html" class="btn_1">Checkout</a>
 										</div>
 									</div>
 								</div>
