@@ -54,7 +54,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="assets/images/products/img-8.png" alt=""
+                                                    <img src="{{ asset('assets/images/products/img-8.png') }}" alt=""
                                                         class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -83,7 +83,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="assets/images/products/img-7.png" alt=""
+                                                    <img src="{{ asset('assets/images/products/img-7.png') }}" alt=""
                                                         class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -113,7 +113,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="assets/images/products/img-3.png" alt=""
+                                                    <img src="{{ asset('assets/images/products/img-3.png') }}" alt=""
                                                         class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
@@ -349,7 +349,7 @@
                             <li>
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
-                                        <img src="assets/images/users/avatar-3.jpg" alt=""
+                                        <img src="{{ asset('assets/images/users/avatar-3.jpg') }}" alt=""
                                             class="avatar-sm rounded">
                                     </div>
                                     <div class="flex-grow-1 ms-3">

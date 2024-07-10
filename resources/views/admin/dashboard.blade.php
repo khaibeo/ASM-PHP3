@@ -1285,6 +1285,14 @@
 </div>
 @endsection
 
+@section('stylesheets')
+     <!-- jsvectormap css -->
+     <link href="{{ asset('administrator/assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
+
+     <!--Swiper slider css-->
+     <link href="{{ asset('administrator/assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('scripts')
     <!-- apexcharts -->
     <script src="{{ asset('administrator/assets/libs/apexcharts/apexcharts.min.js') }}"></script>

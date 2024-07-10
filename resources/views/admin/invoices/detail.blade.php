@@ -33,9 +33,9 @@
                             <div class="card-header border-bottom-dashed p-4">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <img src="administrator/assets/images/logo-dark.png" class="card-logo card-logo-dark"
+                                        <img src="{{ asset('administrator/assets/images/logo-dark.png') }}" class="card-logo card-logo-dark"
                                             alt="logo dark" height="17">
-                                        <img src="administrator/assets/images/logo-light.png" class="card-logo card-logo-light"
+                                        <img src="{{ asset('administrator/assets/images/logo-light.png') }}" class="card-logo card-logo-light"
                                             alt="logo light" height="17">
                                         <div class="mt-sm-5 mt-4">
                                             <h6 class="text-muted text-uppercase fw-semibold">Address</h6>
@@ -245,5 +245,5 @@
 @endsection
 
 @section('scripts')
-    <script src="assets/js/pages/invoicedetails.js"></script>
+    <script src="{{ asset('assets/js/pages/invoicedetails.js') }}"></script>
 @endsection

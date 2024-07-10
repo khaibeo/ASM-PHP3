@@ -369,3 +369,18 @@
     </div>
     <!-- container-fluid -->
 @endsection
+
+@section('stylesheets')
+    <!-- Plugins css -->
+    <link href="{{ asset('administrator/assets/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('scripts')
+    <!-- ckeditor -->
+    <script src="{{ asset('administrator/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+
+    <!-- dropzone js -->
+    <script src="{{ asset('administrator/assets/libs/dropzone/dropzone-min.js') }}"></script>
+
+    <script src="{{ asset('administrator/assets/js/pages/ecommerce-product-create.init.js') }}"></script>
+@endsection
