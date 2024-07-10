@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+    data-sidebar-image="none" data-preloader="disable">
 
 <head>
 
@@ -9,14 +10,7 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <!-- jsvectormap css -->
-    <link href="{{ asset('administrator/assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
-
-    <!--Swiper slider css-->
-    <link href="{{ asset('administrator/assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
     <!-- Layout config Js -->
     <script src="{{ asset('administrator/assets/js/layout.js') }}"></script>
     <!-- Bootstrap Css -->
@@ -27,12 +21,10 @@
     <link href="{{ asset('administrator/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('administrator/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-
     @yield('stylesheets')
 </head>
 
 <body>
-
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('Component.admin.header')
@@ -53,15 +45,12 @@
             </div>
             <!-- End Page-content -->
             @include('Component.admin.footer')
-            
+
         </div>
         <!-- end main content-->
 
     </div>
     <!-- END layout-wrapper -->
-
-
-
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
         <i class="ri-arrow-up-line"></i>
@@ -69,13 +58,13 @@
     <!--end back-to-top-->
 
     <!--preloader-->
-    <div id="preloader">
+    {{-- <div id="preloader">
         <div id="status">
             <div class="spinner-border text-primary avatar-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- JAVASCRIPT -->
     <script src="{{ asset('administrator/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -86,11 +75,11 @@
     <script src="{{ asset('administrator/assets/js/plugins.js') }}"></script>
 
     @yield('scripts')
-    
+
     <!-- App js -->
     <script src="{{ asset('administrator/assets/js/app.js') }}"></script>
 
-    
+
 </body>
 
 </html>

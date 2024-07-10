@@ -4,14 +4,6 @@
     Danh sách sản phẩm
 @endsection
 
-@section('stylesheets')
-    <!-- nouisliderribute css -->
-    <link rel="stylesheet" href="{{ asset('administrator/assets/libs/nouislider/nouislider.min.css') }}">
-
-    <!-- gridjs css -->
-    <link rel="stylesheet" href="{{ asset('administrator/assets/libs/gridjs/theme/mermaid.min.css') }}">
-@endsection
-
 @section('content')
     <div class="container-fluid">
 
@@ -19,12 +11,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Products</h4>
+                    <h4 class="mb-sm-0">Danh sách sản phẩm</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                            <li class="breadcrumb-item active">Products</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Danh sách sản phẩm</a></li>
+                            <li class="breadcrumb-item active">Danh sách</li>
                         </ol>
                     </div>
 
@@ -34,415 +26,605 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-3 col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex mb-3">
-                            <div class="flex-grow-1">
-                                <h5 class="fs-16">Filters</h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <a href="#" class="text-decoration-underline" id="clearall">Clear All</a>
-                            </div>
-                        </div>
+            <div class="col-lg-12">
+                <div class="card" id="customerList">
+                    <div class="card-header border-bottom-dashed">
 
-                        <div class="filter-choices-input">
-                            <input class="form-control" data-choices data-choices-removeItem type="text"
-                                id="filter-choices-input" value="T-Shirts" />
+                        <div class="row g-4 align-items-center">
+                            <div class="col-sm">
+                                <div>
+                                    <h5 class="card-title mb-0">Danh sách sản phẩm</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
+                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
+                                        id="create-btn" data-bs-target="#showModal"><i
+                                            class="ri-add-line align-bottom me-1"></i> Thêm </button>
+                                    <button type="button" class="btn btn-info"><i
+                                            class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="accordion accordion-flush filter-accordion">
-
-                        <div class="card-body border-bottom">
-                            <div>
-                                <p class="text-muted text-uppercase fs-12 fw-medium mb-2">Products</p>
-                                <ul class="list-unstyled mb-0 filter-list">
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Grocery</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Fashion</h5>
-                                            </div>
-                                            <div class="flex-shrink-0 ms-2">
-                                                <span class="badge bg-light text-muted">5</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Watches</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Electronics</h5>
-                                            </div>
-                                            <div class="flex-shrink-0 ms-2">
-                                                <span class="badge bg-light text-muted">5</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Furniture</h5>
-                                            </div>
-                                            <div class="flex-shrink-0 ms-2">
-                                                <span class="badge bg-light text-muted">6</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Automotive Accessories</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Appliances</h5>
-                                            </div>
-                                            <div class="flex-shrink-0 ms-2">
-                                                <span class="badge bg-light text-muted">7</span>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#" class="d-flex py-1 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-0 listname">Kids</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="card-body border-bottom">
-                            <p class="text-muted text-uppercase fs-12 fw-medium mb-4">Price</p>
-
-                            <div id="product-price-range"></div>
-                            <div class="formCost d-flex gap-2 align-items-center mt-3">
-                                <input class="form-control form-control-sm" type="text" id="minCost" value="0" />
-                                <span class="fw-semibold text-muted">to</span> <input class="form-control form-control-sm"
-                                    type="text" id="maxCost" value="1000" />
-                            </div>
-                        </div>
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingBrands">
-                                <button class="accordion-button bg-transparent shadow-none" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseBrands" aria-expanded="true"
-                                    aria-controls="flush-collapseBrands">
-                                    <span class="text-muted text-uppercase fs-12 fw-medium">Brands</span> <span
-                                        class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                </button>
-                            </h2>
-
-                            <div id="flush-collapseBrands" class="accordion-collapse collapse show"
-                                aria-labelledby="flush-headingBrands">
-                                <div class="accordion-body text-body pt-0">
-                                    <div class="search-box search-box-sm">
-                                        <input type="text" class="form-control bg-light border-0" id="searchBrandsList"
-                                            placeholder="Search Brands...">
+                    {{-- <div class="card-body border-bottom-dashed border-bottom">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-xl-6">
+                                    <div class="search-box">
+                                        <input type="text" class="form-control search"
+                                            placeholder="Search for customer, email, phone, status or something...">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
-                                    <div class="d-flex flex-column gap-2 mt-3 filter-check">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Boat"
-                                                id="productBrandRadio5" checked>
-                                            <label class="form-check-label" for="productBrandRadio5">Boat</label>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xl-6">
+                                    <div class="row g-3">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <input type="text" class="form-control" id="datepicker-range"
+                                                    data-provider="flatpickr" data-date-format="d M, Y"
+                                                    data-range-date="true" placeholder="Select date">
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="OnePlus"
-                                                id="productBrandRadio4">
-                                            <label class="form-check-label" for="productBrandRadio4">OnePlus</label>
+                                        <!--end col-->
+                                        <div class="col-sm-4">
+                                            <div>
+                                                <select class="form-control" data-plugin="choices" data-choices
+                                                    data-choices-search-false name="choices-single-default" id="idStatus">
+                                                    <option value="">Status</option>
+                                                    <option value="all" selected>All</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Block">Block</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Realme"
-                                                id="productBrandRadio3">
-                                            <label class="form-check-label" for="productBrandRadio3">Realme</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Sony"
-                                                id="productBrandRadio2">
-                                            <label class="form-check-label" for="productBrandRadio2">Sony</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="JBL"
-                                                id="productBrandRadio1" checked>
-                                            <label class="form-check-label" for="productBrandRadio1">JBL</label>
-                                        </div>
+                                        <!--end col-->
 
-                                        <div>
-                                            <button type="button"
-                                                class="btn btn-link text-decoration-none text-uppercase fw-medium p-0">1,235
-                                                More</button>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                <button type="button" class="btn btn-primary w-100"
+                                                    onclick="SearchData();"> <i
+                                                        class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                            </div>
                                         </div>
+                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end accordion-item -->
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingDiscount">
-                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseDiscount"
-                                    aria-expanded="true" aria-controls="flush-collapseDiscount">
-                                    <span class="text-muted text-uppercase fs-12 fw-medium">Discount</span> <span
-                                        class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseDiscount" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingDiscount">
-                                <div class="accordion-body text-body pt-1">
-                                    <div class="d-flex flex-column gap-2 filter-check">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="50% or more"
-                                                id="productdiscountRadio6">
-                                            <label class="form-check-label" for="productdiscountRadio6">50% or
-                                                more</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="40% or more"
-                                                id="productdiscountRadio5">
-                                            <label class="form-check-label" for="productdiscountRadio5">40% or
-                                                more</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="30% or more"
-                                                id="productdiscountRadio4">
-                                            <label class="form-check-label" for="productdiscountRadio4">
-                                                30% or more
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="20% or more"
-                                                id="productdiscountRadio3" checked>
-                                            <label class="form-check-label" for="productdiscountRadio3">
-                                                20% or more
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="10% or more"
-                                                id="productdiscountRadio2">
-                                            <label class="form-check-label" for="productdiscountRadio2">
-                                                10% or more
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Less than 10%"
-                                                id="productdiscountRadio1">
-                                            <label class="form-check-label" for="productdiscountRadio1">
-                                                Less than 10%
-                                            </label>
-                                        </div>
-                                    </div>
+                            <!--end row-->
+                        </form>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 10px;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                                    </div>
+                                                </th>
+                                                <th data-ordering="false">SR No.</th>
+                                                <th data-ordering="false">ID</th>
+                                                <th data-ordering="false">Purchase ID</th>
+                                                <th data-ordering="false">Title</th>
+                                                <th data-ordering="false">User</th>
+                                                <th>Assigned To</th>
+                                                <th>Created By</th>
+                                                <th>Create Date</th>
+                                                <th>Status</th>
+                                                <th>Priority</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>01</td>
+                                                <td>VLZ-452</td>
+                                                <td>VLZ1400087402</td>
+                                                <td><a href="#!">Post launch reminder/ post list</a></td>
+                                                <td>Joseph Parker</td>
+                                                <td>Alexis Clarke</td>
+                                                <td>Joseph Parker</td>
+                                                <td>03 Oct, 2021</td>
+                                                <td><span class="badge bg-info-subtle text-info">Re-open</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>02</td>
+                                                <td>VLZ-453</td>
+                                                <td>VLZ1400087425</td>
+                                                <td><a href="#!">Additional Calendar</a></td>
+                                                <td>Diana Kohler</td>
+                                                <td>Admin</td>
+                                                <td>Mary Rucker</td>
+                                                <td>05 Oct, 2021</td>
+                                                <td><span class="badge bg-secondary-subtle text-secondary">On-Hold</span></td>
+                                                <td><span class="badge bg-info">Medium</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>03</td>
+                                                <td>VLZ-454</td>
+                                                <td>VLZ1400087438</td>
+                                                <td><a href="#!">Make a creating an account profile</a></td>
+                                                <td>Tonya Noble</td>
+                                                <td>Admin</td>
+                                                <td>Tonya Noble</td>
+                                                <td>27 April, 2022</td>
+                                                <td><span class="badge bg-danger-subtle text-danger">Closed</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>04</td>
+                                                <td>VLZ-455</td>
+                                                <td>VLZ1400087748</td>
+                                                <td><a href="#!">Apologize for shopping Error!</a></td>
+                                                <td>Joseph Parker</td>
+                                                <td>Alexis Clarke</td>
+                                                <td>Joseph Parker</td>
+                                                <td>14 June, 2021</td>
+                                                <td><span class="badge bg-warning-subtle text-warning">Inprogress</span></td>
+                                                <td><span class="badge bg-info">Medium</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>05</td>
+                                                <td>VLZ-456</td>
+                                                <td>VLZ1400087547</td>
+                                                <td><a href="#!">Support for theme</a></td>
+                                                <td>Donald Palmer</td>
+                                                <td>Admin</td>
+                                                <td>Donald Palmer</td>
+                                                <td>25 June, 2021</td>
+                                                <td><span class="badge bg-danger-subtle text-danger">Closed</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>06</td>
+                                                <td>VLZ-457</td>
+                                                <td>VLZ1400087245</td>
+                                                <td><a href="#!">Benner design for FB & Twitter</a></td>
+                                                <td>Mary Rucker</td>
+                                                <td>Jennifer Carter</td>
+                                                <td>Mary Rucker</td>
+                                                <td>14 Aug, 2021</td>
+                                                <td><span class="badge bg-warning-subtle text-warning">Inprogress</span></td>
+                                                <td><span class="badge bg-info">Medium</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>07</td>
+                                                <td>VLZ-458</td>
+                                                <td>VLZ1400087785</td>
+                                                <td><a href="#!">Change email option process</a></td>
+                                                <td>James Morris</td>
+                                                <td>Admin</td>
+                                                <td>James Morris</td>
+                                                <td>12 March, 2022</td>
+                                                <td><span class="badge bg-primary-subtle text-primary">Open</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>08</td>
+                                                <td>VLZ-460</td>
+                                                <td>VLZ1400087745</td>
+                                                <td><a href="#!">Support for theme</a></td>
+                                                <td>Nathan Cole</td>
+                                                <td>Nancy Martino</td>
+                                                <td>Nathan Cole</td>
+                                                <td>28 Feb, 2022</td>
+                                                <td><span class="badge bg-secondary-subtle text-secondary">On-Hold</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>09</td>
+                                                <td>VLZ-461</td>
+                                                <td>VLZ1400087179</td>
+                                                <td><a href="#!">Form submit issue</a></td>
+                                                <td>Grace Coles</td>
+                                                <td>Admin</td>
+                                                <td>Grace Coles</td>
+                                                <td>07 Jan, 2022</td>
+                                                <td><span class="badge bg-success-subtle text-success">New</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>10</td>
+                                                <td>VLZ-462</td>
+                                                <td>VLZ140008856</td>
+                                                <td><a href="#!">Edit customer testimonial</a></td>
+                                                <td>Freda</td>
+                                                <td>Alexis Clarke</td>
+                                                <td>Freda</td>
+                                                <td>16 Aug, 2021</td>
+                                                <td><span class="badge bg-danger-subtle text-danger">Closed</span></td>
+                                                <td><span class="badge bg-info">Medium</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>11</td>
+                                                <td>VLZ-463</td>
+                                                <td>VLZ1400078031</td>
+                                                <td><a href="#!">Ca i have an e-copy invoice</a></td>
+                                                <td>Williams</td>
+                                                <td>Admin</td>
+                                                <td>Williams</td>
+                                                <td>24 Feb, 2022</td>
+                                                <td><span class="badge bg-primary-subtle text-primary">Open</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>12</td>
+                                                <td>VLZ-464</td>
+                                                <td>VLZ1400087416</td>
+                                                <td><a href="#!">Brand logo design</a></td>
+                                                <td>Richard V.</td>
+                                                <td>Admin</td>
+                                                <td>Richard V.</td>
+                                                <td>16 March, 2021</td>
+                                                <td><span class="badge bg-warning-subtle text-warning">Inprogress</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>13</td>
+                                                <td>VLZ-466</td>
+                                                <td>VLZ1400089015</td>
+                                                <td><a href="#!">Issue with finding information about order ?</a></td>
+                                                <td>Olive Gunther</td>
+                                                <td>Alexis Clarke</td>
+                                                <td>Schaefer</td>
+                                                <td>32 March, 2022</td>
+                                                <td><span class="badge bg-success-subtle text-success">New</span></td>
+                                                <td><span class="badge bg-danger">High</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>14</td>
+                                                <td>VLZ-467</td>
+                                                <td>VLZ1400090324</td>
+                                                <td><a href="#!">Make a creating an account profile</a></td>
+                                                <td>Edwin</td>
+                                                <td>Admin</td>
+                                                <td>Edwin</td>
+                                                <td>05 April, 2022</td>
+                                                <td><span class="badge bg-warning-subtle text-warning">Inprogress</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end accordion-item -->
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingRating">
-                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseRating"
-                                    aria-expanded="false" aria-controls="flush-collapseRating">
-                                    <span class="text-muted text-uppercase fs-12 fw-medium">Rating</span> <span
-                                        class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                </button>
-                            </h2>
-
-                            <div id="flush-collapseRating" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingRating">
-                                <div class="accordion-body text-body">
-                                    <div class="d-flex flex-column gap-2 filter-check">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="4 & Above Star"
-                                                id="productratingRadio4" checked>
-                                            <label class="form-check-label" for="productratingRadio4">
-                                                <span class="text-muted">
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                </span> 4 & Above
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="3 & Above Star"
-                                                id="productratingRadio3">
-                                            <label class="form-check-label" for="productratingRadio3">
-                                                <span class="text-muted">
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                </span> 3 & Above
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="2 & Above Star"
-                                                id="productratingRadio2">
-                                            <label class="form-check-label" for="productratingRadio2">
-                                                <span class="text-muted">
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                </span> 2 & Above
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="1 Star"
-                                                id="productratingRadio1">
-                                            <label class="form-check-label" for="productratingRadio1">
-                                                <span class="text-muted">
-                                                    <i class="mdi mdi-star text-warning"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                    <i class="mdi mdi-star"></i>
-                                                </span> 1
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end accordion-item -->
-                    </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
                 </div>
-                <!-- end card -->
+
             </div>
-            <!-- end col -->
-
-            <div class="col-xl-9 col-lg-8">
-                <div>
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <div class="row g-4">
-                                <div class="col-sm-auto">
-                                    <div>
-                                        <a href="apps-ecommerce-add-product.html" class="btn btn-success"
-                                            id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add
-                                            Product</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="d-flex justify-content-sm-end">
-                                        <div class="search-box ms-2">
-                                            <input type="text" class="form-control" id="searchProductList"
-                                                placeholder="Search Products...">
-                                            <i class="ri-search-line search-icon"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab"
-                                                href="#productnav-all" role="tab">
-                                                All <span
-                                                    class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link fw-semibold" data-bs-toggle="tab"
-                                                href="#productnav-published" role="tab">
-                                                Published <span
-                                                    class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft"
-                                                role="tab">
-                                                Draft
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-auto">
-                                    <div id="selection-element">
-                                        <div class="my-n1 d-flex align-items-center text-muted">
-                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div>
-                                            Result <button type="button" class="btn btn-link link-danger p-0 ms-3"
-                                                data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end card header -->
-                        <div class="card-body">
-
-                            <div class="tab-content text-muted">
-                                <div class="tab-pane active" id="productnav-all" role="tabpanel">
-                                    <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
-                                </div>
-                                <!-- end tab pane -->
-
-                                <div class="tab-pane" id="productnav-published" role="tabpanel">
-                                    <div id="table-product-list-published" class="table-card gridjs-border-none"></div>
-                                </div>
-                                <!-- end tab pane -->
-
-                                <div class="tab-pane" id="productnav-draft" role="tabpanel">
-                                    <div class="py-4 text-center">
-                                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.js') }}on" trigger="loop"
-                                            colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
-                                        </lord-icon>
-                                        <h5 class="mt-4">Sorry! No Result Found</h5>
-                                    </div>
-                                </div>
-                                <!-- end tab pane -->
-                            </div>
-                            <!-- end tab content -->
-
-                        </div>
-                        <!-- end card body -->
-                    </div>
-                    <!-- end card -->
-                </div>
-            </div>
-            <!-- end col -->
+            <!--end col-->
         </div>
-        <!-- end row -->
+        <!--end row-->
 
     </div>
     <!-- container-fluid -->
 @endsection
 
-@section('scripts')
-    <!-- nouisliderribute js -->
-    <script src="{{ asset('administrator/assets/libs/nouislider/nouislider.min.js') }}') }}"></script>
-    <script src="{{ asset('administrator/assets/libs/wnumb/wNumb.min.js') }}"></script>
+@section('stylesheets')
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
 
-    <!-- gridjs js -->
-    <script src="{{ asset('administrator/assets/libs/gridjs/gridjs.umd.js') }}"></script>
-    <script src="https://unpkg.com/gridjs/plugins/selection/dist/selection.umd.js"></script>
-    <!-- ecommerce product list -->
-    <script src="{{ asset('administrator/assets/js/pages/ecommerce-product-list.init.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!--datatable js-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
 @endsection
