@@ -20,6 +20,7 @@ Route::get('/',[HomeController::class,'index'])->name('home.index');
 Route::get('/Product',[ProductController::class,'index'])->name('product.index');
 Route::get('/Product-detail',[ProductController::class,'detail'])->name('product.detail');
 Route::get('/Cart',[CartController::class,'index'])->name('cart.index');
+Route::get('/Checkout',[CartController::class,'checkout'])->name('cart.checkout');
 
 Route::prefix('admin')
     ->as('admin.')

@@ -200,15 +200,15 @@
 										</ul>
 										<div class="total_drop">
 											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="checkout.html" class="btn_1">Checkout</a>
+											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="{{route('cart.checkout')}}" class="btn_1">Checkout</a>
 										</div>
 									</div>
 								</div>
 								<!-- /dropdown-cart-->
 							</li>
-							<!-- <li>
+							<li>
 								<a href="#0" class="wishlist"><span>Wishlist</span></a>
-							</li> -->
+							</li>
 							<li>
 								<div class="dropdown dropdown-access">
 									<a href="account.html" class="access_link"><span>Account</span></a>
