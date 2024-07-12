@@ -233,7 +233,7 @@ Chi tiết sản phẩm
 	                                </div>
 	                            </div>
 	                            <!-- /row -->
-	                            <p class="text-end"><a href="leave-review.html" class="btn_1">Leave a review</a></p>
+	                            <p class="text-end"><a href="{{route('product.review')}}" class="btn_1">Leave a review</a></p>
 	                        </div>
 	                        <!-- /card-body -->
 	                    </div>

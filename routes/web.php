@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index'])->name('home.index');
+Route::get('/about',[HomeController::class,'about'])->name('home.about');
+Route::get('/contact',[HomeController::class,'contact'])->name('home.contact');
+Route::get('/blog',[HomeController::class,'blog'])->name('home.blog');
 Route::get('/Product',[ProductController::class,'index'])->name('product.index');
 Route::get('/Product-detail',[ProductController::class,'detail'])->name('product.detail');
+Route::get('/Product-review',[ProductController::class,'review'])->name('product.review');
 Route::get('/Cart',[CartController::class,'index'])->name('cart.index');
 Route::get('/Checkout',[CartController::class,'checkout'])->name('cart.checkout');
+Route::get('/login',[UserController::class,'LoginOrRegiter'])->name('user.login');
+Route::get('/profile',[UserController::class,'profile'])->name('user.profile');
+Route::get('/user/repass',[UserController::class,'repass'])->name('user.repass');
+Route::get('/order',[UserController::class,'orderlist'])->name('user.order');
+Route::get('/help',[UserController::class,'help'])->name('user.help');
 
 Route::prefix('admin')
     ->as('admin.')
