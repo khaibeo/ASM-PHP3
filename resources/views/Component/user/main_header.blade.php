@@ -24,11 +24,11 @@
 							</div>
 							<ul>
 								<li>
-									<a href="index.html">Home</a>
+									<a href="{{route('home.index')}}">Home</a>
 								</li>
 								<li class="megamenu submenu">
-									<a href="{{ route('product.index')}}" class="show-submenu-mega">Pages</a>
-									<div class="menu-wrapper">
+									<a href="{{ route('product.index')}}" >Products</a>
+									{{-- <div class="menu-wrapper">
 										<div class="row small-gutters">
 											<div class="col-lg-3">
 												<h3>Listing grid</h3>
@@ -64,23 +64,23 @@
 											</div>
 										</div>
 										<!-- /row -->
-									</div>
+									</div> --}}
 									<!-- /menu-wrapper -->
 								</li>
-								<li class="submenu">
+								{{-- <li class="submenu">
 									<a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
 									<ul>
 										<li><a href="404.html">404 Page</a></li>
 									</ul>
+								</li> --}}
+								<li>
+									<a href="{{route('home.about')}}">About</a>
 								</li>
 								<li>
-									<a href="about.html">About</a>
+									<a href="{{route('home.contact')}}">Contact</a>
 								</li>
 								<li>
-									<a href="contacts.html">Contact</a>
-								</li>
-								<li>
-									<a href="blog.html">Blog</a>
+									<a href="{{route('home.blog')}}">Blog</a>
 								</li>
 								
 							</ul>
@@ -213,19 +213,19 @@
 								<div class="dropdown dropdown-access">
 									<a href="account.html" class="access_link"><span>Account</span></a>
 									<div class="dropdown-menu">
-										<a href="account.html" class="btn_1">Sign In or Sign Up</a>
+										<a href="{{route('user.login')}}" class="btn_1">Sign In or Sign Up</a>
 										<ul>
 											<li>
 												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
 											</li>
 											<li>
-												<a href="account.html"><i class="ti-package"></i>My Orders</a>
+												<a href="{{route('user.order')}}"><i class="ti-package"></i>My Orders</a>
 											</li>
 											<li>
-												<a href="account.html"><i class="ti-user"></i>My Profile</a>
+												<a href="{{route('user.profile')}}"><i class="ti-user"></i>My Profile</a>
 											</li>
 											<li>
-												<a href="help.html"><i class="ti-help-alt"></i>Help and Faq</a>
+												<a href="{{route('user.help')}}"><i class="ti-help-alt"></i>Help and Faq</a>
 											</li>
 										</ul>
 									</div>
