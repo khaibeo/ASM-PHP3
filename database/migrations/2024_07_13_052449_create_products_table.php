@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->double('sale_price')->nullable();
             $table->double('regular_price');
-            $table->string('sort_description')->nullable();
-            $table->string('description')->nullable();
+            $table->string('short_description')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedInteger('views')->default(0);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);

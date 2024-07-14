@@ -27,7 +27,7 @@ class ProductSeeder extends Seeder
                 'thumbnail' => 'https://drake.vn/image/catalog/H%C3%ACnh%20content/gia%CC%80y%20Converse%20da%20bo%CC%81ng/giay-converse-da-bong-5.jpg',
                 'sale_price' => $faker->optional()->randomFloat(2, 10, 100),
                 'regular_price' => $faker->randomFloat(2, 10, 100),
-                'sort_description' => $faker->optional()->sentence,
+                'short_description' => $faker->optional()->sentence,
                 'description' => $faker->optional()->paragraph,
                 'views' => 0,
                 'is_active' => $faker->boolean(90),

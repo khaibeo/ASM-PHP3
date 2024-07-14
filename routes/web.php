@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -138,6 +138,11 @@ Route::prefix('admin')
     });
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('dang-nhap', function(){
     return view('admin.auth.signin');
 })->name('signin');
@@ -145,3 +150,4 @@ Route::get('dang-nhap', function(){
 Route::get('repass', function(){
     return view('admin.auth.pass_reset');
 })->name('repass');
+
