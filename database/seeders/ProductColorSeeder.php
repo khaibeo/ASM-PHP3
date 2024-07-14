@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class ProductColorSeeder extends Seeder
 {
@@ -13,12 +14,14 @@ class ProductColorSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 5; $i++) {
+        $faker = Faker::create();
+
+        for ($i = 1; $i <= 10; $i++) {
             DB::table('product_colors')->insert([
-                'name' => 'Color ' . rand(1,30),
+                'name' => $faker->colorName(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+        }
     }
-}
 }

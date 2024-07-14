@@ -15,17 +15,36 @@ class CatalogueSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        for($i=0;$i<=10;$i++){
-            DB::table('catalogues')->insert(
-                [
+
+        $parentIds = []; // Mảng lưu trữ id của danh mục cha
+
+        // Tạo 3 các danh mục gốc
+        for ($i = 1; $i <= 3; $i++) {
+            $id = DB::table('catalogues')->insertGetId([
                 'name' => $faker->word,
                 'image' => 'https://drake.vn/image/catalog/H%C3%ACnh%20content/gia%CC%80y%20Converse%20da%20bo%CC%81ng/giay-converse-da-bong-5.jpg',
-                'parent_id' => $faker->numberBetween($min = 1, $max = 10),
-                'is_active' => $faker->boolean($chanceOfGettingTrue = 50),
+                'parent_id' => null,
+                'is_active' => $faker->boolean($chanceOfGettingTrue = 80),
                 'created_at' => now(),
                 'updated_at' => now(),
-                ]
-            );
+            ]);
+
+            // Thêm id của danh mục gốc vào mảng parentIds
+            $parentIds[] = $id;
+        }
+
+        // Tạo các danh mục con cho mỗi danh mục gốc (mỗi danh mục gốc có 3 danh mục con )
+        foreach ($parentIds as $parentId) {
+            for ($i = 1; $i <= 3; $i++) {
+                DB::table('catalogues')->insert([
+                    'name' => $faker->word,
+                    'image' => 'https://drake.vn/image/catalog/H%C3%ACnh%20content/gia%CC%80y%20Converse%20da%20bo%CC%81ng/giay-converse-da-bong-5.jpg',
+                    'parent_id' => $parentId,
+                    'is_active' => $faker->boolean($chanceOfGettingTrue = 80),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
     }
 }
