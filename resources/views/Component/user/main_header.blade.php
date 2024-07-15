@@ -24,10 +24,10 @@
 							</div>
 							<ul>
 								<li>
-									<a href="{{route('home.index')}}">Home</a>
+									<a href="{{route('home.index')}}">Trang chủ</a>
 								</li>
-								<li class="megamenu submenu">
-									<a href="{{ route('product.index')}}" >Products</a>
+								<li class="megamenu">
+									<a href="{{ route('product.index')}}" >Sản phẩm</a>
 									{{-- <div class="menu-wrapper">
 										<div class="row small-gutters">
 											<div class="col-lg-3">
@@ -67,6 +67,9 @@
 									</div> --}}
 									<!-- /menu-wrapper -->
 								</li>
+								<li>
+									<a href="{{route('voucher.list')}}">Khuyến mãi</a>
+								</li>
 								{{-- <li class="submenu">
 									<a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
 									<ul>
@@ -74,21 +77,21 @@
 									</ul>
 								</li> --}}
 								<li>
-									<a href="{{route('home.about')}}">About</a>
+									<a href="{{route('home.about')}}">Giới thiệu</a>
 								</li>
 								<li>
-									<a href="{{route('home.contact')}}">Contact</a>
+									<a href="{{route('home.contact')}}">Liên hệ</a>
 								</li>
-								<li>
-									<a href="{{route('home.blog')}}">Blog</a>
-								</li>
+								{{-- <li>
+									<a href="{{route('home.blog')}}">Bài viết</a>
+								</li> --}}
 								
 							</ul>
 						</div>
 						<!--/main-menu -->
 					</nav>
 					<div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-						<a class="phone_top" href="tel://9438843343"><strong><span>Need Help?</span>+94 423-23-221</strong></a>
+						<a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94 423-23-221</strong></a>
 					</div>
 				</div>
 				<!-- /row -->
@@ -109,7 +112,7 @@
 													<span class="hamburger-inner"></span>
 												</span>
 											</span>
-											Categories
+											Danh mục
 										</a>
 									</span>
 									<div id="menu">

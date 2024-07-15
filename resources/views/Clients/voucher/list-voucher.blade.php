@@ -16,7 +16,7 @@ Voucher
             <div class="col-md-6">
                 <div class="voucher-item">
                     <div class="voucher-details">
-                        <h3>Giảm 10% tối đa 20k</h3>
+                        <h3>Giảm giá 20k</h3>
                         <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
                         <p>Có hiệu lức từ ngày 15/7</p>
                     </div>
@@ -26,7 +26,7 @@ Voucher
                 </div>
                 <div class="voucher-item">
                     <div class="voucher-details">
-                        <h3>Giảm 10% tối đa 20k</h3>
+                        <h3>Giảm giá 10%</h3>
                         <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
                         <p>Có hiệu lức từ ngày 15/7</p>
                     </div>
@@ -38,7 +38,7 @@ Voucher
             <div class="col-md-6">
                 <div class="voucher-item">
                     <div class="voucher-details">
-                        <h3>FreeShip Tối Đa 15k</h3>
+                        <h3>Giảm giá 30k</h3>
                         <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
                         <p>Có hiệu lức từ ngày 15/7</p>
                     </div>
@@ -48,7 +48,7 @@ Voucher
                 </div>
                 <div class="voucher-item">
                     <div class="voucher-details">
-                        <h3>Giảm 5%</h3>
+                        <h3>Giảm 20%</h3>
                         <p>Mỗi tài khoản chỉ được sử dụng một lần duy nhất. Mã giảm giá phát hành bởi Người bán và sẽ không được hoàn lại với bất kỳ lý do nào..</p>
                         <p>Có hiệu lức từ ngày 15/7</p>
                     </div>
