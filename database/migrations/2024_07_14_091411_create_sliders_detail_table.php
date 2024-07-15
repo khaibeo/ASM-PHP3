@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('slider_id');
             $table->string('image_url');
-            $table->string('link_url');
+            $table->string('link_url')->nullable();
             $table->integer('position');
             $table->timestamps();
             $table->foreign('slider_id')->references('id')->on('sliders')->onDelete('cascade');

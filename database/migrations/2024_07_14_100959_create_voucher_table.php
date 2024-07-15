@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->tinyInteger('discount_type');
-            $table->integer('discount_value');
-            $table->Integer('quantity');
-            $table->timestamp('valid_from')->nullable();
-            $table->timestamp('valid_until')->nullable();
+            $table->unsignedInteger('discount_value');
+            $table->unsignedInteger('quantity');
+            $table->timestamp('valid_from');
+            $table->timestamp('valid_until');
             $table->timestamps();
         });
     }

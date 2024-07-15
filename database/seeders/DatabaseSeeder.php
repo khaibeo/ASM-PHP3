@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
                 OrderItemSeeder::class,
                 CartSeeder::class,
                 CartItemSeeder::class,
+                SliderSeeder::class,
+                SliderDetailSeeder::class,
+                VoucherSeeder::class
             ]);
 
             DB::commit();

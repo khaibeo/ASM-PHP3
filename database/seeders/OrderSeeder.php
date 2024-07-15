@@ -22,7 +22,7 @@ class OrderSeeder extends Seeder
             $userId = $faker->randomElement($userIds);
 
             $totalProductPrice = $faker->numberBetween(50000, 1000000);
-            $discountAmount = $faker->numberBetween(0, 10000);
+            $discountAmount = $faker->optional(0.5,0)->numberBetween(0, 10000);
             $totalAmount = $totalProductPrice - $discountAmount;
 
             DB::table('orders')->insert([
