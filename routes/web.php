@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -31,6 +32,7 @@ Route::get('/profile',[UserController::class,'profile'])->name('user.profile');
 Route::get('/user/repass',[UserController::class,'repass'])->name('user.repass');
 Route::get('/order',[UserController::class,'orderlist'])->name('user.order');
 Route::get('/help',[UserController::class,'help'])->name('user.help');
+Route::get('/voucher',[VoucherController::class,'list'])->name('voucher.list');
 
 Route::prefix('admin')
     ->as('admin.')
