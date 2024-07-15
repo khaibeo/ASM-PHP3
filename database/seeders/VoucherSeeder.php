@@ -38,8 +38,10 @@ class VoucherSeeder extends Seeder
                 $validUntil = $now->copy()->addDays(7)->setTime(0, 0, 0); // Voucher còn hạn trong khoảng 7 ngày                
             }
 
-            DB::table('voucher')->insert([
+            DB::table('vouchers')->insert([
                 'code' => Str::upper(Str::random(8)),
+                'name' => $faker->name(),
+                'description' => $faker->paragraph(),
                 'discount_type' => $discountType,
                 'discount_value' => $discountValue,
                 'quantity' => $faker->numberBetween(10, 100),

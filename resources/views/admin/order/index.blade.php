@@ -33,7 +33,7 @@
                             <div class="col-sm">
                                 <h5 class="card-title mb-0">Order History</h5>
                             </div>
-                            <div class="col-sm-auto">
+                            {{-- <div class="col-sm-auto">
                                 <div class="d-flex gap-1 flex-wrap">
                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
                                         id="create-btn" data-bs-target="#showModal"><i
@@ -43,7 +43,7 @@
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body border border-dashed border-end-0 border-start-0">
@@ -162,10 +162,10 @@
                                                             <i class="ri-more-fill align-middle"></i>
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a href="#!" class="dropdown-item"><i
+                                                            <li><a href="{{ route('admin.orders.detail') }}" class="dropdown-item"><i
                                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                                     View</a></li>
-                                                            <li><a class="dropdown-item edit-item-btn"><i
+                                                            <li><a href="{{ route('admin.orders.detail') }}" class="dropdown-item edit-item-btn"><i
                                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                                     Edit</a></li>
                                                             <li>
