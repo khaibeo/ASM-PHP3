@@ -20,15 +20,19 @@ class SliderDetailSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        // có 10 slider
+        // Mỗi slider sẽ có 3 hình ảnh được xếp thứ tự từ 1 -> 3
         for ($i = 1; $i <= 10; $i++) {
-            DB::table('sliders_detail')->insert([
-                'slider_id' => $faker->numberBetween(1, 10),
-                'image_url' => $faker->imageUrl(),
-                'link_url' => $faker->imageUrl(),
-                'position' => $faker->numberBetween(1, 10),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
+            for ($j = 1; $j <= 3; $j++) {
+                DB::table('sliders_detail')->insert([
+                    'slider_id' => $i,
+                    'image_url' => $faker->imageUrl(),
+                    'link_url' => $faker->url(),
+                    'position' => $j,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
         }
     }
 }

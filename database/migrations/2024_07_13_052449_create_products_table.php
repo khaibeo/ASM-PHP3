@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('catalogue_id');
-            $table->foreign('catalogue_id')->references('id')->on('catalogues')->onDelete('cascade');
+            $table->foreign('catalogue_id')->references('id')->on('catalogues');
             $table->string('name');
             $table->string('slug');
             $table->string('sku');
@@ -29,21 +29,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    // id	int	ID	
-// catalogue_id	int	ID danh mục	
-// name	varchar	Tên	
-// slug	varchar	Slug	
-// sku	varchar	Mã sản phẩm	
-// thumbnail	varchar	Ảnh đại diện	
-// sale_price	double	Giá sale	null
-// regular_price	double	Giá thường	
-// short_description	varchar	Mô tả ngắn	null
-// description	text	Mô tả	null
-// views	int	Lượt xem	default 0
-// is_active	boolen	Trạng thái	default 1
-// is_featured	boolen	Đánh dấu nổi bật	default 0
-// created_at	timestamp	Thời gian tạo	
-// updated_at	timestamp	Thời gian cập nhật	
+    
     /**
      * Reverse the migrations.
      */
