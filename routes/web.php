@@ -151,3 +151,7 @@ Route::get('repass', function(){
     return view('admin.auth.pass_reset');
 })->name('repass');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
