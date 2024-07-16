@@ -40,11 +40,9 @@
                                 <div class="d-flex flex-wrap align-items-start gap-2">
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
-                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
-                                        id="create-btn" data-bs-target="#showModal"><i
-                                            class="ri-add-line align-bottom me-1"></i> Thêm danh mục</button>
-                                    <button type="button" class="btn btn-info"><i
-                                            class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                                    <a href="{{route('admin.catalogues.add')}}" class="btn btn-success add-btn" id="create-btn" ><i class="ri-add-line align-bottom me-1"></i> Thêm danh mục</a>
+                                    {{-- <button type="button" class="btn btn-info"><i
+                                            class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -145,8 +143,8 @@
                                                             <i class="ri-more-fill align-middle"></i>
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
-                                                            <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
+                                                            <li><a href="{{ route('admin.catalogues.edit') }}" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
+                                                            <li><a href="{{ route('admin.catalogues.edit') }}" class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
                                                             <li>
                                                                 <a class="dropdown-item remove-item-btn">
                                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
