@@ -216,7 +216,7 @@
 								<div class="dropdown dropdown-access">
 									<a href="account.html" class="access_link"><span>Account</span></a>
 									<div class="dropdown-menu">
-										<a href="{{url('login')}}" class="btn_1">Sign In or Sign Up</a>
+										<a href="{{route('auth.index')}}" class="btn_1">Sign In or Sign Up</a>
 										<ul>
 											<li>
 												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
@@ -227,9 +227,11 @@
 											<li>
 												<a href="{{route('user.profile')}}"><i class="ti-user"></i>My Profile</a>
 											</li>
+											@if (\Auth::check())
 											<li>
-												<a href="{{route('user.help')}}"><i class="ti-help-alt"></i>Help and Faq</a>
+												<a href="{{route('auth.logout')}}"><i class="ti-help-alt"></i>Đăng xuất</a>
 											</li>
+											@endif
 										</ul>
 									</div>
 								</div>
