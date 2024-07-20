@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\catalogues;
+use App\Models\Catalogue;
 use Closure;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class ShareCategories
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $categories = catalogues::whereNull('parent_id')
+        $categories = Catalogue::whereNull('parent_id')
             ->with('children')
             ->get();
 

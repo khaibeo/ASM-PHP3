@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\catalogues;
+use App\Models\Catalogue;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +26,7 @@ class CatalogueController extends Controller
     // }
     public function index()
     {
-        $catalogues = catalogues::with('children')->whereNull('parent_id')->get();
+        $catalogues = Catalogue::with('children')->whereNull('parent_id')->get();
         return view('admin.catalogue.index', compact('catalogues'));
     }
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use PhpParser\Node\Expr\FuncCall;
 
-class catalogues extends Model
+class Catalogue extends Model
 {
     use HasFactory;
 
@@ -19,11 +19,11 @@ class catalogues extends Model
 
     public function children()
     {
-        return $this->hasMany(catalogues::class, 'parent_id')->with('children');
+        return $this->hasMany(Catalogue::class, 'parent_id')->with('children');
     }
     
     public function parent()
     {
-        return $this->belongsTo(catalogues::class, 'parent_id');
+        return $this->belongsTo(Catalogue::class, 'parent_id');
     }
 }
