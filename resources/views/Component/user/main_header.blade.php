@@ -117,57 +117,28 @@
 									</span>
 									<div id="menu">
 										<ul>
-											<li><span><a href="#0">Collections</a></span>
-												<ul>
-													<li><a href="listing-grid-1-full.html">Trending</a></li>
-													<li><a href="listing-grid-2-full.html">Life style</a></li>
-													<li><a href="listing-grid-3.html">Running</a></li>
-													<li><a href="listing-grid-4-sidebar-left.html">Training</a></li>
-													<li><a href="listing-grid-5-sidebar-right.html">View all Collections</a></li>
-												</ul>
-											</li>
-											<li><span><a href="#">Men</a></span>
-												<ul>
-													<li><a href="listing-grid-6-sidebar-left.html">Offers</a></li>
-													<li><a href="listing-grid-7-sidebar-right.html">Shoes</a></li>
-													<li><a href="listing-row-1-sidebar-left.html">Clothing</a></li>
-													<li><a href="listing-row-3-sidebar-left.html">Accessories</a></li>
-													<li><a href="listing-row-4-sidebar-extended.html">Equipment</a></li>
-												</ul>
-											</li>
-											<li><span><a href="#">Women</a></span>
-												<ul>
-													<li><a href="listing-grid-1-full.html">Best Sellers</a></li>
-													<li><a href="listing-grid-2-full.html">Clothing</a></li>
-													<li><a href="listing-grid-3.html">Accessories</a></li>
-													<li><a href="listing-grid-4-sidebar-left.html">Shoes</a></li>
-												</ul>
-											</li>
-											<li><span><a href="#">Boys</a></span>
-												<ul>
-													<li><a href="listing-grid-6-sidebar-left.html">Easy On Shoes</a></li>
-													<li><a href="listing-grid-7-sidebar-right.html">Clothing</a></li>
-													<li><a href="listing-row-3-sidebar-left.html">Must Have</a></li>
-													<li><a href="listing-row-4-sidebar-extended.html">All Boys</a></li>
-												</ul>
-											</li>
-											<li><span><a href="#">Girls</a></span>
-												<ul>
-													<li><a href="listing-grid-1-full.html">New Releases</a></li>
-													<li><a href="listing-grid-2-full.html">Clothing</a></li>
-													<li><a href="listing-grid-3.html">Sale</a></li>
-													<li><a href="listing-grid-4-sidebar-left.html">Best Sellers</a></li>
-												</ul>
-											</li>
-											<li><span><a href="#">Customize</a></span>
-												<ul>
-													<li><a href="listing-row-1-sidebar-left.html">For Men</a></li>
-													<li><a href="listing-row-2-sidebar-right.html">For Women</a></li>
-													<li><a href="listing-row-4-sidebar-extended.html">For Boys</a></li>
-													<li><a href="listing-grid-1-full.html">For Girls</a></li>
-												</ul>
-											</li>
-										</ul>
+										@foreach($categories as $category)
+									<li>
+										<span>
+											<a href="#">
+												{{-- <span class="hamburger hamburger--spin">
+													<span class="hamburger-box">
+														<span class="hamburger-inner"></span>
+													</span>
+												</span> --}}
+												{{ $category->name }}
+											</a>
+										</span>
+										<div id="menu">
+											<ul>
+												@foreach($category->children as $child)
+													<li><a href="#">{{ $child->name }}</a></li>
+												@endforeach
+											</ul>
+										</div>
+									</li>
+								@endforeach
+									</ul>
 									</div>
 								</li>
 							</ul>
@@ -216,7 +187,7 @@
 								<div class="dropdown dropdown-access">
 									<a href="account.html" class="access_link"><span>Account</span></a>
 									<div class="dropdown-menu">
-										<a href="{{url('login')}}" class="btn_1">Sign In or Sign Up</a>
+										<a href="{{route('auth.index')}}" class="btn_1">Sign In or Sign Up</a>
 										<ul>
 											<li>
 												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
@@ -227,9 +198,11 @@
 											<li>
 												<a href="{{route('user.profile')}}"><i class="ti-user"></i>My Profile</a>
 											</li>
+											@if (\Auth::check())
 											<li>
-												<a href="{{route('user.help')}}"><i class="ti-help-alt"></i>Help and Faq</a>
+												<a href="{{route('auth.logout')}}"><i class="ti-help-alt"></i>Đăng xuất</a>
 											</li>
+											@endif
 										</ul>
 									</div>
 								</div>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,6 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 CatalogueSeeder::class,
                 ProductSeeder::class,
-                ProductColorSeeder::class,
-                ProductSizeSeeder::class,
-                ProductVariantSeeder::class,
                 ProductGallerieSeeder::class,
                 OrderSeeder::class,
                 OrderItemSeeder::class,

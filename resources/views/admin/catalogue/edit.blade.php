@@ -6,7 +6,9 @@
 
 @section('content')
 <div class="container-fluid">
-
+    @if (session('error'))
+        <div class="alert alert-danger">{{message('error')}}</div>
+    @endif
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -26,31 +28,43 @@
     <!-- end page title -->
 
     <div class="row">
+        
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
+                    <form action="{{route('admin.catalogues.update',$catalogue->id)}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label class="form-label" for="project-title-input">Tên danh mục</label>
-                        <input type="text" class="form-control" id="project-title-input" placeholder="Nhập tên danh mục">
+                        <input type="text" name="name" class="form-control" id="project-title-input" placeholder="Nhập tên danh mục" value="{{old('name',$catalogue->name)}}">
+                        @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
                                 <label for="choices-priority-input" class="form-label">Danh mục cha</label>
-                                <select class="form-select" data-choices data-choices-search-false id="choices-priority-input">
-                                    <option value="High" selected>Không</option>
-                                    <option value="Medium">Danh mục 1</option>
-                                    <option value="Low">Danh mục 2</option>
+                                <select name="parent_id" class="form-select" data-choices data-choices-search-false id="choices-priority-input">
+                                    <option value="0" {{ $catalogue->parent_id === null ? 'selected' : '' }}>Không có danh mục cha</option>
+                                    @foreach ($catalogues as $parentCatalogue)
+                                        @if ($parentCatalogue->id != $catalogue->id) <!-- Loại bỏ danh mục hiện tại khỏi danh sách -->
+                                        <option value="{{ $parentCatalogue->id }}" {{ $catalogue->parent_id == $parentCatalogue->id ? 'selected' : '' }}>
+                                    {{ $parentCatalogue->name }}
+                                     </option>
+                                    @endif
+                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
                                 <label for="choices-status-input" class="form-label">Trạng thái</label>
-                                <select class="form-select" data-choices data-choices-search-false id="choices-status-input">
-                                    <option value="Inprogress" selected>Hoạt động</option>
-                                    <option value="Completed">Bản nháp</option>
+                                <select name="is_active" class="form-select" data-choices data-choices-search-false id="choices-status-input">
+                                    <option value="1" {{ old('is_active', $catalogue->is_active) == 1 ? 'selected' : '' }}>Kích hoạt</option>
+                                    <option value="0" {{ old('is_active', $catalogue->is_active) == 0 ? 'selected' : '' }}>Không kích hoạt</option>
                                 </select>
                             </div>
                         </div>
@@ -58,14 +72,18 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="project-thumbnail-img">Ảnh đại diện</label>
-                        <input class="form-control" id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg">
+                        <input name="image" class="form-control" id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg" value="{{old('image')}}">
+                        @error('image')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <div class="text-end mb-4 mt-4">
-                        <button type="submit" class="btn btn-danger w-sm">Quay lại</button>
                         
-                        <button type="submit" class="btn btn-success w-sm">Lưu</button>
+                        <button type="button" class="btn btn-danger w-sm"><a href="{{route('admin.catalogues.index')}}">Quay lại</a></button>
+                        <button type="submit" class="btn btn-success w-sm">Thêm</button>
                     </div>
+                </form>
                 </div>
                 <!-- end card body -->
             </div>
