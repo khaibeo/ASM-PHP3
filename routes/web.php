@@ -4,9 +4,12 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,17 +99,23 @@ Route::prefix('admin')
     });
 
     Route::prefix('users')->as('users.')->group(function(){
-        Route::get('/', function(){
-            return view('admin.user.index');
-        })->name('index');
+        // Route::get('/', function(){
+        //     return view('admin.user.index');
+        // })->name('index');
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
 
         Route::get('/add',function(){
             return view('admin.user.add');
         })->name('add');
 
-        Route::get('/edit',function(){
-            return view('admin.user.edit');
-        })->name('edit');
+        Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
+        // Route::get('/edit',function(){
+        //     return view('admin.user.edit');
+        // })->name('edit');
+
+        Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('vouchers')->as('vouchers.')->group(function(){
@@ -153,3 +162,7 @@ Route::get('repass', function(){
     return view('admin.auth.pass_reset');
 })->name('repass');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

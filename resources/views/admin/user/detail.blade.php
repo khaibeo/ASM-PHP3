@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('title')
-    Cập nhật thông tin người dùng
+    Chi tiết thông tin người dùng
 @endsection
 
 @section('content')
@@ -120,8 +120,7 @@
                                         <!--end col-->
                                         <div class="col-lg-12">
                                             <div class="hstack gap-2 justify-content-end">
-                                                <button type="submit" class="btn btn-primary">Sửa</button>
-                                                <button type="button" class="btn btn-soft-success">Quay lại</button>
+                                                <a href="{{ route('admin.user.index') }}"  class="btn btn-success">Sửa</a>
                                             </div>
                                         </div>
                                         <!--end col-->
