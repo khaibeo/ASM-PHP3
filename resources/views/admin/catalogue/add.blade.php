@@ -27,30 +27,36 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <div class="card">
+            <div class="card">     
                 <div class="card-body">
+                    <form action="{{route('admin.catalogues.store')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="mb-3">
                         <label class="form-label" for="project-title-input">Tên danh mục</label>
-                        <input type="text" class="form-control" id="project-title-input" placeholder="Nhập tên danh mục">
+                        <input type="text" name="name" class="form-control" id="project-title-input" placeholder="Nhập tên danh mục" value="{{old('name')}}">
+                        @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
                                 <label for="choices-priority-input" class="form-label">Danh mục cha</label>
-                                <select class="form-select" data-choices data-choices-search-false id="choices-priority-input">
-                                    <option value="High" selected>Không</option>
-                                    <option value="Medium">Danh mục 1</option>
-                                    <option value="Low">Danh mục 2</option>
+                                <select name="parent_id" class="form-select" data-choices data-choices-search-false id="choices-priority-input">
+                                    <option value="0" selected>Không</option>
+                                    @foreach($catalouges as $ct)                    
+                                    <option value="{{$ct->id}}">{{$ct->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
                                 <label for="choices-status-input" class="form-label">Trạng thái</label>
-                                <select class="form-select" data-choices data-choices-search-false id="choices-status-input">
-                                    <option value="Inprogress" selected>Hoạt động</option>
-                                    <option value="Completed">Bản nháp</option>
+                                <select name="is_active" class="form-select" data-choices data-choices-search-false id="choices-status-input">
+                                    <option value="1" selected>Hoạt động</option>
+                                    <option value="0">Bản nháp</option>
                                 </select>
                             </div>
                         </div>
@@ -58,20 +64,22 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="project-thumbnail-img">Ảnh đại diện</label>
-                        <input class="form-control" id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg">
+                        <input name="image" class="form-control" id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg" value="{{old('image')}}">
+                        @error('image')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <div class="text-end mb-4 mt-4">
-                        <button type="submit" class="btn btn-danger w-sm">Quay lại</button>
+                        <button class="btn btn-danger w-sm"><a href="{{route('admin.catalogues.index')}}"></a>Quay lại</button>
                         
                         <button type="submit" class="btn btn-success w-sm">Thêm</button>
                     </div>
+                </form>
                 </div>
                 <!-- end card body -->
             </div>
-            <!-- end card -->
-            
-            
+            <!-- end card -->    
         </div>
         <!-- end col -->
     </div>

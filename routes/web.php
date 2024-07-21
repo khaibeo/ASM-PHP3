@@ -1,12 +1,12 @@
 <?php
-
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\VoucherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Admin;
@@ -84,18 +84,13 @@ Route::prefix('admin')
             })->name('edit_size');
         });
 
-        Route::prefix('catalogues')->as('catalogues.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.catalogue.index');
-            })->name('index');
-
-            Route::get('/add', function () {
-                return view('admin.catalogue.add');
-            })->name('add');
-
-            Route::get('/edit', function () {
-                return view('admin.catalogue.edit');
-            })->name('edit');
+        Route::prefix('catalogues')->as('catalogues.')->group(function(){
+        Route::get('/',[CatalogueController::class,'index'])->name('index');
+        Route::get('/add',[CatalogueController::class,'create'])->name('add');
+        Route::post('/store',[CatalogueController::class,'store'])->name('store');
+        Route::get('/edit/{id}',[CatalogueController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[CatalogueController::class,'update'])->name('update');
+        Route::delete('/delete/{id}',[CatalogueController::class,'destroy'])->name('destroy');
         });
 
         Route::prefix('orders')->as('orders.')->group(function () {
@@ -155,6 +150,5 @@ Route::prefix('admin')
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
         // Route::get('logout', [AdminAuthController::class,'logout'])->name('repass');
     });
-// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
