@@ -7,7 +7,7 @@ use PhpParser\Node\Expr\FuncCall;
 
 class UserController extends Controller
 {
-    public function LoginOrRegiter(){
+    public function     LoginOrRegiter(){
         return view('Clients.account.signin');
     }
     public function profile(){

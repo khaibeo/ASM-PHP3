@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -33,6 +33,7 @@ Route::get('/user/repass',[UserController::class,'repass'])->name('user.repass')
 Route::get('/order',[UserController::class,'orderlist'])->name('user.order');
 Route::get('/help',[UserController::class,'help'])->name('user.help');
 Route::get('/voucher',[VoucherController::class,'list'])->name('voucher.list');
+Route::post('/save-voucher/{id}',[VoucherController::class,'saveVoucher'])->name('save.voucher');
 
 Route::prefix('admin')
     ->as('admin.')
@@ -110,17 +111,12 @@ Route::prefix('admin')
     });
 
     Route::prefix('vouchers')->as('vouchers.')->group(function(){
-        Route::get('/', function(){
-            return view('admin.voucher.index');
-        })->name('index');
-
-        Route::get('/add',function(){
-            return view('admin.voucher.add');
-        })->name('add');
-
-        Route::get('/edit',function(){
-            return view('admin.voucher.edit');
-        })->name('edit');
+        Route::get('/index', [VoucherController::class,'list'])->name('index');
+        Route::get('/add', [VoucherController::class,'add'])->name('add');
+        Route::post('/add', [VoucherController::class,'insert']);
+        Route::get('/edit/{id}', [VoucherController::class,'edit'])->name('edit');
+        Route::post('/edit/{id}', [VoucherController::class,'update']);
+        Route::get('/delete/{id}', [VoucherController::class,'delete'])->name('delete');
     });
 
     Route::prefix('banners')->as('banners.')->group(function(){

@@ -7,6 +7,7 @@
 @section('content')
 <div class="container-fluid">
 
+    
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -25,81 +26,110 @@
     </div>
     <!-- end page title -->
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="project-title-input">Tên mã giảm giá</label>
-                        <input type="text" class="form-control" id="project-title-input">
-                    </div>
+    <form action="{{ route('admin.vouchers.edit', $voucher->id) }}" method="POST">
+        @csrf
+        @method('POST')
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="project-title-input">Tên mã giảm giá</label>
+                            <input type="text" name="name" value="{{ old('name', $voucher->name) }}" class="form-control" id="project-title-input">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="project-title-input">Mô tả</label>
-                        <input type="text" class="form-control" id="project-title-input">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="project-title-input">Mô tả</label>
+                            <input type="text" name="description" value="{{ old('description', $voucher->description) }}" class="form-control" id="project-title-input">
+                            @error('description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="project-title-input">Mã code</label>
-                        <input type="text" class="form-control" id="project-title-input">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="project-title-input">Mã code</label>
+                            <input type="text" name="code" value="{{ old('code', $voucher->code) }}" class="form-control" id="project-title-input">
+                            @error('code')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="mb-3 mb-lg-0">
-                                <label for="choices-priority-input" class="form-label">Loại giảm giá</label>
-                                <select class="form-select">
-                                    <option value="0" selected>Theo phần trăm</option>
-                                    <option value="1">Giảm giá trực tiếp</option>
-                                </select>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="mb-3 mb-lg-0">
+                                    <label for="choices-priority-input" class="form-label">Loại giảm giá</label>
+                                    <select class="form-select" name="discount_type">
+                                        <option value="0" {{ old('discount_type', $voucher->discount_type) == 0 ? 'selected' : '' }}>Số lượng</option>
+                                        <option value="1" {{ old('discount_type', $voucher->discount_type) == 1 ? 'selected' : '' }}>Phần trăm</option>
+                                    </select>
+                                    @error('discount_type')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3 mb-lg-0">
+                                    <label for="choices-status-input" class="form-label">Giá trị giảm</label>
+                                    <input type="number" name="discount_value" value="{{ old('discount_value', $voucher->discount_value) }}" class="form-control">
+                                    @error('discount_value')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div>
+                                    <label for="datepicker-deadline-input" class="form-label">Số lượng</label>
+                                    <input type="number" name="quantity" value="{{ old('quantity', $voucher->quantity) }}" class="form-control">
+                                    @error('quantity')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="mb-3 mb-lg-0">
-                                <label for="choices-status-input" class="form-label">Giá trị giảm</label>
-                                <input type="number" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div>
-                                <label for="datepicker-deadline-input" class="form-label">Số lượng</label>
-                                <input type="number" class="form-control">
-                            </div>
-                        </div>
                     </div>
+                    <!-- end card body -->
                 </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
+                <!-- end card -->
 
-            <div class="text-end mb-4">
-                <button type="submit" class="btn btn-danger w-sm">Quay lại</button>
-                <button type="submit" class="btn btn-success w-sm">Sửa</button>
+                <div class="text-end mb-4">
+                    <a href="{{ route('admin.vouchers.index') }}" class="btn btn-danger w-sm">Quay lại</a>
+                    <button type="submit" class="btn btn-success w-sm">Cập nhật</button>
+                </div>
             </div>
+            <!-- end col -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Thời gian</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="choices-categories-input" class="form-label">Thời gian bắt đầu</label>
+                            <input class="form-control" name="valid_from" value="{{ old('valid_from', $voucher->valid_from) }}" id="choices-text-input" type="date" />
+                            @error('valid_from')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="choices-text-input" class="form-label">Thời gian kết thúc</label>
+                            <input class="form-control" name="valid_until" value="{{ old('valid_until', $voucher->valid_until) }}" id="choices-text-input" type="date" />
+                            @error('valid_until')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
         </div>
-        <!-- end col -->
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Thời gian</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="choices-categories-input" class="form-label">Thời gian bắt đầu</label>
-                        <input class="form-control" id="choices-text-input" type="date" />
-                    </div>
-
-                    <div>
-                        <label for="choices-text-input" class="form-label">Thời gian kết thúc</label>
-                        <input class="form-control" id="choices-text-input" type="date" />
-                    </div>
-                </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-        </div>
-        <!-- end col -->
-    </div>
+    </form>
     <!-- end row -->
 
 </div>
