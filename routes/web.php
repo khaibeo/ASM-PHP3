@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
+use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -56,17 +57,15 @@ Route::prefix('admin')
         })->name('dashboard');
 
         Route::prefix('products')->as('products.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.product.index');
-            })->name('index');
+            Route::get('/', [AdminProductController::class,'index'])->name('index');
 
-            Route::get('/add', function () {
-                return view('admin.product.add');
-            })->name('add');
+            Route::get('/add', [AdminProductController::class,'add'])->name('add');
+            Route::post('/add', [AdminProductController::class,'store'])->name('store');
 
-            Route::get('/edit', function () {
-                return view('admin.product.edit');
-            })->name('edit');
+            Route::get('/{id}', [AdminProductController::class,'edit'])->name('edit');
+            Route::put('/{id}', [AdminProductController::class, 'update'])->name('update');
+
+            Route::delete('/{id}',[AdminProductController::class,'destroy'])->name('destroy');
 
             Route::get('/variant', function () {
                 return view('admin.product.variant');

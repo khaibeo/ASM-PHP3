@@ -24,37 +24,58 @@
             </div>
         </div>
         <!-- end page title -->
-
-        <form id="createproduct-form" autocomplete="off" class="needs-validation" novalidate>
+        @if ($errors->any())
+            <div class="alert alert-danger">Đã có lỗi nhập liệu. Vui lòng kiểm tra lại !</div>
+        @endif
+       
+        <form id="createproduct-form" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Thông tin chunng</h5>
+                        </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label" for="product-title-input">Tên sản phẩm</label>
-                                <input type="text" class="form-control" id="product-title-input" value="">
+                                <label class="form-label" for="name">Tên sản phẩm</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
+                                @error('name')
+                                    <span class="d-block text-danger mt-2">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="product-title-input">SKU</label>
-                                <input type="text" class="form-control" id="product-title-input" value="">
+                                <label class="form-label" for="sku">SKU</label>
+                                <input type="text" class="form-control" id="sku" name="sku" value="{{old('sku')}}">
+                                @error('sku')
+                                    <span class="d-block text-danger mt-2">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="product-title-input">Slug</label>
-                                <input type="text" class="form-control" id="product-title-input" value="">
+                                <label class="form-label" for="slug">Slug</label>
+                                <input type="text" class="form-control" id="slug" name="slug" value="{{old('slug')}}">
+                                @error('slug')
+                                    <span class="d-block text-danger mt-2">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="product-title-input">Giá gốc</label>
-                                <input type="text" class="form-control" id="product-title-input" value="">
+                                <label class="form-label" for="regular_price">Giá gốc</label>
+                                <input type="number" class="form-control" id="regular_price" name="regular_price" value="{{old('regular_price')}}">
+                                @error('regular_price')
+                                    <span class="d-block text-danger mt-2">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="product-title-input">Giá sale</label>
-                                <input type="text" class="form-control" id="product-title-input" value="">
+                                <label class="form-label" for="sale_price">Giá sale</label>
+                                <input type="number" class="form-control" id="sale_price" name="sale_price" value="{{old('sale_price')}}">
+                                @error('sale_price')
+                                    <span class="d-block text-danger mt-2">{{$message}}</span>
+                                @enderror
                             </div>
                             <div>
                                 <label>Mô tả sản phẩm</label>
 
-                                <div id="ckeditor-classic">
-                                </div>
+                                <textarea id="ckeditor-classic" name="description">{{old('description')}}
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -62,85 +83,63 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Ảnh sản phẩm</h5>
+                            <h5 class="card-title mb-0">Biến thể sản phẩm</h5>
                         </div>
                         <div class="card-body">
-                            <div class="mb-4">
-                                <h5 class="fs-14 mb-1">Ảnh đại diện</h5>
-                                <p class="text-muted">Thêm ảnh đại diện</p>
-                                <div class="text-center">
-                                    <div class="position-relative d-inline-block">
-                                        <div class="position-absolute top-100 start-100 translate-middle">
-                                            <label for="product-image-input" class="mb-0" data-bs-toggle="tooltip"
-                                                data-bs-placement="right" title="Select Image">
-                                                <div class="avatar-xs">
-                                                    <div
-                                                        class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
-                                                        <i class="ri-image-fill"></i>
-                                                    </div>
+                            <div class="container">
+                                <div id="productForm">
+                                    <div id="variants">
+                                        <div class="variant">
+                                            <h4 class="fs-5">Biến thể 1</h4>
+                                            <div class="row mb-3">
+                                                <div class="form-group col-4">
+                                                    <label>Giá thường:</label>
+                                                    <input type="number" class="form-control" name="variants[0][regular_price]"
+                                                        step="0.01" value="{{old('variants.0.regular_price')}}" required>
                                                 </div>
-                                            </label>
-                                            <input class="form-control d-none" value="" id="product-image-input"
-                                                type="file" accept="image/png, image/gif, image/jpeg">
-                                        </div>
-                                        <div class="avatar-lg">
-                                            <div class="avatar-title bg-light rounded">
-                                                <img src="" id="product-img" class="avatar-md h-auto" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h5 class="fs-14 mb-1">Bộ sưu tập ảnh</h5>
-                                <p class="text-muted">Chọn nhiều ảnh.</p>
-
-                                <div class="dropzone">
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple="multiple">
-                                    </div>
-                                    <div class="dz-message needsclick">
-                                        <div class="mb-3">
-                                            <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
-                                        </div>
-
-                                        <h5>Thả ảnh vào đây hoặc click để tải lên</h5>
-                                    </div>
-                                </div>
-
-                                <ul class="list-unstyled mb-0" id="dropzone-preview">
-                                    <li class="mt-2" id="dropzone-preview-list">
-                                        <!-- This is used as the file preview template -->
-                                        <div class="border rounded">
-                                            <div class="d-flex p-2">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar-sm bg-light rounded">
-                                                        <img data-dz-thumbnail class="img-fluid rounded d-block"
-                                                            src="#" alt="Product-Image" />
-                                                    </div>
+                                                <div class="form-group col-4">
+                                                    <label>Giá sale:</label>
+                                                    <input type="number" class="form-control"
+                                                        name="variants[0][sale_price]" step="0.01" value="{{old('variants.0.sale_price')}}">
                                                 </div>
-                                                <div class="flex-grow-1">
-                                                    <div class="pt-1">
-                                                        <h5 class="fs-14 mb-1" data-dz-name>&nbsp;</h5>
-                                                        <p class="fs-13 text-muted mb-0" data-dz-size></p>
-                                                        <strong class="error text-danger" data-dz-errormessage></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-shrink-0 ms-3">
-                                                    <button data-dz-remove class="btn btn-sm btn-danger">Delete</button>
+                                                <div class="form-group col-4">
+                                                    <label>Số lượng:</label>
+                                                    <input type="number" class="form-control" name="variants[0][stock]" value="{{old('variants.0.stock')}}" required>
                                                 </div>
                                             </div>
+
+                                            <div class="attributes mb-3">
+                                                <div class="row mb-3">
+                                                    <label>Thuộc tính:</label>
+                                                    <div class="form-group col-4">
+                                                        <input type="text" class="form-control col-4"
+                                                            name="variants[0][attributes][0][name]"
+                                                            placeholder="Tên thuộc tính" value="{{old('variants.0.attributes.0.name')}}" required>
+                                                    </div>
+
+                                                    <div class="form-group col-4">
+                                                        <input type="text" class="form-control col-4"
+                                                            name="variants[0][attributes][0][value]"
+                                                            placeholder="Giá trị thuộc tính" value="{{old('variants.0.attributes.0.value')}}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-secondary add-attribute">Thêm thuộc
+                                                tính</button>
+                                                <hr>
                                         </div>
-                                    </li>
-                                </ul>
-                                <!-- end dropzon-preview -->
+                                    </div>
+                                    <button type="button" class="btn btn-secondary mt-3" id="addVariant">Thêm biến
+                                        thể</button>
+                                </div>
                             </div>
                         </div>
+                        <!-- end card body -->
                     </div>
                     <!-- end card -->
 
                     <div class="text-end mb-3">
-                        <button type="submit" class="btn btn-success w-sm">Thêm</button>
+                        <button type="submit" class="btn btn-success w-sm">Lưu sản phẩm</button>
                     </div>
                 </div>
                 <!-- end col -->
@@ -151,16 +150,10 @@
                             <h5 class="card-title mb-0">Danh mục sản phẩm</h5>
                         </div>
                         <div class="card-body">
-                            <select class="form-select" id="choices-category-input" name="choices-category-input"
-                                data-choices data-choices-search-false>
-                                <option value="Appliances">Appliances</option>
-                                <option value="Automotive Accessories">Automotive Accessories</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Fashion">Fashion</option>
-                                <option value="Furniture">Furniture</option>
-                                <option value="Grocery">Grocery</option>
-                                <option value="Kids">Kids</option>
-                                <option value="Watches">Watches</option>
+                            <select class="form-select" id="catalogue_id" name="catalogue_id">
+                                <option value="1">Danh mục 1</option>
+                                <option value="2">Danh mục 2</option>
+                                <option value="3">Danh mục 3</option>
                             </select>
                         </div>
                         <!-- end card body -->
@@ -173,21 +166,19 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="choices-publish-status-input" class="form-label">Trạng thái hoạt động</label>
+                                <label for="is_active" class="form-label">Trạng thái hoạt động</label>
 
-                                <select class="form-select" id="choices-publish-status-input" data-choices
-                                    data-choices-search-false>
-                                    <option value="Published" selected>Xuất bản</option>
-                                    <option value="Draft">Bản nháp</option>
+                                <select class="form-select" id="is_active" name="is_active">
+                                    <option value="0" {{ old('is_active') == 0 ? 'selected' : '' }}>Bản nháp</option>
+                                    <option value="1" {{ old('is_active', 1) == 1 ? 'selected' : '' }}>Xuất bản</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label for="choices-publish-visibility-input" class="form-label">Đánh dấu nổi bật</label>
-                                <select class="form-select" id="choices-publish-visibility-input" data-choices
-                                    data-choices-search-false>
-                                    <option value="Public" >Có</option>
-                                    <option value="Hidden" selected>Không</option>
+                                <label for="is_featured" class="form-label">Đánh dấu nổi bật</label>
+                                <select class="form-select" id="is_featured" name="is_featured">
+                                    <option value="0" {{ old('is_featured', 0) == 0 ? 'selected' : '' }}>Không</option>
+                                    <option value="1" {{ old('is_featured') == 1 ? 'selected' : '' }}>Có</option>
                                 </select>
                             </div>
                         </div>
@@ -201,20 +192,63 @@
                             <h5 class="card-title mb-0">Mô tả ngắn</h5>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted mb-2">Viết một vài câu mô tả ngắn cho sản phẩm</p>
-                            <textarea class="form-control"  rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="short_description">{{old('description')}}</textarea>
                         </div>
                         <!-- end card body -->
                     </div>
                     <!-- end card -->
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Ảnh sản phẩm</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h5 class="fs-14 mb-1">Ảnh đại diện</h5>
+                                <p class="text-muted mb-1">Thêm ảnh đại diện</p>
+                                @error('thumbnail')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <div class="text-center">
+                                    <div class="position-relative d-inline-block">
+                                        <div class="position-absolute top-100 start-100 translate-middle">
+                                            <label for="product-image-input" class="mb-0" data-bs-toggle="tooltip"
+                                                data-bs-placement="right" title="Select Image">
+                                                <div class="avatar-xs">
+                                                    <div
+                                                        class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                                        <i class="ri-image-fill"></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <input class="form-control d-none" value="{{old('name')}}" id="product-image-input"
+                                                type="file" name="thumbnail" accept="image/png, image/gif, image/jpeg, imgae/jpg">
+                                        </div>
+                                        <div class="avatar-lg">
+                                            <div class="avatar-title bg-light rounded">
+                                                <img src="" id="product-img" class="avatar-md h-auto" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fs-14 mb-1">Bộ sưu tập ảnh</h5>
+                                <p class="text-muted">Chọn nhiều ảnh.</p>
+
+                                <div>
+                                    <input name="product_galleries[]" class="form-control" type="file" multiple="multiple" accept="image/png, image/gif, image/jpeg, imgae/jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card -->
                 </div>
                 <!-- end col -->
             </div>
             <!-- end row -->
-
+            @csrf
         </form>
-
     </div>
     <!-- container-fluid -->
 @endsection
@@ -232,4 +266,78 @@
     <script src="{{ asset('administrator/assets/libs/dropzone/dropzone-min.js') }}"></script>
 
     <script src="{{ asset('administrator/assets/js/pages/ecommerce-product-create.init.js') }}"></script>
+
+    <script>
+        let variantCount = 1;
+
+        document.getElementById('addVariant').addEventListener('click', function() {
+            const variantsContainer = document.getElementById('variants');
+            const newVariant = document.createElement('div');
+            newVariant.className = 'variant mt-4';
+            newVariant.innerHTML = `
+                <h4 class="fs-5">Biến thể ${++variantCount}</h4>
+                <div class="row mb-3">
+                    <div class="form-group col-4">
+                        <label>Giá thường:</label>
+                        <input type="number" class="form-control" name="variants[${variantCount-1}][regular_price]" step="0.01" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Giá sale:</label>
+                        <input type="number" class="form-control" name="variants[${variantCount-1}][sale_price]" step="0.01">
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Số lượng:</label>
+                        <input type="number" class="form-control" name="variants[${variantCount-1}][stock]" required>
+                    </div>
+                </div>
+                                            
+                <div class="attributes mb-3">
+                    <label>Thuộc tính:</label>
+                    <div class="row mb-3">
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control col-4" name="variants[${variantCount-1}][attributes][0][name]" placeholder="Tên thuộc tính" required>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control col-4" name="variants[${variantCount-1}][attributes][0][value]" placeholder="Giá trị thuộc tính" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary add-attribute">Thêm thuộc tính</button>
+                <hr>
+            `;
+            variantsContainer.appendChild(newVariant);
+            addAttributeListeners();
+        });
+
+        function addAttributeListeners() {
+            document.querySelectorAll('.add-attribute').forEach(button => {
+                button.addEventListener('click', function() {
+                    const attributesContainer = this.previousElementSibling;
+                    const attributeCount = attributesContainer.children.length;
+                    const variantIndex = this.closest('.variant').querySelector('input[name$="[stock]"]')
+                        .name.match(/\d+/)[0];
+                    const newAttribute = document.createElement('div');
+                    newAttribute.className = 'row mb-3';
+                    newAttribute.innerHTML = `
+                        <label>Thuộc tính:</label>
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control col-4"
+                                name="variants[${variantIndex}][attributes][${attributeCount}][name]"
+                                placeholder="Tên thuộc tính" required>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control col-4"
+                                name="variants[${variantIndex}][attributes][${attributeCount}][value]"
+                                placeholder="Giá trị thuộc tính" required>
+                        </div>
+                    `;
+                    attributesContainer.appendChild(newAttribute);
+                });
+            });
+        }
+
+        addAttributeListeners();
+    </script>
 @endsection
