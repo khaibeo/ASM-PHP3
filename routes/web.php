@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -92,6 +94,26 @@ Route::prefix('admin')
         Route::put('/update/{id}',[CatalogueController::class,'update'])->name('update');
         Route::delete('/delete/{id}',[CatalogueController::class,'destroy'])->name('destroy');
         });
+      
+      Route::prefix('users')->as('users.')->group(function(){
+        // Route::get('/', function(){
+        //     return view('admin.user.index');
+        // })->name('index');
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
+
+        Route::get('/add',function(){
+            return view('admin.user.add');
+        })->name('add');
+
+        Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
+        // Route::get('/edit',function(){
+        //     return view('admin.user.edit');
+        // })->name('edit');
+
+        Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
+    });
 
         Route::prefix('orders')->as('orders.')->group(function () {
             Route::get('/', function () {
@@ -101,20 +123,6 @@ Route::prefix('admin')
             Route::get('/detail', function () {
                 return view('admin.order.detail');
             })->name('detail');
-        });
-
-        Route::prefix('users')->as('users.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.user.index');
-            })->name('index');
-
-            Route::get('/add', function () {
-                return view('admin.user.add');
-            })->name('add');
-
-            Route::get('/edit', function () {
-                return view('admin.user.edit');
-            })->name('edit');
         });
 
         Route::prefix('vouchers')->as('vouchers.')->group(function () {
