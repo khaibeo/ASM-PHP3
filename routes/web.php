@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 
 /*
@@ -59,15 +61,15 @@ Route::prefix('admin')
         })->name('dashboard');
 
         Route::prefix('products')->as('products.')->group(function () {
-            Route::get('/', [AdminProductController::class,'index'])->name('index');
+            Route::get('/', [AdminProductController::class, 'index'])->name('index');
 
-            Route::get('/add', [AdminProductController::class,'add'])->name('add');
-            Route::post('/add', [AdminProductController::class,'store'])->name('store');
+            Route::get('/add', [AdminProductController::class, 'add'])->name('add');
+            Route::post('/add', [AdminProductController::class, 'store'])->name('store');
 
-            Route::get('/{id}', [AdminProductController::class,'edit'])->name('edit');
+            Route::get('/{id}', [AdminProductController::class, 'edit'])->name('edit');
             Route::put('/{id}', [AdminProductController::class, 'update'])->name('update');
 
-            Route::delete('/{id}',[AdminProductController::class,'destroy'])->name('destroy');
+            Route::delete('/{id}', [AdminProductController::class, 'destroy'])->name('destroy');
 
             Route::get('/variant', function () {
                 return view('admin.product.variant');
@@ -86,34 +88,34 @@ Route::prefix('admin')
             })->name('edit_size');
         });
 
-        Route::prefix('catalogues')->as('catalogues.')->group(function(){
-        Route::get('/',[CatalogueController::class,'index'])->name('index');
-        Route::get('/add',[CatalogueController::class,'create'])->name('add');
-        Route::post('/store',[CatalogueController::class,'store'])->name('store');
-        Route::get('/edit/{id}',[CatalogueController::class,'edit'])->name('edit');
-        Route::put('/update/{id}',[CatalogueController::class,'update'])->name('update');
-        Route::delete('/delete/{id}',[CatalogueController::class,'destroy'])->name('destroy');
+        Route::prefix('catalogues')->as('catalogues.')->group(function () {
+            Route::get('/', [CatalogueController::class, 'index'])->name('index');
+            Route::get('/add', [CatalogueController::class, 'create'])->name('add');
+            Route::post('/store', [CatalogueController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [CatalogueController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [CatalogueController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [CatalogueController::class, 'destroy'])->name('destroy');
         });
-      
-      Route::prefix('users')->as('users.')->group(function(){
-        // Route::get('/', function(){
-        //     return view('admin.user.index');
-        // })->name('index');
-        Route::get('/', [AdminUserController::class, 'index'])->name('index');
 
-        Route::get('/add',function(){
-            return view('admin.user.add');
-        })->name('add');
+        Route::prefix('users')->as('users.')->group(function () {
+            // Route::get('/', function(){
+            //     return view('admin.user.index');
+            // })->name('index');
+            Route::get('/', [AdminUserController::class, 'index'])->name('index');
 
-        Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
-        // Route::get('/edit',function(){
-        //     return view('admin.user.edit');
-        // })->name('edit');
+            Route::get('/add', function () {
+                return view('admin.user.add');
+            })->name('add');
 
-        Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
-    });
+            Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
+            // Route::get('/edit',function(){
+            //     return view('admin.user.edit');
+            // })->name('edit');
+
+            Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
+            Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('orders')->as('orders.')->group(function () {
             Route::get('/', function () {
@@ -158,5 +160,3 @@ Route::prefix('admin')
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
         // Route::get('logout', [AdminAuthController::class,'logout'])->name('repass');
     });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
