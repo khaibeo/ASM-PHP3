@@ -121,7 +121,7 @@
                                         <div class="col-lg-12">
                                             <div class="hstack gap-2 justify-content-end">
                                                 <button type="submit" class="btn btn-primary">Sửa</button>
-                                                <button type="button" class="btn btn-soft-success">Quay lại</button>
+                                                <a href="{{route('admin.users.index')}}" type="submit" class="btn btn-danger w-sm">Quay lại</a>
                                             </div>
                                         </div>
                                         <!--end col-->

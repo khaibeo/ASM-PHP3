@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
 
 
 /*
@@ -40,7 +41,8 @@ Route::get('/profile', [UserController::class, 'profile'])->name('user.profile')
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
 Route::get('/order', [UserController::class, 'orderlist'])->name('user.order');
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
-Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
+Route::get('/voucher',[VoucherController::class,'list'])->name('voucher.list');
+Route::post('/save-voucher/{id}',[VoucherController::class,'saveVoucher'])->name('save.voucher');
 
 Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'showFormAuth'])->name('index');
@@ -127,18 +129,13 @@ Route::prefix('admin')
             })->name('detail');
         });
 
-        Route::prefix('vouchers')->as('vouchers.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.voucher.index');
-            })->name('index');
-
-            Route::get('/add', function () {
-                return view('admin.voucher.add');
-            })->name('add');
-
-            Route::get('/edit', function () {
-                return view('admin.voucher.edit');
-            })->name('edit');
+        Route::prefix('vouchers')->as('vouchers.')->group(function(){
+            Route::get('/index', [AdminVoucherController::class,'list'])->name('index');
+            Route::get('/add', [AdminVoucherController::class,'add'])->name('add');
+            Route::post('/add', [AdminVoucherController::class,'insert']);
+            Route::get('/edit/{id}', [AdminVoucherController::class,'edit'])->name('edit');
+            Route::post('/edit/{id}', [AdminVoucherController::class,'update']);
+            Route::get('/delete/{id}', [AdminVoucherController::class,'delete'])->name('delete');
         });
 
         Route::prefix('banners')->as('banners.')->group(function () {

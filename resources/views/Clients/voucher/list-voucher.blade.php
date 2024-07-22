@@ -9,57 +9,41 @@ Voucher
 <main class="bg_gray">
     <div class="container">
         <div class="page">
-           <img src="https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lxjiss9i08uxf4@resize_w960_nl.webp" width="100%" alt="">
+           <img src="https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lxhqyunswpnfbd@resize_w1920_nl.webp" width="100%" alt="">
            <h1>Danh Sách VouCher</h1>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="voucher-item">
-                    <div class="voucher-details">
-                        <h3>Giảm giá 20k</h3>
-                        <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
-                        <p>Có hiệu lức từ ngày 15/7</p>
-                    </div>
-                    <div class="voucher-actions">
-                        <button class="save-button">Lưu</button>
-                    </div>
-                </div>
-                <div class="voucher-item">
-                    <div class="voucher-details">
-                        <h3>Giảm giá 10%</h3>
-                        <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
-                        <p>Có hiệu lức từ ngày 15/7</p>
-                    </div>
-                    <div class="voucher-actions">
-                        <button class="save-button">Lưu</button>
+            @foreach ($vouchers as $voucher)
+                <div class="col-md-4">
+                    <div class="voucher-item">
+                        <div class="voucher-details">
+                            <h3>{{ $voucher->name }}</h3>
+                            <p> {{ Str::limit($voucher->description, 50) }}</p>
+                            <p>Có hiệu lực từ ngày {{ $voucher->valid_from }}</p>
+                        </div>
+                        <div class="voucher-actions">
+                            <form method="POST" action="{{ route('save.voucher', $voucher->id) }}">
+                                @csrf
+                                <button type="submit" class="save-button">Lưu</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="voucher-item">
-                    <div class="voucher-details">
-                        <h3>Giảm giá 30k</h3>
-                        <p>Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.</p>
-                        <p>Có hiệu lức từ ngày 15/7</p>
-                    </div>
-                    <div class="voucher-actions">
-                        <button class="save-button">Lưu</button>
-                    </div>
-                </div>
-                <div class="voucher-item">
-                    <div class="voucher-details">
-                        <h3>Giảm 20%</h3>
-                        <p>Mỗi tài khoản chỉ được sử dụng một lần duy nhất. Mã giảm giá phát hành bởi Người bán và sẽ không được hoàn lại với bất kỳ lý do nào..</p>
-                        <p>Có hiệu lức từ ngày 15/7</p>
-                    </div>
-                    <div class="voucher-actions">
-                        <button class="save-button">Lưu</button>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
-		
-	</main>
-	<!--/main-->
-    @endsection
+</main>
+
+@if(session('success'))
+    <script>
+        alert('{{ session('success') }}');
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert('{{ session('error') }}');
+    </script>
+@endif
+
+@endsection
