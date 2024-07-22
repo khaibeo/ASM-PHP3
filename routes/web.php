@@ -32,7 +32,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('home.about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blog');
 Route::get('/Product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/Product-detail', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
 Route::get('/Cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/Checkout', [CartController::class, 'checkout'])->name('cart.checkout');
@@ -56,7 +56,7 @@ Route::prefix('auth')->as('auth.')->group(function () {
 
 Route::prefix('admin')
     ->as('admin.')
-    ->middleware(['auth', 'admin'])
+    // ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/', function () {
             return view("admin.dashboard");
