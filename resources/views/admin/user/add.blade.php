@@ -84,8 +84,8 @@
                     <!-- end card -->
 
                     <div class="text-end mb-4">
-                        <button type="submit" class="btn btn-danger w-sm">Quay lại</button>
                         <button type="submit" class="btn btn-success w-sm">Tạo</button>
+                        <a href="{{route('admin.users.index')}}" type="submit" class="btn btn-danger w-sm">Quay lại</a>
                     </div>
                 </div>
                 <!-- end col -->
