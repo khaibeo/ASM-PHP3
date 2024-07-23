@@ -34,8 +34,11 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('home.blog');
 Route::get('/Product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
-Route::get('/Cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/Checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
@@ -157,3 +160,5 @@ Route::prefix('admin')
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
         // Route::get('logout', [AdminAuthController::class,'logout'])->name('repass');
     });
+
+
