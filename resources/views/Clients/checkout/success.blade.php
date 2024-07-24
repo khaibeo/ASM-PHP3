@@ -19,8 +19,13 @@ Thanh toán
                             </g>
                         </svg>
                     </div>
-                <h2>Order completed!</h2>
-                <p>You will receive a confirmation email soon!</p>
+                <h2>Đơn hàng đã hoàn tất!</h2>
+                <p>Bạn sẽ sớm nhận được email thông tin đơn hàng!</p>
+
+                <div>
+                    <a class="btn btn-primary mx-2" href="{{route('home.index')}}">Trang chủ</a>
+                    <a class="btn btn-success mx-2" href="#">Đơn hàng</a>
+                </div>
                 </div>
             </div>
         </div>

@@ -103,7 +103,12 @@
             </div>
         </div>
     @else
-        <p>Giỏ hàng của bạn đang trống.</p>
+        <div class="d-flex justify-content-center align-items-center py-5">
+            <div class="py-5 text-center">
+                <p class="fs-6">Giỏ hàng của bạn đang trống.</p>
+                <a href="#" class="btn btn-primary">Xem sản phẩm</a>
+            </div>
+        </div>
         @endif
         <!-- /box_cart -->
 

@@ -11,6 +11,8 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Voucher;
+use App\Notifications\OrderNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CheckoutController extends Controller
 {
@@ -71,15 +73,21 @@ class CheckoutController extends Controller
                     'product_regular_price' => $item->variant->regular_price,
                 ]);
 
-                // Giảm số lượng tồn kho
+                // Giảm số lượng sản phẩm của biến thể
                 $item->variant->decrement('stock', $item->quantity);
             }
 
-            // Xóa giỏ hàng sau khi đặt hàng thành công
-            // $cart->items()->delete();
-            // $cart->delete();
+            // Xóa sản phẩm khỏi giỏ sau khi đặt hàng thành công
+            $cart->items()->delete();
+
+            if($request->voucher){
+                Voucher::query()->find($request->voucher)->decrement('quantity',1);
+            }
 
             DB::commit();
+
+            //Gửi mail
+            Notification::send(auth()->user(), new OrderNotification($order));
 
             return redirect()->route('checkout.success', ['order' => $order->id]);
         } catch (\Exception $e) {
