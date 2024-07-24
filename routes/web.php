@@ -14,6 +14,7 @@ use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
+use App\Http\Controllers\User\CheckoutController;
 
 
 /*
@@ -35,10 +36,14 @@ Route::get('/Product', [ProductController::class, 'index'])->name('product.index
 Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::post('/checkout/voucher', [CheckoutController::class, 'checkVoucher'])->name('checkVoucher');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');

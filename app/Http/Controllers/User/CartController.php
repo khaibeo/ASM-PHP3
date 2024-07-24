@@ -34,10 +34,6 @@ class CartController extends Controller
         return view('Clients.cart.cart',compact('cartItems', 'total'));
     }
 
-    public function checkout(){
-        return view('Clients.cart.checkout');
-    }
-
     public function add(Request $request)
     {
         $request->validate([

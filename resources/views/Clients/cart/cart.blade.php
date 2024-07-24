@@ -22,6 +22,10 @@
             @session('success')
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endsession
+
+            @session('error')
+                <div class="alert alert-success">{{ session('error') }}</div>
+            @endsession
             <!-- /page_header -->
             @if ($cartItems->count() > 0)
                 <table class="table table-striped cart-list">
@@ -38,13 +42,15 @@
                         @foreach ($cartItems as $item)
                             <tr id="cart-item-{{ $item->id }}" data-item-id="{{ $item->id }}">
                                 <td>
+                                    <a class="text-dark" href="{{ route('product.detail', $item->variant->product->slug) }}">
                                     <div class="thumb_cart">
                                         <img src="{{ \Storage::url($item->variant->product->thumbnail) }}"
                                             data-src="{{ \Storage::url($item->variant->product->thumbnail) }}"
                                             class="lazy" alt="Image">
                                     </div>
-                                    <span class="item_cart fs-6">{{ $item->variant->product->name }}</span>
+                                    <span class="item_cart fs-6 text-decoration-underline">{{ $item->variant->product->name }}</span>
                                     <span class="item_cart mt-2">{{ $item->variantAttributes }}</span>
+                                    </a>
                                 </td>
                                 <td>
                                     @if ($item->variant->sale_price)
@@ -91,7 +97,7 @@
                                 <span>Thành tiền</span> <strong id="cart-total">{{ number_format($total) . 'đ' }}</strong>
                             </li>
                         </ul>
-                        <a href="{{ route('cart.checkout') }}" class="btn_1 full-width cart">Mua hàng</a>
+                        <a href="{{ route('checkout.index') }}" class="btn_1 full-width cart">Mua hàng</a>
                     </div>
                 </div>
             </div>
