@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Voucher;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -47,6 +48,8 @@ class CheckoutController extends Controller
 
         try {
             $cart = Cart::where('user_id', auth()->id())->with('items.variant.product')->firstOrFail();
+
+            $defaultStatus = $request->payment_method == 1 ? 'unpaid' : 'pending';
             
             $order = Order::create([
                 'user_id' => auth()->id(),
@@ -56,7 +59,7 @@ class CheckoutController extends Controller
                 'address' => $request->address,
                 'note' => $request->note,
                 'payment_method' => $request->payment_method,
-                'order_status' => 'pending',
+                'order_status' => $defaultStatus,
                 'total_product_price' => $request->totalProduct,
                 'discount_amount' => $request->discountedValue ?? 0,
                 'total_amount' => $request->totalbill,
@@ -86,8 +89,16 @@ class CheckoutController extends Controller
 
             DB::commit();
 
+            if($request->payment_method == 1){
+                Session::put('total', $request->totalbill);
+                Session::put('orderId', $order->id);
+                Session::put('redirect', true);
+
+                return redirect()->route('payment');
+            }
+
             //Gửi mail
-            Notification::send(auth()->user(), new OrderNotification($order));
+            Notification::route('mail', $request->email)->notify(new OrderNotification($order));
 
             return redirect()->route('checkout.success', ['order' => $order->id]);
         } catch (\Exception $e) {

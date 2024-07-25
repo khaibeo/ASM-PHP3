@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductController;
@@ -10,8 +11,6 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\VoucherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Middleware\Admin;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
 use App\Http\Controllers\User\CheckoutController;
@@ -44,6 +43,9 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.in
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
 Route::post('/checkout/voucher', [CheckoutController::class, 'checkVoucher'])->name('checkVoucher');
+Route::get('/vnpay_payment',[PaymentController::class,'vnpayPayment'])->name('payment');
+Route::get('/check_payment',[PaymentController::class,'checkPayment'])->name('payment.check');
+Route::get('/payment-fail/{id}',[PaymentController::class,'showError'])->name('payment.fail');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
