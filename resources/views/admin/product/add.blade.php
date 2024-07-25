@@ -151,9 +151,9 @@
                         </div>
                         <div class="card-body">
                             <select class="form-select" id="catalogue_id" name="catalogue_id">
-                                <option value="1">Danh mục 1</option>
-                                <option value="2">Danh mục 2</option>
-                                <option value="3">Danh mục 3</option>
+                                @forEach($catalogues as $ct)
+                                <option value="{{$ct->id}}" {{ old('catalogue_id') == $ct->id ? 'selected' : '' }}>{{$ct->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <!-- end card body -->

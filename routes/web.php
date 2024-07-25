@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\User\CartController;
@@ -41,8 +42,8 @@ Route::get('/profile', [UserController::class, 'profile'])->name('user.profile')
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
 Route::get('/order', [UserController::class, 'orderlist'])->name('user.order');
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
-Route::get('/voucher',[VoucherController::class,'list'])->name('voucher.list');
-Route::post('/save-voucher/{id}',[VoucherController::class,'saveVoucher'])->name('save.voucher');
+Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
+Route::post('/save-voucher/{id}', [VoucherController::class, 'saveVoucher'])->name('save.voucher');
 
 Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'showFormAuth'])->name('index');
@@ -129,19 +130,23 @@ Route::prefix('admin')
             })->name('detail');
         });
 
-        Route::prefix('vouchers')->as('vouchers.')->group(function(){
-            Route::get('/index', [AdminVoucherController::class,'list'])->name('index');
-            Route::get('/add', [AdminVoucherController::class,'add'])->name('add');
-            Route::post('/add', [AdminVoucherController::class,'insert']);
-            Route::get('/edit/{id}', [AdminVoucherController::class,'edit'])->name('edit');
-            Route::post('/edit/{id}', [AdminVoucherController::class,'update']);
-            Route::get('/delete/{id}', [AdminVoucherController::class,'delete'])->name('delete');
+        Route::prefix('vouchers')->as('vouchers.')->group(function () {
+            Route::get('/index', [AdminVoucherController::class, 'list'])->name('index');
+            Route::get('/add', [AdminVoucherController::class, 'add'])->name('add');
+            Route::post('/add', [AdminVoucherController::class, 'insert']);
+            Route::get('/edit/{id}', [AdminVoucherController::class, 'edit'])->name('edit');
+            Route::post('/edit/{id}', [AdminVoucherController::class, 'update']);
+            Route::get('/delete/{id}', [AdminVoucherController::class, 'delete'])->name('delete');
         });
 
         Route::prefix('banners')->as('banners.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.banner.index');
-            })->name('index');
+            Route::get('/', [BannerController::class, 'index'])->name('index');
+            Route::get('/create', [BannerController::class, 'create'])->name('create');
+            Route::post('/store', [BannerController::class, 'store'])->name('store');
+            Route::get('/{id}', [BannerController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [BannerController::class, 'update'])->name('update');
+            Route::delete('/{id}', [BannerController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/update-status', [BannerController::class, 'updateStatus'])->name('updateStatus');
         });
 
         Route::prefix('invoices')->as('invoices.')->group(function () {

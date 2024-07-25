@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\products\StoreProductRequest;
 use App\Http\Requests\products\UpdateProductRequest;
+use App\Models\Catalogue;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ProductGallery;
@@ -25,7 +26,8 @@ class ProductController extends Controller
 
     public function add()
     {
-        return view('admin.product.add');
+        $catalogues = Catalogue::all();
+        return view('admin.product.add',['catalogues'=>$catalogues]);
     }
 
     public function store(StoreProductRequest $request)
@@ -92,10 +94,11 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        $catalogues = Catalogue::all();
         $product = Product::query()->with(['variants.attributeValues.attribute'])->findOrFail($id);
         $productImages = $product->galleries;
 
-        return view('admin.product.edit', compact('product','productImages'));
+        return view('admin.product.edit', compact('product','productImages','catalogues'));
     }
 
     public function update(UpdateProductRequest $request, $id)

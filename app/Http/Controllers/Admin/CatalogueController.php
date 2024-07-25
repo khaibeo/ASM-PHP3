@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Catalogue;
+use App\Models\Product;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -130,11 +131,13 @@ class CatalogueController extends Controller
      */
     public function destroy(string $id)
     {
-        $catalogue = DB::table('catalogues')->where('id',$id)->first();
+        $catalogue = Catalogue::findOrFail($id);
 
-        if(!$catalogue){
-            return redirect()->route('admin.catalogues.index')->with('success', 'ID không tồn tại');
-        }
+        // Cập nhật danh mục con cấp đầu
+        Catalogue::where('parent_id', $catalogue->id)->update(['parent_id' => null]);
+    
+        // Chuyển các sản phẩm của danh mục bị xóa sang danh mục có id là 1
+        Product::where('catalogue_id', $catalogue->id)->update(['catalogue_id' => 1]);
 
         if($catalogue->image && Storage::disk('public')->exists($catalogue->image)){
             Storage::disk('public')->delete($catalogue->image);
