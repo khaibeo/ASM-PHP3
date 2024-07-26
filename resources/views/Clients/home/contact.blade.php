@@ -11,32 +11,32 @@
 	
     <div class="container margin_60">
         <div class="main_title">
-            <h2>Contact Allaia</h2>
-            <p>Euismod phasellus ac lectus fusce parturient cubilia a nisi blandit sem cras nec tempor adipiscing rcu ullamcorper ligula.</p>
+            <h2>Liên hệ Allaia</h2>
+            <p>Chúng tôi luôn sẵn sàng lăng nghe những đóng góp, ý kiến của bạn.</p>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-4">
                 <div class="box_contacts">
                     <i class="ti-support"></i>
-                    <h2>Allaia Help Center</h2>
-                    <a href="#0">+94 423-23-221</a> - <a href="#0">help@allaia.com</a>
-                    <small>MON to FRI 9am-6pm SAT 9am-2pm</small>
+                    <h2>Trung tâm trợ giúp Allaia</h2>
+                    <a href="#0">+84 123-456-789</a> - <a href="#0">help@allaia.com</a>
+                    <small>Các ngày trong tuần</small>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="box_contacts">
                     <i class="ti-map-alt"></i>
-                    <h2>Allaia Showroom</h2>
-                    <div>6th Forrest Ray, London - 10001 UK</div>
-                    <small>MON to FRI 9am-6pm SAT 9am-2pm</small>
+                    <h2>Địa chi</h2>
+                    <div>Trịnh Văn Bô - Nam Từ Liêm - Hà Nội</div>
+                    <small>Thứ 2 - Thứ 7</small>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="box_contacts">
                     <i class="ti-package"></i>
-                    <h2>Allaia Orders</h2>
-                    <a href="#0">+94 423-23-221</a> - <a href="#0">order@allaia.com</a>
-                    <small>MON to FRI 9am-6pm SAT 9am-2pm</small>
+                    <h2>Đơn hàng</h2>
+                    <a href="#0">+94 423-231-221</a> - <a href="#0">order@allaia.com</a>
+                    <small>Thứ 2 - Thứ 7</small>
                 </div>
             </div>
         </div>
@@ -45,20 +45,20 @@
     <!-- /container -->
 <div class="bg_white">
     <div class="container margin_60_35">
-        <h4 class="pb-3">Drop Us a Line</h4>
+        <h4 class="pb-3">Nói với chúng tôi về vấn đề của bạn</h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 add_bottom_25">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Name *">
+                    <input class="form-control" type="text" placeholder="Họ tên *">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="email" placeholder="Email *">
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" style="height: 150px;" placeholder="Message *"></textarea>
+                    <textarea class="form-control" style="height: 150px;" placeholder="Ghi chú *"></textarea>
                 </div>
                 <div class="form-group">
-                    <input class="btn_1 full-width" type="submit" value="Submit">
+                    <input class="btn_1 full-width" type="submit" value="Gửi">
                 </div>
             </div>
             <div class="col-lg-8 col-md-6 add_bottom_25">

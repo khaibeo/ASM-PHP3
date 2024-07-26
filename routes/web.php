@@ -1,16 +1,17 @@
 <?php
-use App\Http\Controllers\admin\AuthController as AdminAuthController;
-use App\Http\Controllers\admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\CatalogueController;
-use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\HomeController;
-use App\Http\Controllers\User\ProductController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\User\VoucherController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\VoucherController;
+use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\admin\AuthController as AdminAuthController;
+use App\Http\Controllers\admin\ProductController as AdminProductController;
 
 
 /*
@@ -28,9 +29,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('home.about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blog');
-Route::get('/Product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/Product-detail', [ProductController::class, 'detail'])->name('product.detail');
-Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
+// Route::get('/product/{slug}', [ProductController::class, 'productByCategory'])->name('products.productByCategory');
+Route::get('/product-detail', [ProductController::class, 'detail'])->name('product.detail');
+
+Route::get('/product-review', [ProductController::class, 'review'])->name('product.review');
 Route::get('/Cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/Checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
@@ -52,7 +56,7 @@ Route::prefix('auth')->as('auth.')->group(function () {
 
 Route::prefix('admin')
     ->as('admin.')
-    ->middleware(['auth', 'admin'])
+    // ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/', function () {
             return view("admin.dashboard");
@@ -160,3 +164,7 @@ Route::prefix('admin')
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('/', function () {
+//     dd(Hash::make('12345678'));
+// });
