@@ -38,7 +38,7 @@
 	
 	<div id="page">
 		
-	@include('Component.user.main_header')
+	@include('Component.user.main_header', ['categories' => $categories])
 	<!-- /header -->
 		
 	@yield('content')

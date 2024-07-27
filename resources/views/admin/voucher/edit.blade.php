@@ -108,16 +108,16 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="choices-categories-input" class="form-label">Thời gian bắt đầu</label>
-                            <input class="form-control" name="valid_from" value="{{ old('valid_from', $voucher->valid_from) }}" id="choices-text-input" type="date" />
+                            <label for="valid_from" class="form-label">Thời gian bắt đầu</label>
+                            <input class="form-control" name="valid_from" value="{{ old('valid_from', $voucher->valid_from) }}" id="valid_from" type="date" />
                             @error('valid_from')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="choices-text-input" class="form-label">Thời gian kết thúc</label>
-                            <input class="form-control" name="valid_until" value="{{ old('valid_until', $voucher->valid_until) }}" id="choices-text-input" type="date" />
+                            <label for="valid_until" class="form-label">Thời gian kết thúc</label>
+                            <input class="form-control" name="valid_until" value="{{ old('valid_until', $voucher->valid_until) }}" id="valid_until" type="date" />
                             @error('valid_until')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

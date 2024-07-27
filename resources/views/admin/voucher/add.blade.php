@@ -24,8 +24,7 @@
         </div>
         <!-- end page title -->
 
-
-        <form action="" method="POST">
+        <form action="{{ route('admin.vouchers.add') }}" method="POST">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-lg-8">
@@ -63,11 +62,12 @@
                                     <div class="mb-3 mb-lg-0">
                                         <label for="choices-priority-input" class="form-label">Loại giảm giá</label>
                                         <select class="form-select" name="discount_type">
-                                            <option value="0" {{ old('discount_type') == 0 ? 'selected' : '' }}>Số
-                                                lượng</option>
-                                            <option value="1" {{ old('discount_type') == 1 ? 'selected' : '' }}>Phần
-                                                trăm</option>
+                                            <option value="0" {{ old('discount_type') == 0 ? 'selected' : '' }}>Số lượng</option>
+                                            <option value="1" {{ old('discount_type') == 1 ? 'selected' : '' }}>Phần trăm</option>
                                         </select>
+                                        @error('discount_type')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -90,7 +90,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                     </div>
 

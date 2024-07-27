@@ -11,8 +11,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Order Details</h4>
-
+                    <h4 class="mb-sm-0">Chi Tiết Đơn Hàng</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
@@ -30,10 +29,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Order #VL2667</h5>
+                            <h5 class="card-title flex-grow-1 mb-0">Đơn Hàng #{{ $order->id }}</h5>
                             <div class="flex-shrink-0">
-                                <a href="apps-invoices-details.html" class="btn btn-success btn-sm"><i
-                                        class="ri-download-2-fill align-middle me-1"></i> Invoice</a>
+                                <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Quay Lại</a>
                             </div>
                         </div>
                     </div>
@@ -44,101 +42,38 @@
                                     <tr>
                                         <th scope="col">Product Details</th>
                                         <th scope="col">Item Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Rating</th>
-                                        <th scope="col" class="text-end">Total Amount</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Mã Sản Phẩm</th>
+                                        <th scope="col" class="text-end">Tổng Tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($order->orderDetails as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex">
-                                                <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="{{ asset('assets/images/products/img-8.png') }}" alt=""
-                                                        class="img-fluid d-block">
-                                                </div>
+                                                {{-- <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
+                                                    <img src="{{ asset('assets/images/products/' . $item->product->thumnail) }}"
+                                                        alt="" class="img-fluid d-block">
+                                                </div> --}}
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-15"><a href="apps-ecommerce-product-details.html"
-                                                            class="link-primary">Sweatshirt for Men (Pink)</a></h5>
-                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">Pink</span>
-                                                    </p>
-                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">M</span></p>
+                                                    {{-- <h5 class="fs-15"><a href="{{ route('product.details', $item->product->id) }}"
+                                                            class="link-primary">{{ $item->product->name }}</a></h5> --}}
+                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">{{ $item->color }}</span></p>
+                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">{{ $item->size }}</span></p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>$119.99</td>
-                                        <td>02</td>
+                                        <td>${{ number_format($item->product_sale_price) }}</td>
+                                        <td>{{ $item->quantity }}</td>
                                         <td>
-                                            <div class="text-warning fs-15">
-                                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
-                                                    class="ri-star-fill"></i><i class="ri-star-fill"></i><i
-                                                    class="ri-star-half-fill"></i>
-                                            </div>
+                                            {{ $item->product_sku }}
                                         </td>
                                         <td class="fw-medium text-end">
-                                            $239.98
+                                            {{ number_format($item->product_sale_price * $item->quantity) }} VND
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="{{ asset('assets/images/products/img-7.png') }}" alt=""
-                                                        class="img-fluid d-block">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-15"><a href="apps-ecommerce-product-details.html"
-                                                            class="link-primary">Noise NoiseFit Endure Smart Watch</a></h5>
-                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">Black</span>
-                                                    </p>
-                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">32.5mm</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>$94.99</td>
-                                        <td>01</td>
-                                        <td>
-                                            <div class="text-warning fs-15">
-                                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
-                                                    class="ri-star-fill"></i><i class="ri-star-fill"></i><i
-                                                    class="ri-star-half-fill"></i>
-                                            </div>
-                                        </td>
-                                        <td class="fw-medium text-end">
-                                            $94.99
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="{{ asset('assets/images/products/img-3.png') }}" alt=""
-                                                        class="img-fluid d-block">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-15"><a href="apps-ecommerce-product-details.html"
-                                                            class="link-primary">350 ml Glass Grocery Container</a></h5>
-                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">White</span>
-                                                    </p>
-                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">350 ml</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>$24.99</td>
-                                        <td>01</td>
-                                        <td>
-                                            <div class="text-warning fs-15">
-                                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
-                                                    class="ri-star-half-fill"></i><i class="ri-star-line"></i><i
-                                                    class="ri-star-line"></i>
-                                            </div>
-                                        </td>
-                                        <td class="fw-medium text-end">
-                                            $24.99
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                     <tr class="border-top border-top-dashed">
                                         <td colspan="3"></td>
                                         <td colspan="2" class="fw-medium p-0">
@@ -146,23 +81,23 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Sub Total :</td>
-                                                        <td class="text-end">$359.96</td>
+                                                        <td class="text-end">{{ number_format($item->product_sale_price * $item->quantity) }} VND</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Discount <span class="text-muted">(VELZON15)</span> : :</td>
-                                                        <td class="text-end">-$53.99</td>
+                                                        <td>Discount <span class="text-muted"> :</td>
+                                                        <td class="text-end">{{ number_format($order->discount_amount) }} VND</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Shipping Charge :</td>
-                                                        <td class="text-end">$65.00</td>
+                                                        <td class="text-end">{{ number_format($order->shipping_charge)}} VND</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Estimated Tax :</td>
-                                                        <td class="text-end">$44.99</td>
+                                                        <td class="text-end">{{ number_format($order->tax) }} VND</td>
                                                     </tr>
                                                     <tr class="border-top border-top-dashed">
-                                                        <th scope="row">Total (USD) :</th>
-                                                        <th class="text-end">$415.96</th>
+                                                        <th scope="row">Total (VND) :</th>
+                                                        <th class="text-end">{{ number_format($order->total) }} VND</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -177,13 +112,13 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-sm-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Order Status</h5>
-                            <div class="flex-shrink-0 mt-2 mt-sm-0">
+                            <h5 class="card-title flex-grow-1 mb-0">Tình trạng đặt hàng</h5>
+                            {{-- <div class="flex-shrink-0 mt-2 mt-sm-0">
                                 <a href="javascript:void(0);" class="btn btn-soft-info btn-sm mt-2 mt-sm-0"><i
                                         class="ri-map-pin-line align-middle me-1"></i> Change Address</a>
                                 <a href="javascript:void(0);" class="btn btn-soft-danger btn-sm mt-2 mt-sm-0"><i
                                         class="mdi mdi-archive-remove-outline align-middle me-1"></i> Cancel Order</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -200,8 +135,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-15 mb-0 fw-semibold">Order Placed - <span
-                                                            class="fw-normal">Wed, 15 Dec 2021</span></h6>
+                                                    <h6 class="fs-15 mb-0 fw-semibold">Đặt Hàng Thành Công -  <span
+                                                            class="fw-normal">{{$order->created_at}}</span></h6>
                                                 </div>
                                             </div>
                                         </a>
@@ -209,15 +144,12 @@
                                     <div id="collapseOne" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body ms-2 ps-5 pt-0">
-                                            <h6 class="mb-1">An order has been placed.</h6>
-                                            <p class="text-muted">Wed, 15 Dec 2021 - 05:34PM</p>
-
-                                            <h6 class="mb-1">Seller has processed your order.</h6>
-                                            <p class="text-muted mb-0">Thu, 16 Dec 2021 - 5:48AM</p>
+                                            <h6 class="mb-1">{{$order->order_status}}</h6>
+                                            <p class="text-muted">{{$order->created_at}}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item border-0">
+                                {{-- <div class="accordion-item border-0">
                                     <div class="accordion-header" id="headingTwo">
                                         <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
                                             href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -301,7 +233,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <!--end accordion-->
                         </div>
@@ -311,7 +243,7 @@
             </div>
             <!--end col-->
             <div class="col-xl-3">
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
                             <h5 class="card-title flex-grow-1 mb-0"><i
@@ -332,16 +264,13 @@
                             <p class="text-muted mb-0">Payment Mode : Debit Card</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!--end card-->
 
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
-                            <h5 class="card-title flex-grow-1 mb-0">Customer Details</h5>
-                            <div class="flex-shrink-0">
-                                <a href="javascript:void(0);" class="link-secondary">View Profile</a>
-                            </div>
+                            <h5 class="card-title flex-grow-1 mb-0">Chi Tiết Khách Hàng</h5>
                         </div>
                     </div>
                     <div class="card-body">
@@ -353,45 +282,39 @@
                                             class="avatar-sm rounded">
                                     </div>
                                     <div class="flex-grow-1 ms-3">
-                                        <h6 class="fs-14 mb-1">Joseph Parkers</h6>
+                                        <h6 class="fs-14 mb-1">{{ $order->name }}</h6>
                                         <p class="text-muted mb-0">Customer</p>
                                     </div>
                                 </div>
                             </li>
-                            <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>josephparker@gmail.com</li>
-                            <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>+(256) 245451 441</li>
+                            <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $order->email }}</li>
+                            <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>{{ $order->phone }}</li>
                         </ul>
                     </div>
                 </div>
                 <!--end card-->
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Billing
-                            Address</h5>
+                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Địa Chỉ Thanh Toán</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
-                            <li class="fw-medium fs-14">Joseph Parker</li>
-                            <li>+(256) 245451 451</li>
-                            <li>2186 Joyce Street Rocky Mount</li>
-                            <li>New York - 25645</li>
-                            <li>United States</li>
+                            <li class="fw-medium fs-14">{{ $order->name }}</li>
+                            <li>{{ $order->phone }}</li>
+                            <li>{{ $order->address }}</li>
                         </ul>
                     </div>
                 </div>
                 <!--end card-->
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Shipping
-                            Address</h5>
+                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Địa chỉ giao hàng</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
-                            <li class="fw-medium fs-14">Joseph Parker</li>
-                            <li>+(256) 245451 451</li>
-                            <li>2186 Joyce Street Rocky Mount</li>
-                            <li>California - 24567</li>
-                            <li>United States</li>
+                            <li class="fw-medium fs-14">{{ $order->name }}</li>
+                            <li>{{ $order->phone }}</li>
+                            <li>{{ $order->address }}</li>
                         </ul>
                     </div>
                 </div>
