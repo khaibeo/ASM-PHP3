@@ -1,145 +1,172 @@
 @extends('admin.layout')
 
 @section('title')
-    Slide quảng cáo
+    Quản lý Slider
 @endsection
 
 @section('content')
     <div class="container-fluid">
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Slide trang chủ</h4>
+                    <h4 class="mb-sm-0">Quản lý Slider</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Slide</a></li>
-                            <li class="breadcrumb-item active">Chỉnh sửa</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Quản lý Slider</a></li>
+                            <li class="breadcrumb-item active">Danh sách</li>
                         </ol>
                     </div>
-
                 </div>
             </div>
         </div>
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-lg-8">
-                <div class="card p-3">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label" for="project-title-input">Tên slide</label>
-                            <input type="text" class="form-control" id="project-title-input">
-                        </div>
+            <div class="col-lg-12">
+                @session('success')
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endsession
 
-                        <div id="slides-container">
-                            <div class="row mb-3 slide-row">
-                                <div class="col-lg-4">
-                                    <div class="mb-3 mb-lg-0">
-                                        <label for="choices-priority-input" class="form-label">Ảnh</label>
-                                        <input class="form-control" type="file" id="image_url" name="image_url[]"> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="mb-3 mb-lg-0">
-                                        <label for="choices-status-input" class="form-label">Đường link</label>
-                                        <input type="text" class="form-control" id="link_url" name="link_url[]" placeholder="Đường link sau khi click">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div>
-                                        <label for="datepicker-deadline-input" class="form-label">Số thứ tự</label>
-                                        <input type="number" class="form-control" id="position" name="position[]" placeholder="Thứ tự slide">
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 d-flex align-items-end">
-                                    <button type="button" class="btn btn-danger btn-remove-slide">Xóa</button>
+                @session('error')
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endsession
+                <div class="card" id="sliderList">
+                    <div class="card-header border-bottom-dashed">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-sm">
+                                <div>
+                                    <h5 class="card-title mb-0">Danh sách Slider</h5>
                                 </div>
                             </div>
+                            <div class="col-sm-auto">
+                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
+                                    <a href="{{route('admin.banners.create')}}" type="button" class="btn btn-success add-btn"
+                                        id="create-btn"><i
+                                            class="ri-add-line align-bottom me-1"></i> Thêm </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div>
-                        <button id="btn-add-slide" type="button" class="btn btn-primary">Thêm slide +</button>
-                    </div>
-                    <!-- end card body -->
-                </div>
-                <!-- end card -->
-
-                <div class="text-end mb-4">
-                    <button type="submit" class="btn btn-danger w-sm">Quay lại</button>
-                    <button type="submit" class="btn btn-success w-sm">Lưu</button>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 10px;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                                    </div>
+                                                </th>
+                                                <th>ID</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Số lượng ảnh</th>
+                                                <th>Trạng thái</th>
+                                                <th>Thời gian tạo</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($sliders as $slider)
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>{{ $slider->id }}</td>
+                                                <td>{{ $slider->title }}</td>
+                                                <td>{{ $slider->details->count() }}</td>
+                                                <td>
+                                                    <span class="badge {{ $slider->active ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ $slider->active ? 'Kích hoạt' : 'Vô hiệu' }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ $slider->created_at->format('d/m/Y H:i:s') }}</td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a href="{{ route('admin.banners.edit', $slider->id) }}" class="dropdown-item">
+                                                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Sửa
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <form id="toggle-form-{{ $slider->id }}" action="{{ route('admin.banners.updateStatus', $slider->id) }}" method="POST" style="display: inline;">
+                                                                    @csrf
+                                                                    <button type="button" class="dropdown-item" onclick="confirmToggle({{ $slider->id }}, '{{ $slider->active ? 'Vô hiệu hóa' : 'Kích hoạt' }}')">
+                                                                        <i class="ri-toggle-line align-bottom me-2 text-muted"></i> {{ $slider->active ? 'Vô hiệu hóa' : 'Kích hoạt' }}
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn">
+                                                                    <form action="{{ route('admin.banners.destroy', $slider->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-link text-danger p-0" onclick="return confirm('Bạn có chắc chắn muốn xóa slider này?')">
+                                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Xóa
+                                                                        </button>
+                                                                    </form>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
                 </div>
             </div>
-            <!-- end col -->
-            {{-- <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Thời gian</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="choices-categories-input" class="form-label">Thời gian bắt đầu</label>
-                        <input class="form-control" id="choices-text-input" type="date" />
-                    </div>
-
-                    <div>
-                        <label for="choices-text-input" class="form-label">Thời gian kết thúc</label>
-                        <input class="form-control" id="choices-text-input" type="date" />
-                    </div>
-                </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-        </div> --}}
-            <!-- end col -->
+            <!--end col-->
         </div>
-        <!-- end row -->
-
+        <!--end row-->
     </div>
     <!-- container-fluid -->
 @endsection
 
+@section('stylesheets')
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+@endsection
+
 @section('scripts')
-<script>
-    document.getElementById('btn-add-slide').addEventListener('click', function() {
-        var slideContainer = document.getElementById('slides-container');
-        var newSlide = document.createElement('div');
-        newSlide.className = 'row mb-3 slide-row';
-        newSlide.innerHTML = `
-            <div class="col-lg-4">
-                <div class="mb-3 mb-lg-0">
-                    <label for="choices-priority-input" class="form-label">Ảnh</label>
-                    <input class="form-control" type="file" id="image_url" name="image_url[]"> 
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="mb-3 mb-lg-0">
-                    <label for="choices-status-input" class="form-label">Đường link</label>
-                    <input type="text" class="form-control" id="link_url" name="link_url[]" placeholder="Đường link sau khi click">
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div>
-                    <label for="datepicker-deadline-input" class="form-label">Số thứ tự</label>
-                    <input type="number" class="form-control" id="position" name="position[]" placeholder="Thứ tự slide">
-                </div>
-            </div>
-            <div class="col-lg-1 d-flex align-items-end">
-                <button type="button" class="btn btn-danger btn-remove-slide">Xóa</button>
-            </div>
-        `;
-        slideContainer.appendChild(newSlide);
-        addRemoveButtonEvent(newSlide.querySelector('.btn-remove-slide'));
-    });
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    function addRemoveButtonEvent(button) {
-        button.addEventListener('click', function() {
-            this.closest('.slide-row').remove();
-        });
+    <!--datatable js-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
+    <script>
+    function confirmToggle(sliderId, action) {
+        if (confirm(`Bạn có chắc chắn muốn ${action} slide này?`)) {
+            document.getElementById(`toggle-form-${sliderId}`).submit();
+        }
     }
-
-    document.querySelectorAll('.btn-remove-slide').forEach(addRemoveButtonEvent);
-</script>
+    </script>
 @endsection

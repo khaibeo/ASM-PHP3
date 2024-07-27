@@ -44,9 +44,9 @@
                             <div class="mb-3 mb-lg-0">
                                 <label for="choices-priority-input" class="form-label">Danh mục cha</label>
                                 <select name="parent_id" class="form-select" data-choices data-choices-search-false id="choices-priority-input">
-                                    <option value="0" selected>Không</option>
+                                    <option value="0" {{old('parent_id',0) == 0? 'selected' : ''}} >Không</option>
                                     @foreach($catalouges as $ct)                    
-                                    <option value="{{$ct->id}}">{{$ct->name}}</option>
+                                    <option value="{{$ct->id}}" {{ old('parent_id') == $ct->id ? 'selected' : '' }}>{{$ct->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
