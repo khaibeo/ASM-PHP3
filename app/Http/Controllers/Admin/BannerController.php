@@ -55,12 +55,13 @@ class BannerController extends Controller
         $banner = Slider::create($request->only('title'));
 
         if ($request->has('image_url')) {
-            foreach ($request->image_url as $key => $image) {
-                $imagePath = $image->store('banners');
+            foreach ($request->image_url as $key => $file) {
+                $filename = 'banners/' . time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 
                 SliderDetail::create([
                     'slider_id' => $banner->id,
-                    'image_url' => $imagePath,
+                    'image_url' => $filename,
                     'link_url' => $request->link_url[$key] ?? null,
                     'position' => $request->position[$key]
                 ]);
@@ -115,7 +116,7 @@ class BannerController extends Controller
                 }
 
                 $image = $request->file('image_url.' . $detailId);
-                $imageName = $image->getClientOriginalName(); // Lấy tên gốc của file
+                $imageName = time() . '_' . $image->getClientOriginalName(); // Lấy tên gốc của file
                 $imagePath = $image->storeAs('banners', $imageName, 'public');
                 $detail->image_url = $imagePath;
             } else {
@@ -138,7 +139,7 @@ class BannerController extends Controller
                     }
 
                     if ($file) {
-                        $imageName = $image->getClientOriginalName(); // Lấy tên gốc của file
+                        $imageName = time() . '_' . $image->getClientOriginalName(); // Lấy tên gốc của file
                         $imagePath = $image->storeAs('banners', $imageName, 'public');
                         SliderDetail::create([
                             'banner_id' => $banner->id,

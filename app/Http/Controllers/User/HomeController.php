@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Catalogue;
 use App\Models\Product;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 
@@ -35,7 +36,8 @@ class HomeController extends Controller
         $featuredProductstop = Product::where('is_featured', true)
         ->orderBy('created_at', 'desc')
         ->get();
-        return view('Clients.home.index',compact('products'),['categories'=>$categories,'featuredProductstop'=>$featuredProductstop]);
+        $activeSlides = Slider::where('active',true)->with('details')->get();
+        return view('Clients.home.index',compact('products'),['categories'=>$categories,'featuredProductstop'=>$featuredProductstop,'activeSlides'=>$activeSlides]);
     }
     public function about(){
         return view('Clients.home.about');

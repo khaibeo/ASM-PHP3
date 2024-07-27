@@ -45,7 +45,7 @@
                                         <div class="col-lg-4">
                                             <div class="mb-3 mb-lg-0">
                                                 <label class="form-label">Ảnh</label>
-                                                <img src="{{ Storage::url($detail->image_url) }}" alt="Slide Image" style="max-width: 100px; height: auto;">
+                                                <img src="{{ asset('storage/' . $detail->image_url) }}" alt="Slide Image" style="max-width: 100px; height: auto;">
                                                 <input type="file" name="image_url[{{ $detail->id }}]">
                                                 <input type="hidden" name="old_image_url[{{ $detail->id }}]" value="{{ $detail->image_url }}">
                                             </div>

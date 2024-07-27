@@ -14,60 +14,26 @@ Trang chủ
 	<main>
 		<div id="carousel-home">
 			<div class="owl-carousel owl-theme">
-				<div class="owl-slide cover" style="background-image: url(img/slides/slide_home_2.jpg);">
-					<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<div class="container">
-							<div class="row justify-content-center justify-content-md-end">
-								<div class="col-lg-6 static">
-									<div class="slide-text text-end white">
-										<h2 class="owl-slide-animated owl-slide-title">Attack Air<br>Max 720 Sage Low</h2>
-										<p class="owl-slide-animated owl-slide-subtitle">
-											Limited items available at this price
-										</p>
-										<div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a></div>
+				@foreach($activeSlides as $slide)
+					@foreach($slide->details as $detail)
+						<div class="owl-slide cover" style="background-image: url('{{ asset('storage/' . $detail->image_url) }}');">
+							<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+								<div class="container">
+									<div class="row justify-content-center justify-content-md-{{ $loop->iteration % 2 == 0 ? 'end' : 'start' }}">
+										<div class="col-lg-6 static">
+											<div class="slide-text text-{{ $loop->iteration % 2 == 0 ? 'end' : 'start' }} white">
+												<h2 class="owl-slide-animated owl-slide-title">{{ $slide->title }}</h2>
+												@if($detail->link_url)
+													<div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="{{ $detail->link_url }}" role="button">Shop Now</a></div>
+												@endif
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<!--/owl-slide-->
-				<div class="owl-slide cover" style="background-image: url({{ asset('client/img/slides/slide_home_1.jpg')}});">
-					<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<div class="container">
-							<div class="row justify-content-center justify-content-md-start">
-								<div class="col-lg-6 static">
-									<div class="slide-text white">
-										<h2 class="owl-slide-animated owl-slide-title">Attack Air<br>VaporMax Flyknit 3</h2>
-										<p class="owl-slide-animated owl-slide-subtitle">
-											Limited items available at this price
-										</p>
-										<div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--/owl-slide-->
-				<div class="owl-slide cover" style="background-image: url(img/slides/slide_home_3.jpg);">
-					<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(255, 255, 255, 0.5)">
-						<div class="container">
-							<div class="row justify-content-center justify-content-md-start">
-								<div class="col-lg-12 static">
-									<div class="slide-text text-center black">
-										<h2 class="owl-slide-animated owl-slide-title">Attack Air<br>Monarch IV SE</h2>
-										<p class="owl-slide-animated owl-slide-subtitle">
-											Lightweight cushioning and durable support with a Phylon midsole
-										</p>
-										<div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--/owl-slide-->
-				</div>
+					@endforeach
+				@endforeach
 			</div>
 			<div id="icon_drag_mobile"></div>
 		</div>
@@ -76,7 +42,7 @@ Trang chủ
 		<ul id="banners_grid" class="clearfix">
 			<li>
 				<a href="#0" class="img_container">
-					<img src="{{asset('client/img/banners_cat_placeholder.jpg')}}" data-src="{{asset('client/img/banner_1.jpg')}}" alt="" class="lazy">
+					<img src="https://www.bonsoir.co.in/cdn/shop/articles/4_1_1024x1024.jpg?v=1687944095" data-src="https://www.bonsoir.co.in/cdn/shop/articles/4_1_1024x1024.jpg?v=1687944095" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Men's Collection</h3>
 						<div><span class="btn_1">Shop Now</span></div>
@@ -85,7 +51,7 @@ Trang chủ
 			</li>
 			<li>
 				<a href="#0" class="img_container">
-					<img src="img/banners_cat_placeholder.jpg" data-src="img/banner_2.jpg" alt="" class="lazy">
+					<img src="https://www.cougar.com.pk/cdn/shop/articles/New_Women_s_Collection.jpg?v=1662637654" data-src="https://www.cougar.com.pk/cdn/shop/articles/New_Women_s_Collection.jpg?v=1662637654" alt="" class="lazy">++50
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Womens's Collection</h3>
 						<div><span class="btn_1">Shop Now</span></div>
@@ -94,7 +60,7 @@ Trang chủ
 			</li>
 			<li>
 				<a href="#0" class="img_container">
-					<img src="img/banners_cat_placeholder.jpg" data-src="img/banner_3.jpg" alt="" class="lazy">
+					<img src="https://www.hydroflask.sg/cdn/shop/collections/ddd_7f763b3d-ab14-4da6-94e7-98a4db0b006c.jpg?v=1620733556" data-src="https://www.hydroflask.sg/cdn/shop/collections/ddd_7f763b3d-ab14-4da6-94e7-98a4db0b006c.jpg?v=1620733556" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 						<h3>Kids's Collection</h3>
 						<div><span class="btn_1">Shop Now</span></div>
@@ -111,42 +77,7 @@ Trang chủ
 				<p>Cum doctus civibus efficiantur in imperdiet deterruisset</p>
 			</div>
 			<div class="row small-gutters">
-				{{-- @foreach($products['most_viewed'] as $product)
-				<div class="col-6 col-md-4 col-xl-3">
-					<div class="grid_item">
-						<figure>
-							<span class="ribbon off">-30%</span>
-							<a href="">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-							</a>
-						</figure>
-						<div class="rating">
-							@for ($i = 0; $i < 5; $i++)
-								<i class="icon-star voted"></i>
-							@endfor
-						</div>
-						<a href="">
-							<h3>{{ $product->name }}</h3>
-						</a>
-						<div class="price_box">
-							@if($product->sale_price)
-								<span class="new_price">{{ $product->sale_price }}</span>
-								<span class="old_price">{{ $product->regular_price }}</span>
-							@else
-								<span class="new_price">{{ $product->regular_price }}</span>
-							@endif
-						</div>
-						<ul>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-						</ul>
-					</div>
-					<!-- /grid_product -->
-				</div>
-				<!-- /col -->
-				@endforeach --}}
+				
 		
 				@foreach($products['newest'] as $product)
 				<div class="col-6 col-md-4 col-xl-3">
@@ -185,48 +116,13 @@ Trang chủ
 				<!-- /col -->
 				@endforeach
 		
-				{{-- @foreach($products['featured'] as $product)
-				<div class="col-6 col-md-4 col-xl-3">
-					<div class="grid_item">
-						<span class="ribbon hot">Hot</span>
-						<figure>
-							<a href="">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-							</a>
-						</figure>
-						<div class="rating">
-							@for ($i = 0; $i < 5; $i++)
-								<i class="icon-star voted"></i>
-							@endfor
-						</div>
-						<a href="">
-							<h3>{{ $product->name }}</h3>
-						</a>
-						<div class="price_box">
-							@if($product->sale_price)
-								<span class="new_price">{{ $product->sale_price }}</span>
-								<span class="old_price">{{ $product->regular_price }}</span>
-							@else
-								<span class="new_price">{{ $product->regular_price }}</span>
-							@endif
-						</div>
-						<ul>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-						</ul>
-					</div>
-					<!-- /grid_item -->
-				</div>
-				<!-- /col -->
-				@endforeach --}}
+				
 			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
 
-		<div class="featured lazy" data-bg="url(img/featured_home.jpg)">
+		<div class="featured lazy" data-bg="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg">
 			<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 				<div class="container margin_60">
 					<div class="row justify-content-center justify-content-md-start">
