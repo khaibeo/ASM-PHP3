@@ -22,6 +22,7 @@ class Catalogue extends Model
         return $this->hasMany(Catalogue::class, 'parent_id')->with('children');
     }
     
+    
     public function parent()
     {
         return $this->belongsTo(Catalogue::class, 'parent_id');

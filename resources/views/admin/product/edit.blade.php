@@ -83,7 +83,7 @@
                             <div>
                                 <label>Mô tả sản phẩm</label>
 
-                                <textarea id="ckeditor-classic" name="description">{{old('description')}}
+                                <textarea id="ckeditor-classic" name="description">{{old('description',$product->description)}}
                                 </textarea>
                             </div>
                         </div>
@@ -162,14 +162,13 @@
                         </div>
                         <div class="card-body">
                             <select class="form-select" id="catalogue_id" name="catalogue_id">
-                                <option value="1">Danh mục 1</option>
-                                <option value="2">Danh mục 2</option>
+                               
 
-                                {{-- @foreach($categories as $category)
+                                @foreach($catalogues as $category)
                                     <option value="{{ $category->id }}" {{ $product->catalogue_id == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <!-- end card body -->

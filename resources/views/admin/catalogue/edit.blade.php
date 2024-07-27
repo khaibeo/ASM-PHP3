@@ -51,7 +51,7 @@
                                     <option value="0" {{ $catalogue->parent_id === null ? 'selected' : '' }}>Không có danh mục cha</option>
                                     @foreach ($catalogues as $parentCatalogue)
                                         @if ($parentCatalogue->id != $catalogue->id) <!-- Loại bỏ danh mục hiện tại khỏi danh sách -->
-                                        <option value="{{ $parentCatalogue->id }}" {{ $catalogue->parent_id == $parentCatalogue->id ? 'selected' : '' }}>
+                                        <option value="{{ $parentCatalogue->id }}" {{ old('parent_id', $catalogue->parent_id) == $parentCatalogue->id ? 'selected' : '' }}>
                                     {{ $parentCatalogue->name }}
                                      </option>
                                     @endif

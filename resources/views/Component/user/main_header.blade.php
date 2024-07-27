@@ -28,54 +28,10 @@
 								</li>
 								<li class="megamenu">
 									<a href="{{ route('product.index')}}" >Sản phẩm</a>
-									{{-- <div class="menu-wrapper">
-										<div class="row small-gutters">
-											<div class="col-lg-3">
-												<h3>Listing grid</h3>
-												<ul>
-													<li><a href="listing-grid-4-sidebar-left.html">Grid Sidebar Left</a></li>
-												</ul>
-											</div>
-											<div class="col-lg-3">
-												<h3>Listing row &amp; Product</h3>
-												<ul>
-													<li><a href="product-detail-2.html">Product Large Image</a></li>
-													<li><a href="product-detail-2.html">Product Carousel</a></li>
-												</ul>
-											</div>
-											<div class="col-lg-3">
-												<h3>Other pages</h3>
-												<ul>
-													<li><a href="cart.html">Cart Page</a></li>
-													<li><a href="checkout.html">Check Out Page</a></li>
-													<li><a href="confirm.html">Confirm Purchase Page</a></li>
-													<li><a href="account.html">Create Account Page</a></li>
-													<li><a href="track-order.html">Track Order</a></li>
-													<li><a href="help.html">Help Page</a></li>
-													<li><a href="leave-review.html">Leave a Review</a></li>
-												</ul>
-											</div>
-											<div class="col-lg-3 d-xl-block d-lg-block d-md-none d-sm-none d-none">
-												<div class="banner_menu">
-													<a href="#0">
-														<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/banner_menu.jpg" width="400" height="550" alt="" class="img-fluid lazy">
-													</a>
-												</div>
-											</div>
-										</div>
-										<!-- /row -->
-									</div> --}}
-									<!-- /menu-wrapper -->
 								</li>
 								<li>
 									<a href="{{route('voucher.list')}}">Khuyến mãi</a>
 								</li>
-								{{-- <li class="submenu">
-									<a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
-									<ul>
-										<li><a href="404.html">404 Page</a></li>
-									</ul>
-								</li> --}}
 								<li>
 									<a href="{{route('home.about')}}">Giới thiệu</a>
 								</li>
@@ -85,19 +41,19 @@
 								{{-- <li>
 									<a href="{{route('home.blog')}}">Bài viết</a>
 								</li> --}}
-								
-							</ul>
-						</div>
-						<!--/main-menu -->
-					</nav>
-					<div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-						<a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94 423-23-221</strong></a>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-		</div>
-		<!-- /main_header -->
+                        </ul>
+                    </div>
+                    <!--/main-menu -->
+                </nav>
+                <div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
+                    <a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94
+                            423-23-221</strong></a>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+    </div>
+    <!-- /main_header -->
 
 		<div class="main_nav Sticky">
 			<div class="container">
@@ -120,19 +76,14 @@
 										@foreach($categories as $category)
 									<li>
 										<span>
-											<a href="#">
-												{{-- <span class="hamburger hamburger--spin">
-													<span class="hamburger-box">
-														<span class="hamburger-inner"></span>
-													</span>
-												</span> --}}
+											<a href="{{route('product.category',$category->id)}}">
 												{{ $category->name }}
 											</a>
 										</span>
 										<div id="menu">
 											<ul>
 												@foreach($category->children as $child)
-													<li><a href="#">{{ $child->name }}</a></li>
+													<li><a href="{{route('product.category',$child->id)}}">{{ $child->name }}</a></li>
 												@endforeach
 											</ul>
 										</div>
@@ -154,7 +105,7 @@
 						<ul class="top_tools">
 							<li>
 								<div class="dropdown dropdown-cart">
-									<a href="cart.html" class="cart_bt"><strong>2</strong></a>
+									<a href="{{route('cart.index')}}" class="cart_bt"><strong>2</strong></a>
 									<div class="dropdown-menu">
 										<ul>
 											<li>
@@ -174,7 +125,7 @@
 										</ul>
 										<div class="total_drop">
 											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="{{route('cart.checkout')}}" class="btn_1">Checkout</a>
+											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="{{route('checkout.index')}}" class="btn_1">Checkout</a>
 										</div>
 									</div>
 								</div>
