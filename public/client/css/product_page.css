@@ -87,7 +87,7 @@
 }
 .all .slider .item-box,
 .all .slider-two .item-box {
-  overflow: hidden;
+  overflow:hidden;
   width: 100%;
   height: 450px;
   position: relative;

@@ -1,17 +1,20 @@
 <?php
-use App\Http\Middleware\Admin;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\admin\AuthController as AdminAuthController;
+use App\Http\Controllers\admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\PaymentController;
+
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\VoucherController;
-use App\Http\Controllers\Admin\CatalogueController;
-use App\Http\Controllers\admin\AuthController as AdminAuthController;
-use App\Http\Controllers\admin\ProductController as AdminProductController;
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
+use App\Http\Controllers\User\CheckoutController;
 
 
 /*
@@ -29,20 +32,33 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('home.about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blog');
-Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
-// Route::get('/product/{slug}', [ProductController::class, 'productByCategory'])->name('products.productByCategory');
-Route::get('/product-detail', [ProductController::class, 'detail'])->name('product.detail');
 
 Route::get('/product-review', [ProductController::class, 'review'])->name('product.review');
 Route::get('/Cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/Checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
+Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::post('/checkout/voucher', [CheckoutController::class, 'checkVoucher'])->name('checkVoucher');
+Route::get('/vnpay_payment',[PaymentController::class,'vnpayPayment'])->name('payment');
+Route::get('/check_payment',[PaymentController::class,'checkPayment'])->name('payment.check');
+Route::get('/payment-fail/{id}',[PaymentController::class,'showError'])->name('payment.fail');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
 Route::get('/order', [UserController::class, 'orderlist'])->name('user.order');
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
-Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
+Route::get('/voucher',[VoucherController::class,'list'])->name('voucher.list');
+Route::post('/save-voucher/{id}',[VoucherController::class,'saveVoucher'])->name('save.voucher');
 
 Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'showFormAuth'])->name('index');
@@ -63,15 +79,15 @@ Route::prefix('admin')
         })->name('dashboard');
 
         Route::prefix('products')->as('products.')->group(function () {
-            Route::get('/', [AdminProductController::class,'index'])->name('index');
+            Route::get('/', [AdminProductController::class, 'index'])->name('index');
 
-            Route::get('/add', [AdminProductController::class,'add'])->name('add');
-            Route::post('/add', [AdminProductController::class,'store'])->name('store');
+            Route::get('/add', [AdminProductController::class, 'add'])->name('add');
+            Route::post('/add', [AdminProductController::class, 'store'])->name('store');
 
-            Route::get('/{id}', [AdminProductController::class,'edit'])->name('edit');
+            Route::get('/{id}', [AdminProductController::class, 'edit'])->name('edit');
             Route::put('/{id}', [AdminProductController::class, 'update'])->name('update');
 
-            Route::delete('/{id}',[AdminProductController::class,'destroy'])->name('destroy');
+            Route::delete('/{id}', [AdminProductController::class, 'destroy'])->name('destroy');
 
             Route::get('/variant', function () {
                 return view('admin.product.variant');
@@ -90,34 +106,34 @@ Route::prefix('admin')
             })->name('edit_size');
         });
 
-        Route::prefix('catalogues')->as('catalogues.')->group(function(){
-        Route::get('/',[CatalogueController::class,'index'])->name('index');
-        Route::get('/add',[CatalogueController::class,'create'])->name('add');
-        Route::post('/store',[CatalogueController::class,'store'])->name('store');
-        Route::get('/edit/{id}',[CatalogueController::class,'edit'])->name('edit');
-        Route::put('/update/{id}',[CatalogueController::class,'update'])->name('update');
-        Route::delete('/delete/{id}',[CatalogueController::class,'destroy'])->name('destroy');
+        Route::prefix('catalogues')->as('catalogues.')->group(function () {
+            Route::get('/', [CatalogueController::class, 'index'])->name('index');
+            Route::get('/add', [CatalogueController::class, 'create'])->name('add');
+            Route::post('/store', [CatalogueController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [CatalogueController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [CatalogueController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [CatalogueController::class, 'destroy'])->name('destroy');
         });
-      
-      Route::prefix('users')->as('users.')->group(function(){
-        // Route::get('/', function(){
-        //     return view('admin.user.index');
-        // })->name('index');
-        Route::get('/', [AdminUserController::class, 'index'])->name('index');
 
-        Route::get('/add',function(){
-            return view('admin.user.add');
-        })->name('add');
+        Route::prefix('users')->as('users.')->group(function () {
+            // Route::get('/', function(){
+            //     return view('admin.user.index');
+            // })->name('index');
+            Route::get('/', [AdminUserController::class, 'index'])->name('index');
 
-        Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
-        // Route::get('/edit',function(){
-        //     return view('admin.user.edit');
-        // })->name('edit');
+            Route::get('/add', function () {
+                return view('admin.user.add');
+            })->name('add');
 
-        Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
-    });
+            Route::post('/store/user', [AdminUserController::class, 'storeUser'])->name('store');
+            // Route::get('/edit',function(){
+            //     return view('admin.user.edit');
+            // })->name('edit');
+
+            Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
+            Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('orders')->as('orders.')->group(function () {
             Route::get('/', function () {
@@ -129,18 +145,13 @@ Route::prefix('admin')
             })->name('detail');
         });
 
-        Route::prefix('vouchers')->as('vouchers.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.voucher.index');
-            })->name('index');
-
-            Route::get('/add', function () {
-                return view('admin.voucher.add');
-            })->name('add');
-
-            Route::get('/edit', function () {
-                return view('admin.voucher.edit');
-            })->name('edit');
+        Route::prefix('vouchers')->as('vouchers.')->group(function(){
+            Route::get('/index', [AdminVoucherController::class,'list'])->name('index');
+            Route::get('/add', [AdminVoucherController::class,'add'])->name('add');
+            Route::post('/add', [AdminVoucherController::class,'insert']);
+            Route::get('/edit/{id}', [AdminVoucherController::class,'edit'])->name('edit');
+            Route::post('/edit/{id}', [AdminVoucherController::class,'update']);
+            Route::get('/delete/{id}', [AdminVoucherController::class,'delete'])->name('delete');
         });
 
         Route::prefix('banners')->as('banners.')->group(function () {
@@ -162,9 +173,3 @@ Route::prefix('admin')
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
         // Route::get('logout', [AdminAuthController::class,'logout'])->name('repass');
     });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::get('/', function () {
-//     dd(Hash::make('12345678'));
-// });

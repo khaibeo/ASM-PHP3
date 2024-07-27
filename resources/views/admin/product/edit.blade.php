@@ -83,7 +83,7 @@
                             <div>
                                 <label>Mô tả sản phẩm</label>
 
-                                <textarea id="ckeditor-classic" name="description">{{old('description')}}
+                                <textarea id="ckeditor-classic" name="description">{{old('description',$product->description)}}
                                 </textarea>
                             </div>
                         </div>
