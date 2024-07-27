@@ -58,7 +58,7 @@ class BannerController extends Controller
             foreach ($request->image_url as $key => $file) {
                 $filename = 'banners/' . time() . '_' . $file->getClientOriginalName();
                 $file->storeAs('public', $filename);
-                
+
                 SliderDetail::create([
                     'slider_id' => $banner->id,
                     'image_url' => $filename,
@@ -85,6 +85,7 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $banner = Slider::findOrFail($id);
 
         // Cập nhật thông tin slide chính
@@ -106,31 +107,34 @@ class BannerController extends Controller
         }
 
         // Cập nhật các chi tiết của slide
-        foreach ($request->input('position') as $detailId => $position) {
-            $detail = SliderDetail::find($detailId);
+        if ($request->has('position')) {
+            foreach ($request->input('position') as $detailId => $position) {
+                $detail = SliderDetail::find($detailId);
+                if($detail){
+                if ($request->hasFile('image_url.' . $detailId)) {
+                    // Xóa ảnh cũ nếu có
+                    if ($detail->image_url && Storage::exists($detail->image_url)) {
+                        Storage::delete($detail->image_url);
+                    }
 
-            if ($request->hasFile('image_url.' . $detailId)) {
-                // Xóa ảnh cũ nếu có
-                if ($detail->image_url && Storage::exists($detail->image_url)) {
-                    Storage::delete($detail->image_url);
+                    $image = $request->file('image_url.' . $detailId);
+                    $imageName = 'banners/' . time() . '_' . $image->getClientOriginalName(); // Đảm bảo tên tệp là duy nhất
+                    $imagePath = $image->storeAs('public', $imageName);
+                    $detail->image_url = $imageName;
+                } else {
+                    $detail->image_url = $request->input('old_image_url.' . $detailId);
                 }
 
-                $image = $request->file('image_url.' . $detailId);
-                $imageName = time() . '_' . $image->getClientOriginalName(); // Lấy tên gốc của file
-                $imagePath = $image->storeAs('banners', $imageName, 'public');
-                $detail->image_url = $imagePath;
-            } else {
-                $detail->image_url = $request->input('old_image_url.' . $detailId);
+                $detail->link_url = $request->input('link_url.' . $detailId);
+                $detail->position = $position;
+                $detail->save();
             }
-
-            $detail->link_url = $request->input('link_url.' . $detailId);
-            $detail->position = $position;
-            $detail->save();
+            }
         }
 
         // Thêm mới ảnh nếu cần và số lượng ảnh chưa đạt giới hạn
         if (count($banner->details) < 5) {
-            $newImageUrls = $request->file('new_image_url');
+            $newImageUrls = $request->file('image_url');
             if ($newImageUrls) {
                 $count = 0;
                 foreach ($newImageUrls as $index => $file) {
@@ -139,13 +143,14 @@ class BannerController extends Controller
                     }
 
                     if ($file) {
-                        $imageName = time() . '_' . $image->getClientOriginalName(); // Lấy tên gốc của file
-                        $imagePath = $image->storeAs('banners', $imageName, 'public');
+                        $imageName = 'banners/' . time() . '_' . $file->getClientOriginalName(); // Đảm bảo tên tệp là duy nhất
+                        $imagePath = $file->storeAs('public', $imageName);
                         SliderDetail::create([
-                            'banner_id' => $banner->id,
-                            'image_url' => $imagePath,
-                            'link_url' => $request->input('new_link_url')[$index],
-                            'position' => $request->input('new_position')[$index],
+                            
+                            'slider_id' => $banner->id,
+                            'image_url' => $imageName,
+                            'link_url' => $request->input('link_url')[$index],
+                            'position' => $request->input('position')[$index],
                         ]);
                         $count++;
                     }
@@ -158,24 +163,25 @@ class BannerController extends Controller
 
 
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        
+
         $banner = Slider::findOrFail($id);
 
         if ($banner->active) {
             return redirect()->back()->with('error', 'Không thể xóa slide đang hoạt động.');
         }
 
-        
+
         if ($id == 8) {
             return redirect()->back()->with('error', 'Không thể xóa slide mặc định.');
         }
 
-       
+
         $banner->delete();
 
         // Chuyển hướng về trang danh sách với thông báo thành công
