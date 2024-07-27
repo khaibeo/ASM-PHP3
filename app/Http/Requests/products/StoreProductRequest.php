@@ -3,6 +3,8 @@
 namespace App\Http\Requests\products;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreProductRequest extends FormRequest
 {
@@ -24,14 +26,18 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => "required",
             'sku' => "required|unique:products",
-            'slug' => "required",
+            'slug' => "required|unique:products",
             'regular_price' => 'required|regex:/^[1-9]\d*$/',
-            // 'sale_price' => 'required|regex:/^[1-9]\d*$/',
+            'sale_price' => 'nullable|regex:/^[1-9]\d*$/',
             'thumbnail' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'variants.*.regular_price' => 'required|regex:/^[1-9]\d*$/',
-            // 'variants.*.stock' => 'required|regex:/^[1-9]\d*$/',
-            // 'variants.*.attributes.*.name' => 'required|string',
-            // 'variants.*.attributes.*.value' => 'required|string',
+
+            'variants' => 'required|array|min:1',
+            'variants.*.regular_price' => 'required|regex:/^[1-9]\d*$/',
+            'variants.*.sale_price' => 'nullable|regex:/^[1-9]\d*$/',
+            'variants.*.stock' => 'required|regex:/^[1-9]\d*$/',
+            'variants.*.attributes' => 'required|array|min:1',
+            'variants.*.attributes.*.name' => 'required',
+            'variants.*.attributes.*.value' => 'required',
         ];
     }
 
@@ -43,7 +49,16 @@ class StoreProductRequest extends FormRequest
             "regex" => ":attribute phải là số nguyên dương",
             "mimes" => "Ảnh không đúng định dạng (jpeg,png,jpg,gif,svg)",
             "max" => "Kích thước ảnh quá lớn ( > 2MB )",
-            "string" => ":attribute phải là chuỗi"
+            "string" => ":attribute phải là chuỗi",
+            'variants.required' => 'Ít nhất một biến thể sản phẩm là bắt buộc.',
+            'variants.*.regular_price.required' => 'Giá thường của biến thể là bắt buộc.',
+            'variants.*.regular_price.regex' => 'Giá thường của biến thể phải là số lớn hơn 0.',
+            'variants.*.sale_price.regex' => 'Giá sale của biến thể phải là số lớn hơn 0.',
+            'variants.*.stock.required' => 'Số lượng tồn kho của biến thể là bắt buộc.',
+            'variants.*.stock.regex' => 'Số lượng tồn kho của biến thể phải lớn hơn 0.',
+            'variants.*.attributes.required' => 'Mỗi biến thể phải có ít nhất một thuộc tính.',
+            'variants.*.attributes.*.name.required' => 'Tên thuộc tính của biến thể là bắt buộc.',
+            'variants.*.attributes.*.value.required' => 'Giá trị thuộc tính của biến thể là bắt buộc.',
         ];
     }
 
@@ -56,10 +71,16 @@ class StoreProductRequest extends FormRequest
             'regular_price' => 'Giá gốc',
             'sale_price' => 'Giá sale',
             'thumbnail' => 'Ảnh đại diện',
-            'variants.*.regular_price' => 'Giá gốc',
-            'variants.*.stock' => 'Số lượng',
-            'variants.*.attributes.*.name' => 'Tên thuộc tính',
-            'variants.*.attributes.*.value' => 'Giá trị thuộc tính',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('variants', $this->input('variants'))
+        );
     }
 }
