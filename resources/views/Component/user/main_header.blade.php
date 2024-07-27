@@ -76,14 +76,14 @@
 										@foreach($categories as $category)
 									<li>
 										<span>
-											<a href="#">
+											<a href="{{route('product.category',$category->id)}}">
 												{{ $category->name }}
 											</a>
 										</span>
 										<div id="menu">
 											<ul>
 												@foreach($category->children as $child)
-													<li><a href="#">{{ $child->name }}</a></li>
+													<li><a href="{{route('product.category',$child->id)}}">{{ $child->name }}</a></li>
 												@endforeach
 											</ul>
 										</div>

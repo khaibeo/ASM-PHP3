@@ -208,7 +208,7 @@
                                             </a>
                                             <div data-countdown="2019/05/15" class="countdown"></div>
                                         </figure>
-                                        <a href="{{ route('product.detail') }}">
+                                        <a href="{{ route('product.detail',$item->slug) }}">
                                             <h3>{{ $item->name }}</h3>
                                         </a>
                                         <div class="price_box">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
 use App\Models\Product;
 use App\Models\Catalogue;
 
@@ -12,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('is_active', 1)->paginate(9);
+        $products = Product::where('is_active', 1)->latest('id')->paginate(9);
         // dd($products);
         return view('Clients.product.product', compact('products'));
     }
@@ -24,7 +23,7 @@ class ProductController extends Controller
         // dd($categoryBySlug);
        
         // Lấy danh sách sản phẩm theo danh mục
-        $productsByCategory = Product::where('catalogue_id', $categoryBySlug->id)->paginate(9);
+        $productsByCategory = Product::where('catalogue_id', $categoryBySlug->id)->latest('id')->paginate(9);
         // dd($productsByCategory);
         // Trả về view và truyền dữ liệu vào view
         return view('Clients.product.product-by-category', [
@@ -32,8 +31,6 @@ class ProductController extends Controller
             'products' => $productsByCategory
         ]);
     }
-
-
 
     // public function category($slug)
     // {
