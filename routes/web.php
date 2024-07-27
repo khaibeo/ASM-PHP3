@@ -1,14 +1,15 @@
 <?php
-
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\PaymentController;
+
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
-use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\VoucherController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -31,7 +32,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/about', [HomeController::class, 'about'])->name('home.about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blog');
-Route::get('/Product', [ProductController::class, 'index'])->name('product.index');
+
+Route::get('/product-review', [ProductController::class, 'review'])->name('product.review');
+Route::get('/Cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/Checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
 Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/Product-review', [ProductController::class, 'review'])->name('product.review');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -167,5 +173,3 @@ Route::prefix('admin')
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
         // Route::get('logout', [AdminAuthController::class,'logout'])->name('repass');
     });
-
-

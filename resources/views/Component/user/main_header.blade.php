@@ -41,19 +41,19 @@
 								{{-- <li>
 									<a href="{{route('home.blog')}}">Bài viết</a>
 								</li> --}}
-								
-							</ul>
-						</div>
-						<!--/main-menu -->
-					</nav>
-					<div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-						<a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94 423-23-221</strong></a>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-		</div>
-		<!-- /main_header -->
+                        </ul>
+                    </div>
+                    <!--/main-menu -->
+                </nav>
+                <div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
+                    <a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94
+                            423-23-221</strong></a>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+    </div>
+    <!-- /main_header -->
 
 		<div class="main_nav Sticky">
 			<div class="container">
