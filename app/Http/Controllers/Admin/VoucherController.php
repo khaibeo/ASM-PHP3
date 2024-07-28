@@ -56,6 +56,16 @@ class VoucherController extends Controller
             'valid_until.date' => 'Thời gian kết thúc phải là ngày hợp lệ',
             'valid_until.after_or_equal' => 'Thời gian kết thúc phải sau hoặc bằng thời gian bắt đầu',
         ]);
+
+        $request->validate([
+            'discount_value' => [
+                function($attribute, $value, $fail) use ($request) {
+                    if ($request->discount_type == 1 && $value > 100) {
+                        $fail('Giá trị giảm tối đa không được vượt quá 100 khi loại giảm giá là phần trăm.');
+                    }
+                }
+            ]
+        ]);
     
         $voucher = new VouchersModel;
         $voucher->name = trim($request->name);
@@ -68,7 +78,7 @@ class VoucherController extends Controller
         $voucher->valid_until = trim($request->valid_until);
         $voucher->save();
         
-        return redirect('admin/vouchers/index')->with('success', 'Voucher đã được xóa thành công.');
+        return redirect('admin/vouchers/index');
     }
 
     public function edit($id)
@@ -113,6 +123,16 @@ class VoucherController extends Controller
                 'valid_until.date' => 'Thời gian kết thúc phải là ngày hợp lệ',
                 'valid_until.after_or_equal' => 'Thời gian kết thúc phải sau hoặc bằng thời gian bắt đầu',
             ]);
+            
+            $request->validate([
+                'discount_value' => [
+                    function($attribute, $value, $fail) use ($request) {
+                        if ($request->discount_type == 1 && $value > 100) {
+                            $fail('Giá trị giảm tối đa không được vượt quá 100 khi loại giảm giá là phần trăm.');
+                        }
+                    }
+                ]
+            ]);
 
             $voucher = VouchersModel::getSingle($id);
             $voucher->name = trim($request->name);
@@ -126,14 +146,14 @@ class VoucherController extends Controller
             $voucher->save();
             
             
-            return redirect('admin/vouchers/index')->with('success', 'Voucher đã được xóa thành công.');
+            return redirect('admin/vouchers/index');
         }
 
     public function delete($id)
 {
     $voucher = VouchersModel::getSingle($id);
     $voucher->delete();
-    return redirect()->route('admin.vouchers.index')->with('success', 'Voucher đã được xóa thành công.');
+    return redirect()->route('admin.vouchers.index');
 }
 
 }

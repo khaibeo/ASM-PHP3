@@ -3,8 +3,8 @@ use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
-
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\UserController;
@@ -130,20 +130,18 @@ Route::prefix('admin')
             // Route::get('/edit',function(){
             //     return view('admin.user.edit');
             // })->name('edit');
-
+    
             Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [AdminUserController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('orders')->as('orders.')->group(function () {
-            Route::get('/', function () {
-                return view('admin.order.index');
-            })->name('index');
-
-            Route::get('/detail', function () {
-                return view('admin.order.detail');
-            })->name('detail');
+            Route::get('/index', [OrderController::class, 'index'])->name('index');
+            Route::get('/edit-status/{id}', [OrderController::class, 'editStatus'])->name('editStatus');
+            Route::post('/update-status/{id}', [OrderController::class, 'updateStatus'])->name('updateStatus');
+            Route::get('/detail/{id}',[OrderController::class, 'detail'])->name('detail');
+            Route::get('/delete/{id}', [OrderController::class, 'delete'])->name('delete');
         });
 
         Route::prefix('vouchers')->as('vouchers.')->group(function () {

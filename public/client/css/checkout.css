@@ -287,3 +287,17 @@
   -webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
   animation: checkmark-circle 0.6s ease-in-out backwards;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group .d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.form-group .ml-2 {
+  margin-left: 0.5rem;
+}
