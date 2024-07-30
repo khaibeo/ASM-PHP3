@@ -118,7 +118,6 @@
                                                 <th data-ordering="false">Ảnh</th>
                                                 <th data-ordering="false">Tên sản phẩm</th>
                                                 <th data-ordering="false">Giá thường</th>
-                                                <th data-ordering="false">Giá khuyến mãi</th>
                                                 <th>Lượt xem</th>
                                                 <th>Trạng thái</th>
                                                 <th>Nổi bật</th>
@@ -143,11 +142,26 @@
                                                 <td>{{$index}}</td>
                                                 <td><img width="30" height="30" src="{{\Storage::url($item->thumbnail)}}" alt=""></td>
                                                 <td><a href="#">{{$item->name}}</a></td>
-                                                <td>{{$item->regular_price}}</td>
-                                                <td>{{$item->sale_price}}</td>
+                                                @if ($item->sale_price)
+                                                    <td>{{currencyFormat($item->sale_price)}} <del>{{currencyFormat($item->regular_price)}}</del></td>
+                                                @else
+                                                    <td>{{currencyFormat($item->regular_price)}}</del></td>
+                                                @endif
+                                                
                                                 <td>{{$item->views}}</td>
-                                                <td><span class="badge bg-info-subtle text-info">{{$item->is_active}}</span></td>
-                                                <td><span class="badge bg-danger">{{$item->is_featured}}</span></td>
+                                                <td>
+                                                    @if ($item->is_active)
+                                                        <span class="badge bg-success text-white">Hoạt động</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Ẩn</span>
+                                                    @endif   
+                                                </td>
+                                                <td>
+                                                    @if ($item->is_featured)
+                                                        <span class="badge bg-success text-white">Có</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Không</span>
+                                                    @endif
                                                 <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s')}}</td>
                                                 <td>
                                                     <div class="dropdown d-inline-block">

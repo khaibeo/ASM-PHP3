@@ -95,6 +95,9 @@
                             <div class="container">
                                 <div id="productForm">
                                     <div id="variants">
+                                        @error("variants")
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                         @foreach (old('variants', []) as $index => $variant)
                                             <div class="variant mt-4">
                                                 <h4 class="fs-5">Biến thể {{ $index + 1 }}</h4>
@@ -181,8 +184,10 @@
                         </div>
                         <div class="card-body">
                             <select class="form-select" id="catalogue_id" name="catalogue_id">
-                                @forEach($catalogues as $ct)
-                                <option value="{{$ct->id}}" {{ old('catalogue_id') == $ct->id ? 'selected' : '' }}>{{$ct->name}}</option>
+                                @foreach ($catalogues as $ct)
+                                    <option value="{{ $ct->id }}"
+                                        {{ old('catalogue_id') == $ct->id ? 'selected' : '' }}>{{ $ct->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
