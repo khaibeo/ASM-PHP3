@@ -70,11 +70,11 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('admin.products.variant') }}" class="nav-link" role="button" aria-expanded="false" aria-controls="sidebarInvoices" data-key="t-invoices">
                                     Thuộc tính
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.products.index') }}" class="nav-link" role="button" aria-expanded="false" aria-controls="sidebarInvoices" data-key="t-invoices">

@@ -44,8 +44,8 @@ Trang chủ
 				<a href="#0" class="img_container">
 					<img src="https://www.bonsoir.co.in/cdn/shop/articles/4_1_1024x1024.jpg?v=1687944095" data-src="https://www.bonsoir.co.in/cdn/shop/articles/4_1_1024x1024.jpg?v=1687944095" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<h3>Men's Collection</h3>
-						<div><span class="btn_1">Shop Now</span></div>
+						<h3>Bộ sưu tập nam</h3>
+						<div><span class="btn_1">Mua ngay</span></div>
 					</div>
 				</a>
 			</li>
@@ -53,8 +53,8 @@ Trang chủ
 				<a href="#0" class="img_container">
 					<img src="https://www.cougar.com.pk/cdn/shop/articles/New_Women_s_Collection.jpg?v=1662637654" data-src="https://www.cougar.com.pk/cdn/shop/articles/New_Women_s_Collection.jpg?v=1662637654" alt="" class="lazy">++50
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<h3>Womens's Collection</h3>
-						<div><span class="btn_1">Shop Now</span></div>
+						<h3>Bộ sưu tập nữ</h3>
+						<div><span class="btn_1">Mua ngay</span></div>
 					</div>
 				</a>
 			</li>
@@ -62,92 +62,18 @@ Trang chủ
 				<a href="#0" class="img_container">
 					<img src="https://www.hydroflask.sg/cdn/shop/collections/ddd_7f763b3d-ab14-4da6-94e7-98a4db0b006c.jpg?v=1620733556" data-src="https://www.hydroflask.sg/cdn/shop/collections/ddd_7f763b3d-ab14-4da6-94e7-98a4db0b006c.jpg?v=1620733556" alt="" class="lazy">
 					<div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-						<h3>Kids's Collection</h3>
-						<div><span class="btn_1">Shop Now</span></div>
+						<h3>Bộ sưu tập trẻ em</h3>
+						<div><span class="btn_1">Mua ngay</span></div>
 					</div>
 				</a>
 			</li>
 		</ul>
 		<!--/banners_grid -->
-		
-		<div class="container margin_60_35">
-			<div class="main_title">
-				<h2>Top Selling</h2>
-				<span>Products</span>
-				<p>Cum doctus civibus efficiantur in imperdiet deterruisset</p>
-			</div>
-			<div class="row small-gutters">
-				
-		
-				@foreach($products['newest'] as $product)
-				<div class="col-6 col-md-4 col-xl-3">
-					<div class="grid_item">
-						<span class="ribbon new">New</span>
-						<figure>
-							<a href="">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
-							</a>
-						</figure>
-						<div class="rating">
-							@for ($i = 0; $i < 5; $i++)
-								<i class="icon-star voted"></i>
-							@endfor
-						</div>
-						<a href="">
-							<h3>{{ $product->name }}</h3>
-						</a>
-						<div class="price_box">
-							@if($product->sale_price)
-								<span class="new_price">{{ $product->sale_price }}</span>
-								<span class="old_price">{{ $product->regular_price }}</span>
-							@else
-								<span class="new_price">{{ $product->regular_price }}</span>
-							@endif
-						</div>
-						<ul>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-						</ul>
-					</div>
-					<!-- /grid_item -->
-				</div>
-				<!-- /col -->
-				@endforeach
-		
-				
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-
-		<div class="featured lazy" data-bg="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg">
-			<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-				<div class="container margin_60">
-					<div class="row justify-content-center justify-content-md-start">
-						<div class="col-lg-6 wow" data-wow-offset="150">
-							<h3>Armor<br>Air Color 720</h3>
-							<p>Lightweight cushioning and durable support with a Phylon midsole</p>
-							<div class="feat_text_block">
-								<div class="price_box">
-									<span class="new_price">$90.00</span>
-									<span class="old_price">$170.00</span>
-								</div>
-								<a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /featured -->
 
 		<div class="container margin_60_35">
 			<div class="main_title">
-				<h2>Featured</h2>
+				<h2>Sản phẩm nổi bật</h2>
 				<span>Products</span>
-				<p>Cum doctus civibus efficiantur in imperdiet deterruisset</p>
 			</div>
 			<div class="owl-carousel owl-theme products_carousel">
 				@foreach ($featuredProductstop as $product)
@@ -192,11 +118,80 @@ Trang chủ
 			<!-- /owl-carousel -->
 			<!-- /products_carousel -->
 		</div>
+
+		<div class="featured lazy" data-bg="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg">
+			<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+				<div class="container margin_60">
+					<div class="row justify-content-center justify-content-md-start">
+						<div class="col-lg-6 wow" data-wow-offset="150">
+							<h3>Armor<br>Air Color 720</h3>
+							<p>Lightweight cushioning and durable support with a Phylon midsole</p>
+							<div class="feat_text_block">
+								<div class="price_box">
+									<span class="new_price">$90.00</span>
+									<span class="old_price">$170.00</span>
+								</div>
+								<a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /featured -->
+
 		<div class="container margin_60_35">
 			<div class="main_title">
-				<h2>Best Sale</h2>
+				<h2>Sản phẩm bán chạy</h2>
 				<span>Products</span>
-				<p>Cum doctus civibus efficiantur in imperdiet deterruisset</p>
+			</div>
+			<div class="row small-gutters">
+				@foreach($products['newest'] as $product)
+				<div class="col-6 col-md-4 col-xl-3">
+					<div class="grid_item">
+						<span class="ribbon new">New</span>
+						<figure>
+							<a href="">
+								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
+								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
+							</a>
+						</figure>
+						<div class="rating">
+							@for ($i = 0; $i < 5; $i++)
+								<i class="icon-star voted"></i>
+							@endfor
+						</div>
+						<a href="">
+							<h3>{{ $product->name }}</h3>
+						</a>
+						<div class="price_box">
+							@if($product->sale_price)
+								<span class="new_price">{{ $product->sale_price }}</span>
+								<span class="old_price">{{ $product->regular_price }}</span>
+							@else
+								<span class="new_price">{{ $product->regular_price }}</span>
+							@endif
+						</div>
+						<ul>
+							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
+							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+						</ul>
+					</div>
+					<!-- /grid_item -->
+				</div>
+				<!-- /col -->
+				@endforeach
+				
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+
+		<div class="container margin_60_35">
+			<div class="main_title">
+				<h2>Sản phẩm mới</h2>
+				<span>Products</span>
 			</div>
 			<div class="owl-carousel owl-theme products_carousel">
 				@foreach ($products['most_viewed'] as $product)
@@ -271,9 +266,8 @@ Trang chủ
 
 		<div class="container margin_60_35">
 			<div class="main_title">
-				<h2>Latest News</h2>
+				<h2>Bài viết mới nhất</h2>
 				<span>Blog</span>
-				<p>Cum doctus civibus efficiantur in imperdiet deterruisset</p>
 			</div>
 			<div class="row">
 				<div class="col-lg-6">

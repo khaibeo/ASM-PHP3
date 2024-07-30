@@ -54,16 +54,16 @@
                                     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width: 10px;">
+                                                {{-- <th scope="col" style="width: 10px;">
                                                     <div class="form-check">
                                                         <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
                                                     </div>
-                                                </th>
+                                                </th> --}}
                                                 <th data-ordering="false">ID</th>
-                                                <th data-ordering="false">Name</th>
-                                                <th>Created at</th>
-                                                <th>Update at</th>
-                                                <th>Action</th>
+                                                <th data-ordering="false">Tên danh mục</th>
+                                                <th>Thời gian tạo</th>
+                                                <th>Thời gian cập nhật</th>
+                                                <th>Thao tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>

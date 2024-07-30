@@ -167,7 +167,7 @@
                 }
 
                 $.ajax({
-                    url: "{{route('checkVoucher')}}",
+                    url: "{{route('checkout.voucher')}}",
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

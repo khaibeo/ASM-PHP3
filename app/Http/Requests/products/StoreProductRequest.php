@@ -45,7 +45,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             "required" => ":attribute bắt buộc phải nhập",
-            "unique" => "SKU đã tồn tại",
+            "unique" => ":attribute đã tồn tại",
             "regex" => ":attribute phải là số nguyên dương",
             "mimes" => "Ảnh không đúng định dạng (jpeg,png,jpg,gif,svg)",
             "max" => "Kích thước ảnh quá lớn ( > 2MB )",

@@ -19,7 +19,7 @@
 						<!-- Mobile menu button -->
 						<div class="main-menu">
 							<div id="header_menu">
-								<a href="index.html"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
+								<a href="/"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
 								<a href="#" class="open_close" id="close_in"><i class="ti-close"></i></a>
 							</div>
 							<ul>
@@ -46,8 +46,7 @@
                     <!--/main-menu -->
                 </nav>
                 <div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-                    <a class="phone_top" href="tel://9438843343"><strong><span>Cần hỗ trợ?</span>+94
-                            423-23-221</strong></a>
+                    <a class="phone_top"><strong><span>Cần hỗ trợ?</span>0346 315 304</strong></a>
                 </div>
             </div>
             <!-- /row -->
@@ -68,7 +67,7 @@
 													<span class="hamburger-inner"></span>
 												</span>
 											</span>
-											Danh mục
+											Danh mục sản phẩm
 										</a>
 									</span>
 									<div id="menu">
@@ -97,57 +96,26 @@
 					</div>
 					<div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
 						<div class="custom-search-input">
-							<input type="text" placeholder="Search over 10.000 products">
+							<input type="text" placeholder="Tìm kiếm sản phẩm">
 							<button type="submit"><i class="header-icon_search_custom"></i></button>
 						</div>
 					</div>
 					<div class="col-xl-3 col-lg-2 col-md-3">
 						<ul class="top_tools">
 							<li>
-								<div class="dropdown dropdown-cart">
-									<a href="{{route('cart.index')}}" class="cart_bt"><strong>2</strong></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li>
-												<a href="product-detail-2.html">
-													<figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/1.jpg" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Air x Fear</span>$90.00</strong>
-												</a>
-												<a href="#0" class="action"><i class="ti-trash"></i></a>
-											</li>
-											<li>
-												<a href="product-detail-2.html">
-													<figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/2.jpg" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Okwahn II</span>$110.00</strong>
-												</a>
-												<a href="0" class="action"><i class="ti-trash"></i></a>
-											</li>
-										</ul>
-										<div class="total_drop">
-											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-											<a href="{{route('cart.index')}}" class="btn_1 outline">View Cart</a><a href="{{route('checkout.index')}}" class="btn_1">Checkout</a>
-										</div>
-									</div>
-								</div>
-								<!-- /dropdown-cart-->
-							</li>
-							<li>
-								<a href="#0" class="wishlist"><span>Wishlist</span></a>
-							</li>
-							<li>
 								<div class="dropdown dropdown-access">
-									<a href="account.html" class="access_link"><span>Account</span></a>
+									<a href="#" class="access_link"><span>Tài khoản</span></a>
 									<div class="dropdown-menu">
-										<a href="{{route('auth.index')}}" class="btn_1">Sign In or Sign Up</a>
+										@if (!Auth::check())
+											<a href="{{route('auth.index')}}" class="btn_1">Đăng nhập / Đăng ký</a>
+										@endif
+										
 										<ul>
 											<li>
-												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
+												<a href="{{route('user.order')}}"><i class="ti-package"></i>Đơn hàng của tôi</a>
 											</li>
 											<li>
-												<a href="{{route('user.order')}}"><i class="ti-package"></i>My Orders</a>
-											</li>
-											<li>
-												<a href="{{route('user.profile')}}"><i class="ti-user"></i>My Profile</a>
+												<a href="{{route('user.profile')}}"><i class="ti-user"></i>Thông tin tài khoản</a>
 											</li>
 											@if (\Auth::check())
 											<li>
@@ -159,6 +127,22 @@
 								</div>
 								<!-- /dropdown-access-->
 							</li>
+							<li>
+								<div class="dropdown dropdown-cart">
+									<a href="{{route('cart.index')}}" class="cart_bt"><strong>2</strong></a>
+									<div class="dropdown-menu">
+										<div class="total_drop">
+											<a href="{{route('cart.index')}}" class="btn_1 outline">Xem giỏ hàng</a>
+											<a href="{{route('checkout.index')}}" class="btn_1">Thanh toán</a>
+										</div>
+									</div>
+								</div>
+								<!-- /dropdown-cart-->
+							</li>
+							{{-- <li>
+								<a href="#0" class="wishlist"><span>Wishlist</span></a>
+							</li> --}}
+							
 							<!-- <li>
 								<a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>
 							</li>

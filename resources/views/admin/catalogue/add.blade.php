@@ -35,7 +35,7 @@
                         <label class="form-label" for="project-title-input">Tên danh mục</label>
                         <input type="text" name="name" class="form-control" id="project-title-input" placeholder="Nhập tên danh mục" value="{{old('name')}}">
                         @error('name')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -66,7 +66,7 @@
                         <label class="form-label" for="project-thumbnail-img">Ảnh đại diện</label>
                         <input name="image" class="form-control" id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg" value="{{old('image')}}">
                         @error('image')
-                        <div class="alert alert-danger">{{$message}}</div>
+                            <div class="text-danger mt-2">{{$message}}</div>
                         @enderror
                     </div>
 
