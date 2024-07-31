@@ -72,6 +72,7 @@ class UserController extends Controller
         $user = Auth::user();
         $user_orders = Order::where('user_id', $user->id)
         ->orderByRaw("FIELD(order_status, 'shipped', 'processing', 'pending', 'unpaid', 'delivered', 'cancelled')")
+        ->orderBy('created_at', 'desc')
         ->get();
        
         $orders = $user_orders->sortBy(function ($order) {
@@ -107,7 +108,7 @@ class UserController extends Controller
         // Lấy thông tin đơn hàng
         $order =DB::table('order_items')
         ->select(
-            'orders.id as order_id',
+            'order_items.id as order_id',
             DB::raw('MAX(products.thumbnail) as thumbnail'),
             DB::raw('MAX(products.name) as name'),
             DB::raw('MAX(attribute_values.value) as value'),
@@ -120,7 +121,7 @@ class UserController extends Controller
         ->join('attribute_values', 'variant_attribute_values.attribute_value_id', '=', 'attribute_values.id')
         ->join('orders', 'order_items.order_id', '=', 'orders.id')
         ->where('orders.id', $id)
-        ->groupBy('orders.id')
+        ->groupBy('order_items.id')
         ->get();
         
         $user = Auth::user();
