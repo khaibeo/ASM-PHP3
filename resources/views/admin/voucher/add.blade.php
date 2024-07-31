@@ -90,7 +90,51 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-lg-4">
+                                    <div class="mb-3 mb-lg-0">
+                                        <label for="min-order-value-input" class="form-label">Giá trị đơn hàng tối thiểu</label>
+                                        <input type="number" name="min_order_value" class="form-control"
+                                            value="{{ old('min_order_value') }}">
+                                        @error('min_order_value')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3 mb-lg-0">
+                                        <label for="max-order-value-input" class="form-label">Giá trị đơn hàng tối đa</label>
+                                        <input type="number" name="max_order_value" class="form-control"
+                                            value="{{ old('max_order_value') }}">
+                                        @error('max_order_value')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div>
+                                        <label for="max-discount-value-input" class="form-label">Giá trị giảm giá tối đa</label>
+                                        <input type="number" name="max_discount_value" class="form-control"
+                                            value="{{ old('max_discount_value') }}">
+                                        @error('max_discount_value')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 mt-4">
+                                <div class="form-check form-switch form-switch-md">
+                                    <input type="hidden" name="display_status" value="0">
+                                    <input type="checkbox" class="form-check-input" id="is-visible-switch" name="display_status" value="1" {{ old('display_status', 0) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is-visible-switch">Hiển thị</label>
+                                    @error('display_status')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
 
