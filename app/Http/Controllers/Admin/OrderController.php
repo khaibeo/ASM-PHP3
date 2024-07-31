@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\OrderModel;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,34 +12,17 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $data['order'] = OrderModel::getAll();
-        return view('admin.order.index', $data);
+        $orders = Order::all();
+        return view('admin.order.index', compact('orders'));
     }
 
     public function detail($id)
     {
-        $data['order'] = OrderModel::getSingle($id);
-        return view('admin.order.detail', $data);
-    }
+        $order = Order::query()->find($id);
 
-    public function store(Request $request)
-    {
-        // Implementation here
-    }
+        $orderItems = $order->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
 
-    public function show(string $id)
-    {
-        // Implementation here
-    }
-
-    public function edit(string $id)
-    {
-        // Implementation here
-    }
-
-    public function update(Request $request, string $id)
-    {
-        // Implementation here
+        return view('admin.order.detail',compact('order','orderItems'));
     }
 
     public function editStatus($id)
@@ -64,7 +48,9 @@ class OrderController extends Controller
         $order->order_status = $request->order_status;
         $order->save();
 
-        return redirect()->route('admin.orders.index');
+        return back()->with('msg','Cập nhật trạng thái thành công');
+
+        // return redirect()->route('admin.orders.index');
     }
 
     public function delete($id)

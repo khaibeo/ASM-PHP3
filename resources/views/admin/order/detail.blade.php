@@ -25,6 +25,9 @@
         <!-- end page title -->
 
         <div class="row">
+            @session('msg')
+                <div class="alert alert-success">{{session('msg')}}</div>
+            @endsession
             <div class="col-xl-9">
                 <div class="card">
                     <div class="card-header">
@@ -34,43 +37,56 @@
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Quay Lại</a>
                             </div>
                         </div>
+                        <div class="mt-3">
+                            <p>Thời gian đặt hàng: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s')  }}</p>
+                            <p>Phương thức thanh toán: {{ $order->payment_method == 0 ? 'Thanh toán khi nhận hàng' : 'Thanh toán Online' }}</p>
+                            <p>Ghi chú: {{ $order->name }}</p>
+                        </div>
                     </div>
                     <div class="card-body">
+                        <div>
+
+                        </div>
                         <div class="table-responsive table-card">
                             <table class="table table-nowrap align-middle table-borderless mb-0">
                                 <thead class="table-light text-muted">
                                     <tr>
-                                        <th scope="col">Product Details</th>
-                                        <th scope="col">Item Price</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Giá</th>
                                         <th scope="col">Số Lượng</th>
                                         <th scope="col">Mã Sản Phẩm</th>
                                         <th scope="col" class="text-end">Tổng Tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($order->orderDetails as $item)
+                                    @foreach($orderItems as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex">
-                                                {{-- <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="{{ asset('assets/images/products/' . $item->product->thumnail) }}"
+                                                <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
+                                                    <img src="{{ Storage::url($item->variant->product->thumbnail) }}"
                                                         alt="" class="img-fluid d-block">
-                                                </div> --}}
+                                                </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    {{-- <h5 class="fs-15"><a href="{{ route('product.details', $item->product->id) }}"
-                                                            class="link-primary">{{ $item->product->name }}</a></h5> --}}
-                                                    <p class="text-muted mb-0">Color: <span class="fw-medium">{{ $item->color }}</span></p>
-                                                    <p class="text-muted mb-0">Size: <span class="fw-medium">{{ $item->size }}</span></p>
+                                                    <h5 class="fs-15"><a href="{{ route('admin.products.edit', $item->variant->product->id) }}"
+                                                            class="link-primary">{{ $item->product_name }}</a></h5>
+                                                    @foreach ($item->variant->attributeValues as $val)
+                                                        <p class="text-muted mb-0">{{$val->attribute->name}}: <span class="fw-medium">{{ $val->value }}</span></p>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>${{ number_format($item->product_sale_price) }}</td>
+                                        @if ($item->product_sale_price)
+                                            <td> {{ currencyFormat($item->product_sale_price) }} <del>{{ currencyFormat($item->product_regular_price) }}</del> </td>
+                                        @else
+                                            <td> {{ currencyFormat($item->product_sale_price) }} </td>
+                                        @endif
                                         <td>{{ $item->quantity }}</td>
                                         <td>
                                             {{ $item->product_sku }}
                                         </td>
                                         <td class="fw-medium text-end">
-                                            {{ number_format($item->product_sale_price * $item->quantity) }} VND
+                                            {{ currencyFormat(($item->product_sale_price ?? $item->product_regular_price) * $item->quantity) }}
                                         </td>
                                     </tr>
                                     @endforeach
@@ -80,24 +96,20 @@
                                             <table class="table table-borderless mb-0">
                                                 <tbody>
                                                     <tr>
-                                                        <td>Sub Total :</td>
-                                                        <td class="text-end">{{ number_format($item->product_sale_price * $item->quantity) }} VND</td>
+                                                        <td>Tổng tiền sản phẩm :</td>
+                                                        <td class="text-end">{{ currencyFormat($order->total_product_price) }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Discount <span class="text-muted"> :</td>
-                                                        <td class="text-end">{{ number_format($order->discount_amount) }} VND</td>
+                                                        <td>Giảm giá <span class="text-muted"> :</td>
+                                                        <td class="text-end">{{ currencyFormat($order->discount_amount) }}</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Shipping Charge :</td>
-                                                        <td class="text-end">{{ number_format($order->shipping_charge)}} VND</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Estimated Tax :</td>
-                                                        <td class="text-end">{{ number_format($order->tax) }} VND</td>
-                                                    </tr>
+                                                    {{-- <tr>
+                                                        <td>Phí vận chuyển :</td>
+                                                        <td class="text-end">{{ currencyFormat($order->shipping_charge)}}</td>
+                                                    </tr> --}}
                                                     <tr class="border-top border-top-dashed">
-                                                        <th scope="row">Total (VND) :</th>
-                                                        <th class="text-end">{{ number_format($order->total) }} VND</th>
+                                                        <th scope="row">Thành tiền:</th>
+                                                        <th class="text-end">{{ currencyFormat($order->total_amount) }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -109,184 +121,47 @@
                     </div>
                 </div>
                 <!--end card-->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-sm-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Tình trạng đặt hàng</h5>
-                            {{-- <div class="flex-shrink-0 mt-2 mt-sm-0">
-                                <a href="javascript:void(0);" class="btn btn-soft-info btn-sm mt-2 mt-sm-0"><i
-                                        class="ri-map-pin-line align-middle me-1"></i> Change Address</a>
-                                <a href="javascript:void(0);" class="btn btn-soft-danger btn-sm mt-2 mt-sm-0"><i
-                                        class="mdi mdi-archive-remove-outline align-middle me-1"></i> Cancel Order</a>
-                            </div> --}}
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="profile-timeline">
-                            <div class="accordion accordion-flush" id="accordionFlushExample">
-                                <div class="accordion-item border-0">
-                                    <div class="accordion-header" id="headingOne">
-                                        <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
-                                            href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 avatar-xs">
-                                                    <div class="avatar-title bg-success rounded-circle">
-                                                        <i class="ri-shopping-bag-line"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-15 mb-0 fw-semibold">Đặt Hàng Thành Công -  <span
-                                                            class="fw-normal">{{$order->created_at}}</span></h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body ms-2 ps-5 pt-0">
-                                            <h6 class="mb-1">{{$order->order_status}}</h6>
-                                            <p class="text-muted">{{$order->created_at}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="accordion-item border-0">
-                                    <div class="accordion-header" id="headingTwo">
-                                        <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
-                                            href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 avatar-xs">
-                                                    <div class="avatar-title bg-success rounded-circle">
-                                                        <i class="mdi mdi-gift-outline"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-15 mb-1 fw-semibold">Packed - <span
-                                                            class="fw-normal">Thu, 16 Dec 2021</span></h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div id="collapseTwo" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body ms-2 ps-5 pt-0">
-                                            <h6 class="mb-1">Your Item has been picked up by courier partner</h6>
-                                            <p class="text-muted mb-0">Fri, 17 Dec 2021 - 9:45AM</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item border-0">
-                                    <div class="accordion-header" id="headingThree">
-                                        <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
-                                            href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 avatar-xs">
-                                                    <div class="avatar-title bg-success rounded-circle">
-                                                        <i class="ri-truck-line"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-15 mb-1 fw-semibold">Shipping - <span
-                                                            class="fw-normal">Thu, 16 Dec 2021</span></h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div id="collapseThree" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body ms-2 ps-5 pt-0">
-                                            <h6 class="fs-14">RQK Logistics - MFDS1400457854</h6>
-                                            <h6 class="mb-1">Your item has been shipped.</h6>
-                                            <p class="text-muted mb-0">Sat, 18 Dec 2021 - 4.54PM</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item border-0">
-                                    <div class="accordion-header" id="headingFour">
-                                        <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
-                                            href="#collapseFour" aria-expanded="false">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 avatar-xs">
-                                                    <div class="avatar-title bg-light text-success rounded-circle">
-                                                        <i class="ri-takeaway-fill"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-14 mb-0 fw-semibold">Out For Delivery</h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="accordion-item border-0">
-                                    <div class="accordion-header" id="headingFive">
-                                        <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse"
-                                            href="#collapseFile" aria-expanded="false">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 avatar-xs">
-                                                    <div class="avatar-title bg-light text-success rounded-circle">
-                                                        <i class="mdi mdi-package-variant"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-14 mb-0 fw-semibold">Delivered</h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <!--end accordion-->
-                        </div>
-                    </div>
-                </div>
+                
                 <!--end card-->
             </div>
             <!--end col-->
             <div class="col-xl-3">
-                {{-- <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
                             <h5 class="card-title flex-grow-1 mb-0"><i
-                                    class="mdi mdi-truck-fast-outline align-middle me-1 text-muted"></i> Logistics Details
+                                    class="mdi mdi-truck-fast-outline align-middle me-1 text-muted"></i> Trạng thái đơn hàng
                             </h5>
-                            <div class="flex-shrink-0">
-                                <a href="javascript:void(0);" class="badge bg-primary-subtle text-primary fs-11">Track
-                                    Order</a>
-                            </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="text-center">
-                            <lord-icon src="https://cdn.lordicon.com/uetqnvvg.json" trigger="loop"
-                                colors="primary:#405189,secondary:#0ab39c" style="width:80px;height:80px"></lord-icon>
-                            <h5 class="fs-16 mt-2">RQK Logistics</h5>
-                            <p class="text-muted mb-0">ID: MFDS1400457854</p>
-                            <p class="text-muted mb-0">Payment Mode : Debit Card</p>
+                        <div>
+                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="text-end">
+                                <select class="form-select" name="order_status" id="order_status">
+                                    <option value="unpaid" {{ $order->order_status == 'unpaid' ? 'selected' : '' }}>Chưa thanh toán</option>
+                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Chờ duyệt</option>
+                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Đang chuẩn bị hàng</option>
+                                    <option value="shipped" {{ $order->order_status == 'shipped' ? 'selected' : '' }}>Đang vận chuyển</option>
+                                    <option value="delivered" {{ $order->order_status == 'delivered' ? 'selected' : '' }}>Hoàn thành</option>
+                                    <option value="cancelled" {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
+                                </select>
+                                @csrf
+                                <button class="btn btn-primary mt-2">Cập nhật</button>
+                            </form>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <!--end card-->
 
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
-                            <h5 class="card-title flex-grow-1 mb-0">Chi Tiết Khách Hàng</h5>
+                            <h5 class="card-title flex-grow-1 mb-0">Thông tin người nhận</h5>
                         </div>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled mb-0 vstack gap-3">
-                            <li>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img src="{{ asset('assets/images/users/avatar-3.jpg') }}" alt=""
-                                            class="avatar-sm rounded">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="fs-14 mb-1">{{ $order->name }}</h6>
-                                        <p class="text-muted mb-0">Customer</p>
-                                    </div>
-                                </div>
-                            </li>
+                            <li>Họ và tên: {{ $order->name }}</li>
                             <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $order->email }}</li>
                             <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>{{ $order->phone }}</li>
                         </ul>
@@ -295,20 +170,7 @@
                 <!--end card-->
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Địa Chỉ Thanh Toán</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
-                            <li class="fw-medium fs-14">{{ $order->name }}</li>
-                            <li>{{ $order->phone }}</li>
-                            <li>{{ $order->address }}</li>
-                        </ul>
-                    </div>
-                </div>
-                <!--end card-->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Địa chỉ giao hàng</h5>
+                        <h5 class="card-title mb-0"><i class="ri-map-pin-line align-middle me-1 text-muted"></i> Địa chỉ nhận hàng</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
@@ -320,12 +182,12 @@
                 </div>
                 <!--end card-->
 
-                <div class="card">
-                    <div class="card-header">
+                {{-- <div class="card"> --}}
+                    {{-- <div class="card-header">
                         <h5 class="card-title mb-0"><i class="ri-secure-payment-line align-bottom me-1 text-muted"></i>
-                            Payment Details</h5>
-                    </div>
-                    <div class="card-body">
+                            {{$order->payment_method == 0 ? 'Thanh toán khi nhận hàng' : 'Thanh toán online'}}</h5>
+                    </div> --}}
+                    {{-- <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="flex-shrink-0">
                                 <p class="text-muted mb-0">Transactions:</p>
@@ -366,8 +228,8 @@
                                 <h6 class="mb-0">$415.96</h6>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div> --}}
+                {{-- </div> --}}
                 <!--end card-->
             </div>
             <!--end col-->

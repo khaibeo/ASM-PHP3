@@ -26,12 +26,12 @@
                             <div class="mb-3">
                                 <label for="order_status" class="form-label">Trạng Thái Đơn Hàng</label>
                                 <select class="form-control" id="order_status" name="order_status">
-                                    <option value="Chờ xử lý" {{ $order->order_status == 'Chờ xử lý' ? 'selected' : '' }} {{ $order->order_status == 'Giao hàng thành công' ? 'disabled' : '' }}>Chờ Xử Lý</option>
-                                    <option value="Đang sử lý" {{ $order->order_status == 'Đang sử lý' ? 'selected' : '' }} {{ $order->order_status == 'Giao hàng thành công' ? 'disabled' : '' }}>Đang Xử Lý</option>
-                                    <option value="Đã gửi cho đơn vị vận chuyển" {{ $order->order_status == 'Đã gửi cho đơn vị vận chuyển' ? 'selected' : '' }} {{ $order->order_status == 'Giao hàng thành công' ? 'disabled' : '' }}>Đã Gửi Cho Đơn Vị Vận Chuyển</option>
-                                    <option value="Giao hàng thành công" {{ $order->order_status == 'Giao hàng thành công' ? 'selected' : '' }}>Giao Hàng Thành Công</option>
-                                    <option value="Đã hủy" {{ $order->order_status == 'Đã hủy' ? 'selected' : '' }} {{ $order->order_status == 'Giao hàng thành công' ? 'disabled' : '' }}>Đã Hủy</option>
-                                    <option value="Chờ thanh toán" {{ $order->order_status == 'Chờ thanh toán' ? 'selected' : '' }} {{ $order->order_status == 'Giao hàng thành công' ? 'disabled' : '' }}>Chờ Thanh Toán</option>
+                                    <option value="unpaid" {{ $order->order_status == 'unpaid' ? 'selected' : '' }}>Chưa thanh toán</option>
+                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Chờ duyệt</option>
+                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Đang chuẩn bị hàng</option>
+                                    <option value="shipped" {{ $order->order_status == 'shipped' ? 'selected' : '' }}>Đang vận chuyển</option>
+                                    <option value="delivered" {{ $order->order_status == 'delivered' ? 'selected' : '' }}>Hoàn thành</option>
+                                    <option value="cancelled" {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Cập Nhật</button>
