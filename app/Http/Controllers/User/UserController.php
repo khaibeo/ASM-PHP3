@@ -70,8 +70,22 @@ class UserController extends Controller
     {
 
         $user = Auth::user();
-        $user_orders = Order::where('user_id', $user->id)->get();
-
+        $user_orders = Order::where('user_id', $user->id)
+        ->orderByRaw("FIELD(order_status, 'shipped', 'processing', 'pending', 'unpaid', 'delivered', 'cancelled')")
+        ->get();
+       
+        $orders = $user_orders->sortBy(function ($order) {
+            $statusOrder = [
+                'shipped' => 1,
+                'processing' => 2,
+                'pending' => 3,
+                'unpaid' => 4,
+                'delivered' => 5,
+                'cancelled' => 6
+            ];
+            
+            return $statusOrder[$order->order_status] ?? 999; 
+        });
         $orders = $user_orders->map(function ($order) {
             $order_details = OrderDetail::where('order_id', $order->id)->get();
             $order->total = number_format($order->total, 0, ',', '.') . ' đ';
@@ -85,7 +99,7 @@ class UserController extends Controller
 
             return $order;
         });
-
+        //dd($orders);
         return view('Clients.account.order', compact('orders', 'user'));
     }
     public function showOrderDetail($id)
