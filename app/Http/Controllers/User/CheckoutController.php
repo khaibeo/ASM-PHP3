@@ -103,7 +103,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.success', ['order' => $order->id]);
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
+           // dd($e->getMessage());
             return redirect()->back()->with('error', 'Có lỗi xảy ra trong quá trình đặt hàng. Vui lòng thử lại.');
         }
     }
