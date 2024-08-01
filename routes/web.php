@@ -134,7 +134,7 @@ Route::prefix('admin')
                 Route::post('/update-status/{id}', 'updateStatus')->name('updateStatus');
                 Route::get('/detail/{id}', 'detail')->name('detail');
                 Route::get('/delete/{id}', 'delete')->middleware('can:admin')->name('delete');
-                Route::get('/print/{id}','print')->name('print');
+                Route::get('/print/{id}', 'print')->name('print');
             });
 
         // Mã giảm giá
