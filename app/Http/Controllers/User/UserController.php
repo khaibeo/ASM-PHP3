@@ -36,6 +36,28 @@ class UserController extends Controller
             'phone' => ['required', 'regex:/^(\+84|0[3|5|7|8|9])+([0-9]{8})$/'], // Sử dụng regex để validate số điện thoại
             'address' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate ảnh
+        ],
+        [
+            'name.required' => 'trường này không bỏ trống',
+            'name.string' => 'bạn phải nhập văn bản',
+            'name.max' => 'văn bản không được vượt quá 255 ký tự',
+            
+            'email.required' => 'trường này không bỏ trống',
+            'email.string' => 'bạn phải nhập văn bản',
+            'email.email' => 'bạn phải nhập một địa chỉ email hợp lệ',
+            'email.max' => 'email không được vượt quá 255 ký tự',
+            'email.unique' => 'email này đã được sử dụng',
+        
+            'phone.required' => 'trường này không bỏ trống',
+            'phone.regex' => 'bạn phải nhập một số điện thoại hợp lệ',
+        
+            'address.required' => 'trường này không bỏ trống',
+            'address.string' => 'bạn phải nhập văn bản',
+            'address.max' => 'địa chỉ không được vượt quá 255 ký tự',
+        
+            'thumbnail.image' => 'tệp phải là một hình ảnh',
+            'thumbnail.mimes' => 'ảnh phải có định dạng jpeg, png, jpg, gif, hoặc svg',
+            'thumbnail.max' => 'ảnh không được vượt quá 2048 kilobytes',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +90,7 @@ class UserController extends Controller
     }
     public function orderlist()
     {
-
+        
         $user = Auth::user();
         $user_orders = Order::where('user_id', $user->id)
         ->orderByRaw("FIELD(order_status, 'shipped', 'processing', 'pending', 'unpaid', 'delivered', 'cancelled')")
@@ -105,27 +127,30 @@ class UserController extends Controller
     }
     public function showOrderDetail($id)
     {
+        $order = Order::query()->find($id);
+        $orderItems = $order->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
+        //dd($orderItems);
         // Lấy thông tin đơn hàng
-        $order =DB::table('order_items')
-        ->select(
-            'order_items.id as order_id',
-            DB::raw('MAX(products.thumbnail) as thumbnail'),
-            DB::raw('MAX(products.name) as name'),
-            DB::raw('MAX(attribute_values.value) as value'),
-            DB::raw('MAX(order_items.quantity) as quantity'),
-            DB::raw('MAX(order_items.product_sale_price) as product_sale_price')
-        )
-        ->join('products', 'order_items.product_sku', '=', 'products.sku')
-        ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
-        ->join('variant_attribute_values', 'product_variants.id', '=', 'variant_attribute_values.variant_id')
-        ->join('attribute_values', 'variant_attribute_values.attribute_value_id', '=', 'attribute_values.id')
-        ->join('orders', 'order_items.order_id', '=', 'orders.id')
-        ->where('orders.id', $id)
-        ->groupBy('order_items.id')
-        ->get();
+        // $order =DB::table('order_items')
+        // ->select(
+        //     'order_items.id as order_id',
+        //     DB::raw('MAX(products.thumbnail) as thumbnail'),
+        //     DB::raw('MAX(products.name) as name'),
+        //     DB::raw('MAX(attribute_values.value) as value'),
+        //     DB::raw('MAX(order_items.quantity) as quantity'),
+        //     DB::raw('MAX(order_items.product_sale_price) as product_sale_price')
+        // )
+        // ->join('products', 'order_items.product_sku', '=', 'products.sku')
+        // ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
+        // ->join('variant_attribute_values', 'product_variants.id', '=', 'variant_attribute_values.variant_id')
+        // ->join('attribute_values', 'variant_attribute_values.attribute_value_id', '=', 'attribute_values.id')
+        // ->join('orders', 'order_items.order_id', '=', 'orders.id')
+        // ->where('orders.id', $id)
+        // ->groupBy('order_items.id')
+        // ->get();
         
         $user = Auth::user();
-        return view('Clients.account.order_detail', compact('order','user'));
+        return view('Clients.account.order_detail', compact('orderItems','order','user'));
     }
     public function repass()
     {
@@ -143,8 +168,19 @@ class UserController extends Controller
                     $fail('Mật khẩu cũ không đúng.');
                 }
             }],
-            'new_pass' => 'required|string|min:8|confirmed', // Validate mật khẩu mới với ít nhất 8 ký tự và khớp với nhập lại mật khẩu
-            'new_pass_confirmation' => 'required_with:new_pass|same:new_pass', // Validate mật khẩu nhập lại phải khớp với mật khẩu mới
+            'new_pass' => 'required|string|min:8|confirmed', 
+            'new_pass_confirmation' => 'required_with:new_pass|same:new_pass',
+        ], 
+        [
+            'old_pass.required' => 'trường này không bỏ trống',
+            
+            'new_pass.required' => 'trường này không bỏ trống',
+            'new_pass.string' => 'bạn phải nhập văn bản',
+            'new_pass.min' => 'mật khẩu mới phải có ít nhất 8 ký tự',
+            'new_pass.confirmed' => 'xác nhận mật khẩu không khớp',
+        
+            'new_pass_confirmation.required_with' => 'trường này không bỏ trống khi có mật khẩu mới',
+            'new_pass_confirmation.same' => 'xác nhận mật khẩu phải khớp với mật khẩu mới',
         ]);
 
         if ($validator->fails()) {

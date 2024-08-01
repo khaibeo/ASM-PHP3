@@ -21,7 +21,7 @@ class OrderController extends Controller
         $order = Order::query()->find($id);
 
         $orderItems = $order->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
-
+        
         return view('admin.order.detail',compact('order','orderItems'));
     }
 

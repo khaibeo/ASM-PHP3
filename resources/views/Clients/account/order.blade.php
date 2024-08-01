@@ -98,6 +98,15 @@
                                                         </tbody>
                                                     </table>
                                                 </div> --}}
+                                                <div class="d-flex flex-wrap">
+                                                    @foreach ($order->details as $item)
+                                                        <div class="p-2">
+                                                            <a href="#">
+                                                                <img src="{{ asset('upload/' . $item->product_image) }}" class="rounded" width="80" alt="...">
+                                                            </a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                                 <div class="text-end mt-4">
                                                     {!! $btn !!}
                                                     {!! $btn1 !!}
