@@ -10,13 +10,13 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-sm-flex align-orders-center justify-content-between">
                     <h4 class="mb-sm-0">Đơn Hàng</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                            <li class="breadcrumb-item active">Đon Hàng</li>
+                            <li class="breadcrumb-order"><a href="javascript: void(0);">Đơn hàng</a></li>
+                            <li class="breadcrumb-order active">Danh sách đơn hàng</li>
                         </ol>
                     </div>
 
@@ -29,7 +29,7 @@
             <div class="col-lg-12">
                 <div class="card" id="orderList">
                     <div class="card-header border-0">
-                        <div class="row align-items-center gy-3">
+                        <div class="row align-orders-center gy-3">
                             <div class="col-sm">
                                 <h5 class="card-title mb-0">Lịch Sử Đơn Hàng</h5>
                             </div>
@@ -106,83 +106,48 @@
                                         style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width: 10px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll"
-                                                            value="option">
-                                                    </div>
-                                                </th>
                                                 <th data-ordering="false">ID</th>
                                                 <th data-ordering="false">TÊN NGƯỜI DÙNG</th>
-                                                <th data-ordering="false">TÊN SẢN PHẨM</th>
-                                                <th data-ordering="false">EMAIL</th>
-                                                <th data-ordering="false">ĐỊA CHỈ</th>
                                                 <th>SỐ ĐIỆN THOẠI</th>
-                                                <th>GHI CHÚ</th>
-                                                <th>PHƯƠNG THỨC THANH TOÁN </th>
-                                                <th>TÌNH TRẠNG ĐẶT HÀNG</th>
-                                                <th>GIẢM GIÁ</th>
-                                                <th>TỔNG GIÁ TRỊ</th>
-                                                <th>TỔNG SỐ TIỀN</th>
-                                                <th>NGÀY TẠO</th>
-                                                <th>NGÀY SỬA</th>
+                                                <th>TRẠNG THÁI</th>
+                                                <th>THÀNH TIỀN</th>
+                                                <th>NGÀY ĐẶT</th>
                                                 <th>HÀNH ĐỘNG</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           @foreach ($order as $item)
-                                           <tr>
-                                            <th scope="row">
-                                                <div class="form-check">
-                                                    <input class="form-check-input fs-15" type="checkbox"
-                                                        name="checkAll" value="option1">
-                                                </div>
-                                            </th>
-                                            <td>{{$item->id}}</td>
-                                            <td>{{$item->user_name}}</td>
-                                            <td>{{$item->name}}</td>
-                                            <td>{{$item->email}}</td>
-                                            <td>{{$item->address}}</td>
-                                            <td>{{$item->phone}}</td>
-                                            <td>{{$item->note}}</td>
-                                            <td>{{$item->pay_name}}</td>
-                                            <td>{{$item->order_status}}</td>
-                                            <td><span class="badge bg-info-subtle text-info">{{number_format($item->total_product_price)}} vnd</span></td>
-                                            <td><span class="badge bg-danger">{{number_format($item->discount_amount)}} vnd</span></td>
-                                            <td><span class="badge bg-danger">{{number_format($item->total_amount)}} vnd</span></td>
-                                            <td><span class="badge bg-danger">{{$item->created_at->format('d-m-Y') }}</span></td>
-                                            <td><span class="badge bg-danger">{{$item->updated_at->format('d-m-Y') }}</span></td>
-                                            <td>
-                                                <div class="dropdown d-inline-block">
-                                                    <button class="btn btn-soft-secondary btn-sm dropdown"
-                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="ri-more-fill align-middle"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a href="{{ route('admin.orders.detail',$item->id) }}"
-                                                                class="dropdown-item edit-item-btn"><i
-                                                                    class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                View</a></li>
-                                                        <li>
-                                                            <a href="{{ route('admin.orders.delete',$item->id) }}" class="dropdown-item remove-item-btn">
+                                            @foreach ($orders as $order)
+                                                <tr>
+                                                    <td>#{{ $order->id }}</td>
+                                                    <td>{{ $order->name }}</td>
+                                                    <td>{{ $order->phone }}</td>
+                                                    <td>{{ getOrderStatus($order->order_status) }}</td>
+                                                    <td>{{ currencyFormat($order->total_amount) }}</td>
+                                                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                                                    <td>
+                                                        <ul class="list-unstyled d-flex gap-2">
+                                                            <li><a href="{{ route('admin.orders.detail', $order->id) }}"
+                                                                    class="btn btn-info">
+                                                                    Chi tiết</a></li>
+                                                            <li>
+                                                                <a class="btn btn-danger"
+                                                                    href="{{ route('admin.orders.delete', $order->id) }}"
+                                                                    class="dropdown-order remove-order-btn">
+                                                                    Xóa
+                                                                </a>
+                                                            </li>
+                                                            {{-- <li>
+                                                            <a href="{{ route('admin.orders.editStatus', $order->id) }}" class="dropdown-order remove-order-btn">
                                                                 <i
                                                                     class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                Delete
+                                                                    Cập nhật trạng thái
                                                             </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="{{ route('admin.orders.editStatus', $item->id) }}" class="dropdown-item remove-item-btn">
-                                                                <i
-                                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                    Edit Status
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                           @endforeach
-                                         
+                                                        </li> --}}
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>

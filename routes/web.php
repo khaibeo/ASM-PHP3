@@ -51,14 +51,28 @@ Route::controller(CheckoutController::class)
         Route::post('/voucher', 'checkVoucher')->name('voucher');
     });
 
+//Tài khoản
+Route::controller(UserController::class)
+    ->prefix('user')->as('user.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/profile','profile')->name('profile');
+        Route::post('/profile','updateProfile')->name('update');
+        Route::get('/repass', 'repass')->name('repass');
+        Route::post('/repass', 'updateRepass')->name('updaterepass');
+        Route::get('/order', 'orderlist')->name('order');
+        Route::get('/order/{id}', 'showOrderDetail')->name('orderdetail');
+        Route::get('/order/cancel/{id}',  'cancelOrder')->name('ordercancel');
+        Route::get('/order/pay/{id}', 'payOrder')->name('orderpay');
+    });
+
+
 // Thanh toán online
 Route::get('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('payment');
 Route::get('/check_payment', [PaymentController::class, 'checkPayment'])->name('payment.check');
 Route::get('/payment-fail/{id}', [PaymentController::class, 'showError'])->name('payment.fail');
 
-Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-Route::get('/user/repass', [UserController::class, 'repass'])->name('user.repass');
-Route::get('/order', [UserController::class, 'orderlist'])->name('user.order');
+
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
 Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
 Route::post('/save-voucher/{id}', [VoucherController::class, 'saveVoucher'])->name('save.voucher');
