@@ -151,6 +151,13 @@ class UserController extends Controller
    return redirect()->route('admin.users.index');
 
 }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+        $users = User::where('role', 'like', "%{$query}%")->get();
+        return view('admin.user.index', compact('users'));
+    }
 }
 
 
