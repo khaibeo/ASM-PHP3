@@ -6,13 +6,8 @@
 
 @section('content')
     <div class="container-fluid">
-        @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
         <!-- start page title -->
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">Danh mục sản phẩm</h4>
@@ -28,6 +23,12 @@
         </div>
         <!-- end page title -->
 
+        @if (session('success'))
+            <div class="alert alert-success mb-3">
+                {{ session('success') }}
+            </div>
+        @endif
+        
         <div class="row">
             <div class="col-lg-12">
                 <div class="card" id="customerList">
@@ -40,8 +41,10 @@
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    <a href="{{ route('admin.catalogues.add') }}" class="btn btn-success add-btn" id="create-btn" ><i class="ri-add-line align-bottom me-1"></i> Thêm danh mục</a>
+                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
+                                    <a href="{{ route('admin.catalogues.add') }}" class="btn btn-success add-btn"
+                                        id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Thêm danh mục</a>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +54,9 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="example"
+                                        class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                        style="width:100%">
                                         <thead>
                                             <tr>
                                                 {{-- <th scope="col" style="width: 10px;">
@@ -68,8 +73,10 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($catalogues as $item)
-                                                @php($indent = "")
-                                                @include('admin.catalogue.catalogue_row', ['catalogue' => $item])
+                                                @php($each = '')
+                                                @include('admin.catalogue.catalogue_row', [
+                                                    'catalogue' => $item,
+                                                ])
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -111,4 +118,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        new DataTable("#example", {
+            "ordering": false
+        });
+    </script>
 @endsection

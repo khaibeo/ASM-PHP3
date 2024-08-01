@@ -42,19 +42,20 @@
                     <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-priority-input" class="form-label">Danh mục cha</label>
-                                <select name="parent_id" class="form-select" data-choices data-choices-search-false id="choices-priority-input">
-                                    <option value="0" {{old('parent_id',0) == 0? 'selected' : ''}} >Không</option>
-                                    @foreach($catalouges as $ct)                    
-                                    <option value="{{$ct->id}}" {{ old('parent_id') == $ct->id ? 'selected' : '' }}>{{$ct->name}}</option>
+                                <label for="" class="form-label">Danh mục cha</label>
+                                <select name="parent_id" class="form-select">
+                                    <option value="0" {{old('parent_id') == 0 ? 'selected' : ''}} >Không</option>
+                                    @foreach ($catalogues as $item)
+                                        @php($indent = "")
+                                        @include('admin.catalogue.catalogue_nested', ['catalog' => $item])
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-status-input" class="form-label">Trạng thái</label>
-                                <select name="is_active" class="form-select" data-choices data-choices-search-false id="choices-status-input">
+                                <label for="" class="form-label">Trạng thái</label>
+                                <select name="is_active" class="form-select" data-choices data-choices-search-false id="">
                                     <option value="1" selected>Hoạt động</option>
                                     <option value="0">Bản nháp</option>
                                 </select>
@@ -71,7 +72,7 @@
                     </div>
 
                     <div class="text-end mb-4 mt-4">
-                        <button class="btn btn-danger w-sm"><a href="{{route('admin.catalogues.index')}}"></a>Quay lại</button>
+                        <a class="btn btn-primary" href="{{route('admin.catalogues.index')}}">Quay lại</a>
                         
                         <button type="submit" class="btn btn-success w-sm">Thêm</button>
                     </div>

@@ -45,8 +45,8 @@
                                 <div class="d-flex flex-wrap align-items-start gap-2">
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
-                                    <a href="{{route('admin.products.add')}}" type="button" class="btn btn-success add-btn"
-                                        id="create-btn"><i
+                                    <a href="{{ route('admin.products.add') }}" type="button"
+                                        class="btn btn-success add-btn" id="create-btn"><i
                                             class="ri-add-line align-bottom me-1"></i> Thêm </a>
                                     <button type="button" class="btn btn-info"><i
                                             class="ri-file-download-line align-bottom me-1"></i> Import</button>
@@ -106,12 +106,15 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="example"
+                                        class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                        style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col" style="width: 10px;">
                                                     <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll"
+                                                            value="option">
                                                     </div>
                                                 </th>
                                                 <th data-ordering="false">STT</th>
@@ -130,63 +133,77 @@
                                                 $index = 0;
                                             @endphp
                                             @foreach ($products as $item)
-                                            @php
-                                                $index++
-                                            @endphp
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
-                                                    </div>
-                                                </th>
-                                                <td>{{$index}}</td>
-                                                <td><img width="30" height="30" src="{{\Storage::url($item->thumbnail)}}" alt=""></td>
-                                                <td><a href="#">{{$item->name}}</a></td>
-                                                @if ($item->sale_price)
-                                                    <td>{{currencyFormat($item->sale_price)}} <del>{{currencyFormat($item->regular_price)}}</del></td>
-                                                @else
-                                                    <td>{{currencyFormat($item->regular_price)}}</del></td>
-                                                @endif
-                                                
-                                                <td>{{$item->views}}</td>
-                                                <td>
-                                                    @if ($item->is_active)
-                                                        <span class="badge bg-success text-white">Hoạt động</span>
+                                                @php
+                                                    $index++;
+                                                @endphp
+                                                <tr>
+                                                    <th scope="row">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input fs-15" type="checkbox"
+                                                                name="checkAll" value="option1">
+                                                        </div>
+                                                    </th>
+                                                    <td>{{ $index }}</td>
+                                                    <td><img width="30" height="30"
+                                                            src="{{ \Storage::url($item->thumbnail) }}" alt=""></td>
+                                                    <td><a href="#">{{ $item->name }}</a></td>
+                                                    @if ($item->sale_price)
+                                                        <td>{{ currencyFormat($item->sale_price) }}
+                                                            <del>{{ currencyFormat($item->regular_price) }}</del></td>
                                                     @else
-                                                        <span class="badge bg-danger text-white">Ẩn</span>
-                                                    @endif   
-                                                </td>
-                                                <td>
-                                                    @if ($item->is_featured)
-                                                        <span class="badge bg-success text-white">Có</span>
-                                                    @else
-                                                        <span class="badge bg-danger text-white">Không</span>
+                                                        <td>{{ currencyFormat($item->regular_price) }}</del></td>
                                                     @endif
-                                                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s')}}</td>
-                                                <td>
-                                                    <div class="dropdown d-inline-block">
-                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            <i class="ri-more-fill align-middle"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><div href="#" class="dropdown-item btn btn-warning">
-                                                                <a class="btn btn-warning" href="{{route('admin.products.edit', $item->id)}}">Sửa</a>
-                                                                </div>
-                                                            </li>
-                                                            
-                                                            <li>
-                                                                <a class="dropdown-item remove-item-btn">
-                                                                    <form action="{{ route('admin.products.destroy', $item->id) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</button>
-                                                                    </form>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+
+                                                    <td>{{ $item->views }}</td>
+                                                    <td>
+                                                        @if ($item->is_active)
+                                                            <span class="badge bg-success text-white">Hoạt động</span>
+                                                        @else
+                                                            <span class="badge bg-danger text-white">Ẩn</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($item->is_featured)
+                                                            <span class="badge bg-success text-white">Có</span>
+                                                        @else
+                                                            <span class="badge bg-danger text-white">Không</span>
+                                                        @endif
+                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-soft-secondary btn-sm dropdown"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <i class="ri-more-fill align-middle"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li>
+                                                                    <div href="#"
+                                                                        class="dropdown-item btn btn-warning">
+                                                                        <a class="btn btn-warning"
+                                                                            href="{{ route('admin.products.edit', $item->id) }}">Sửa</a>
+                                                                    </div>
+                                                                </li>
+
+                                                                @can('admin')
+                                                                    <li>
+                                                                        <a class="dropdown-item remove-item-btn">
+                                                                            <form
+                                                                                action="{{ route('admin.products.destroy', $item->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="btn btn-danger"
+                                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</button>
+                                                                            </form>
+                                                                        </a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>

@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function add()
     {
-        $catalogues = Catalogue::all();
+        $catalogues = Catalogue::query()->with('children')->orderBy('id','desc')->whereNull('parent_id')->get();
         return view('admin.product.add',['catalogues'=>$catalogues]);
     }
 
@@ -94,7 +94,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $catalogues = Catalogue::all();
+        $catalogues = Catalogue::query()->with('children')->orderBy('id','desc')->whereNull('parent_id')->get();
         $product = Product::query()->with(['variants.attributeValues.attribute'])->findOrFail($id);
         $productImages = $product->galleries;
 

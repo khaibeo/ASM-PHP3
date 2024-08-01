@@ -5,29 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Catalogue;
 use App\Models\Product;
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CatalogueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index()
-    // {
-    //     //$list_catalogue = DB::table('catalogues')->get();
-    //     $list_catalogue = DB::table('catalogues as c1')
-    //     ->leftJoin('catalogues as c2', 'c1.parent_id', '=', 'c2.id')
-    //     ->select('c1.id', 'c1.name', 'c1.image', 'c1.is_active','c1.created_at', 'c2.name as parent_name')
-    //     ->get();
-    //     return view('admin.catalogue.index',['listcata'=>$list_catalogue]);
-
-    // }
     public function index()
     {
-        $catalogues = Catalogue::with('children')->whereNull('parent_id')->get();
+        $catalogues = Catalogue::with('children')->whereNull('parent_id')->orderBy('id','desc')->get();
+
         return view('admin.catalogue.index', compact('catalogues'));
     }
     /**
@@ -35,8 +22,9 @@ class CatalogueController extends Controller
      */
     public function create()
     {
-        $catalogues = DB::table('catalogues')->get();
-        return view('admin.catalogue.add', ['catalouges' => $catalogues]);
+        $catalogues = Catalogue::query()->with('children')->orderBy('id','desc')->whereNull('parent_id')->get();
+
+        return view('admin.catalogue.add', compact('catalogues'));
     }
 
     /**
@@ -80,12 +68,11 @@ class CatalogueController extends Controller
     {
 
         $catalogue = DB::table('catalogues')->where('id', $id)->first();
-        $catalogues = DB::table('catalogues')->get();
+        $catalogues = Catalogue::query()->with('children')->orderBy('id','desc')->whereNull('parent_id')->whereNot('id',$id)->get();
         if (!$catalogue) {
             return redirect()->route('admin.catalogues.index')->with('error', 'Danh mục không tồn tại');
         }
-        //dd($catalogue);
-        //dd($catalogues);
+        
         return view('admin.catalogue.edit', ['catalogue' => $catalogue, 'catalogues' => $catalogues]);
     }
 
