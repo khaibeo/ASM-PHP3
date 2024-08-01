@@ -46,16 +46,13 @@
                     <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-priority-input" class="form-label">Danh mục cha</label>
-                                <select name="parent_id" class="form-select" data-choices data-choices-search-false id="choices-priority-input">
-                                    <option value="0" {{ $catalogue->parent_id === null ? 'selected' : '' }}>Không có danh mục cha</option>
-                                    @foreach ($catalogues as $parentCatalogue)
-                                        @if ($parentCatalogue->id != $catalogue->id) <!-- Loại bỏ danh mục hiện tại khỏi danh sách -->
-                                        <option value="{{ $parentCatalogue->id }}" {{ old('parent_id', $catalogue->parent_id) == $parentCatalogue->id ? 'selected' : '' }}>
-                                    {{ $parentCatalogue->name }}
-                                     </option>
-                                    @endif
-                                     @endforeach
+                                <label for="" class="form-label">Danh mục cha</label>
+                                <select name="parent_id" class="form-select" id="">
+                                    <option value="0" {{ $catalogue->parent_id === null ? 'selected' : '' }}>Không</option>
+                                        @foreach ($catalogues as $item)
+                                            @php($indent = "")
+                                            @include('admin.catalogue.catalogue_edit_nested', ['catalog' => $item])
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -80,8 +77,8 @@
 
                     <div class="text-end mb-4 mt-4">
                         
-                        <button type="button" class="btn btn-danger w-sm"><a href="{{route('admin.catalogues.index')}}">Quay lại</a></button>
-                        <button type="submit" class="btn btn-success w-sm">Thêm</button>
+                        <a class="btn btn-primary" href="{{route('admin.catalogues.index')}}">Quay lại</a>
+                        <button type="submit" class="btn btn-success w-sm">Sửa</button>
                     </div>
                 </form>
                 </div>

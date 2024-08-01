@@ -7,13 +7,38 @@ use App\Models\Order;
 use App\Models\OrderModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
-        return view('admin.order.index', compact('orders'));
+        $query = Order::query()->orderBy('id','desc');
+
+        if($request->has('date') && $request->input('date') != ''){
+            $date = $request->date;
+
+            if(Str::contains($date, 'to')){
+                $date = explode(' to', $date);
+
+                $query = $query->whereBetween('created_at',[ Carbon::parse($date[0])->startOfDay() , Carbon::parse($date[1])->endOfDay()]);
+            }else{
+                $query = $query->whereDate('created_at', Carbon::parse($date)->format('Y-m-d'));
+            }          
+        }
+
+        if($request->has('status') && $request->input('status') != 'all'){
+            $query = $query->where('order_status',$request->status);
+        }
+
+        if($request->has('payment') && $request->input('payment') != 'all'){
+            $query = $query->where('payment_method',$request->payment);
+        }
+
+        $query = $query->get();
+
+        return view('admin.order.index', ['orders' => $query]);
     }
 
     public function detail($id)
@@ -59,4 +84,12 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->route('admin.orders.index');
     }
+
+    public function print($id){
+        $order = Order::query()->find($id);
+
+        $orderItems = $order->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
+
+        return view('admin.invoices.detail',compact('order','orderItems'));
+    }   
 }

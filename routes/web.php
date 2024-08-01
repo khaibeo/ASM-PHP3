@@ -76,7 +76,7 @@ Route::prefix('auth')->as('auth.')->group(function () {
 //Route admin
 Route::prefix('admin')
     ->as('admin.')
-    // ->middleware(['admin'])
+    ->middleware(['admin'])
     ->group(function () {
         Route::get('/', function () {
             return view("admin.dashboard");
@@ -94,7 +94,7 @@ Route::prefix('admin')
                 Route::get('/{id}', 'edit')->name('edit');
                 Route::put('/{id}', 'update')->name('update');
 
-                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::delete('/{id}', 'destroy')->can('admin')->name('destroy');
             });
 
         // Danh mục sản phẩm
@@ -112,6 +112,7 @@ Route::prefix('admin')
         // Người dùng
         Route::controller(AdminUserController::class)
             ->prefix('users')->as('users.')
+            ->middleware('can:admin')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
 
@@ -128,16 +129,18 @@ Route::prefix('admin')
         Route::controller(OrderController::class)
             ->prefix('orders')->as('orders.')
             ->group(function () {
-                Route::get('/index', 'index')->name('index');
+                Route::get('/', 'index')->name('index');
                 Route::get('/edit-status/{id}', 'editStatus')->name('editStatus');
                 Route::post('/update-status/{id}', 'updateStatus')->name('updateStatus');
                 Route::get('/detail/{id}', 'detail')->name('detail');
-                Route::get('/delete/{id}', 'delete')->name('delete');
+                Route::get('/delete/{id}', 'delete')->middleware('can:admin')->name('delete');
+                Route::get('/print/{id}','print')->name('print');
             });
 
         // Mã giảm giá
         Route::controller(AdminVoucherController::class)
             ->prefix('vouchers')->as('vouchers.')
+            ->middleware('can:admin')
             ->group(function () {
                 Route::get('/index', 'list')->name('index');
                 Route::get('/add', 'add')->name('add');

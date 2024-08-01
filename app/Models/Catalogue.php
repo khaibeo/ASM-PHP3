@@ -10,7 +10,7 @@ class Catalogue extends Model
 {
     use HasFactory;
 
-    protected $filltable = [
+    protected $fillable = [
         'name',
         'image',
         'parent_id',
@@ -19,7 +19,7 @@ class Catalogue extends Model
 
     public function children()
     {
-        return $this->hasMany(Catalogue::class, 'parent_id')->with('children');
+        return $this->hasMany(Catalogue::class, 'parent_id');
     }
     
     

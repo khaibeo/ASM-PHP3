@@ -34,7 +34,8 @@
                         <div class="d-flex align-items-center">
                             <h5 class="card-title flex-grow-1 mb-0">Đơn Hàng #{{ $order->id }}</h5>
                             <div class="flex-shrink-0">
-                                <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Quay Lại</a>
+                                <a href="{{ route('admin.orders.index') }}" class="btn btn-primary">Quay Lại</a>
+                                <a href="{{ route('admin.orders.print', $order->id) }}" class="btn btn-success">Hóa đơn</a>
                             </div>
                         </div>
                         <div class="mt-3">
