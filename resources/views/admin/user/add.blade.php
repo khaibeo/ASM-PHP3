@@ -65,9 +65,9 @@
                                         <label for="choices-status-input" class="form-label">Vai trò</label>
                                         <select class="form-select" data-choices data-choices-search-false
                                             id="choices-status-input" name="role">
-                                            <option value="customer" selected>Khách hàng</option>
+                                            <option value="customer" selected>Customer</option>
                                             <option value="admin">Admin</option>
-                                            <option value="staff">Nhân viên</option>
+                                            <option value="staff">Staff</option>
                                         </select>
                                     </div>
                                 </div>
