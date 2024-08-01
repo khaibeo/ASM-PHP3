@@ -29,7 +29,7 @@ class CheckoutController extends Controller
         $cartItems = $cartItems->map(function ($item) {
             $variantAttributes = $item->variant->attributeValues->map(function ($av) {
                 return $av->attribute->name . ': ' . $av->value;
-            })->implode(', ');
+            })->implode(', ');  
 
             $item->variantAttributes = $variantAttributes;
             return $item;
