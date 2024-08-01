@@ -27,6 +27,7 @@ Route::get('/product', [ProductController::class, 'index'])->name('product.index
 Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
 Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product-review', [ProductController::class, 'review'])->name('product.review');
+Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
 
 //Giỏ hàng
 Route::controller(CartController::class)
@@ -122,6 +123,7 @@ Route::prefix('admin')
                 Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::post('/update/{id}', 'update')->name('update');
                 Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+                Route::get('/search', 'search')->name('search');
             });
 
         // Đơn hàng

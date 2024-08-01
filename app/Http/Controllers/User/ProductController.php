@@ -72,4 +72,17 @@ class ProductController extends Controller
     {
         return view('Clients.product.review-product');
     }
+
+    public function search(Request $request)
+    {
+
+        $data = $request->validate(
+            [
+                'query' => 'required|string|max:255',
+            ],
+        );
+
+        $products = Product::where('name', 'like', "%{$data['query']}%")->paginate(9);
+        return view('Clients.product.product', compact('products'));
+    }
 }

@@ -46,18 +46,21 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="card-body border-bottom-dashed border-bottom">
-                        <form>
+                   <div class="card-body border-bottom-dashed border-bottom">
+                        {{-- <form> --}}
                             <div class="row g-3">
                                 <div class="col-xl-6">
+                                    <form action="{{ route('admin.users.search') }}" method="get">
+                                    @csrf
                                     <div class="search-box">
-                                        <input type="text" class="form-control search"
-                                            placeholder="Search for customer, email, phone, status or something...">
+                                        <input type="text" name="search" value="{{ request()->query('search', old('search')) }}"
+                                            class="form-control search" placeholder="Nhập vai trò...">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
+                                </form>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xl-6">
+                               {{--   <div class="col-xl-6">
                                     <div class="row g-3">
                                         <div class="col-sm-4">
                                             <div class="">
@@ -140,10 +143,10 @@
                                                                 class="badge bg-info-subtle text-info">Admin</span>
                                                         @elseif ($user->role == 'customer')
                                                             <span
-                                                                class="badge bg-info-subtle text-primary">Nhan vien</span>
+                                                                class="badge bg-info-subtle text-primary">Customer</span>
                                                         @else
                                                             <span
-                                                                class="badge bg-warning-subtle text-success">Khach hang</span>
+                                                                class="badge bg-warning-subtle text-success">Staff</span>
                                                         @endif
 
                                                     </td>

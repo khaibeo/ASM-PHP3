@@ -46,5 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-   
+    public static function searchByRole($role)
+    {
+        return self::where('role', 'like', "%{$role}%")->get();
+    }
 }
