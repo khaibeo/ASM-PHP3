@@ -6,7 +6,6 @@
                             </figure>
                             <div class="flex-fill">
                                 <h5 class="mb-3">{{$user->name}}</h5>
-                                <a class="btn btn-primary me-2" href="{{route('user.profile')}}">Sửa thông tin</a>
                             </div>
                         </div>
                         <div class="card sticky-top mb-4 mb-md-0">

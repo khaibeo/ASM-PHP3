@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-3 col-sm-4">
+                                <div class="col-xxl-4 col-sm-4">
                                     <div>
                                         <select class="form-control" name="payment" id="payment">
                                             <option value="all" selected>Phương thức thanh toán</option>
@@ -83,6 +83,7 @@
                             <!--end row-->
                         </form>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">

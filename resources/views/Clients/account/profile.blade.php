@@ -31,7 +31,7 @@ Hồ sơ cá nhân
                                                         <figure class="me-4">
                                                             <img width="100" height="100" class="rounded-pill" src="{{ $user->thumbnail ? asset('storage/' . $user->thumbnail) : asset('default-thumbnail.png') }}" alt="Profile Picture">
                                                         </figure>
-                                                        <input type="file" name="thumbnail" placeholder="Chọn ảnh">
+                                                        <input type="file"  name="thumbnail" placeholder="Chọn ảnh">
                                                         @error('thumbnail')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -40,32 +40,29 @@ Hồ sơ cá nhân
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Tên đăng nhập</label>
-                                                            <input type="text" class="form-control" value="{{ $user->name }}" disabled>
-                                                        </div>
-                                                        <div class="mb-3">
                                                             <label class="form-label">Email</label>
-                                                            <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                                                            <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" disabled>
                                                            @error('email')
                                                                <div class="text-danger">{{ $message }}</div>
                                                            @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Họ và tên</label>
-                                                            <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
-                                                            @error('name')
-                                                               <div class="text-danger">{{ $message }}</div>
-                                                           @enderror
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Số điện thoại</label>
-                                                            <input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
-                                                            @error('phone')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label">Họ và tên</label>
+                                                        <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
+                                                        @error('name')
+                                                           <div class="text-danger">{{ $message }}</div>
+                                                       @enderror
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label">Số điện thoại</label>
+                                                        <input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
+                                                        @error('phone')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="row">

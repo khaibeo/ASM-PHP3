@@ -75,7 +75,6 @@ Route::get('/payment-fail/{id}', [PaymentController::class, 'showError'])->name(
 
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
 Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
-Route::post('/save-voucher/{id}', [VoucherController::class, 'saveVoucher'])->name('save.voucher');
 
 Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'showFormAuth'])->name('index');
@@ -138,7 +137,6 @@ Route::prefix('admin')
                 Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::post('/update/{id}', 'update')->name('update');
                 Route::delete('/destroy/{id}', 'destroy')->name('destroy');
-                Route::get('/search', 'search')->name('search');
             });
 
         // Đơn hàng
@@ -150,7 +148,7 @@ Route::prefix('admin')
                 Route::post('/update-status/{id}', 'updateStatus')->name('updateStatus');
                 Route::get('/detail/{id}', 'detail')->name('detail');
                 Route::get('/delete/{id}', 'delete')->middleware('can:admin')->name('delete');
-                Route::get('/print/{id}','print')->name('print');
+                Route::get('/print/{id}', 'print')->name('print');
             });
 
         // Mã giảm giá

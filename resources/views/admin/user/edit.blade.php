@@ -6,9 +6,9 @@
 
 @section('content')
     <div class="container-fluid">
+        <form action="{{ route('admin.users.update', $user->id) }}" method="post" enctype="multipart/form-data">
+            <div class="row">
 
-        <div class="row">
-            <form action="{{ route('admin.users.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
                 <div class="col-xxl-3">
@@ -20,7 +20,8 @@
                                         class="rounded-circle avatar-xl img-thumbnail user-profile-image"
                                         alt="user-profile-image">
                                     <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                        <input id="profile-img-file-input" type="file" name="thumbnail" class="profile-img-file-input">
+                                        <input id="profile-img-file-input" type="file" name="thumbnail"
+                                            class="profile-img-file-input">
                                         <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                             <span class="avatar-title rounded-circle bg-light text-body">
                                                 <i class="ri-camera-fill"></i>
@@ -60,8 +61,7 @@
                                             <div class="mb-3">
                                                 <label for="firstnameInput" class="form-label">Tên người dùng</label>
                                                 <input type="text" class="form-control" name="name"
-                                                    id="firstnameInput" placeholder="Enter your firstname"
-                                                    value="{{ $user->name }}">
+                                                    id="firstnameInput" placeholder="" value="{{ $user->name }}">
                                                 @error('name')
                                                     <b class="text-danger">{{ $errors->first('name') }}</b>
                                                 @enderror
@@ -74,8 +74,7 @@
                                             <div class="mb-3">
                                                 <label for="phonenumberInput" class="form-label">Số điện thoại</label>
                                                 <input type="text" class="form-control" name="phone"
-                                                    id="phonenumberInput" placeholder="Enter your phone number"
-                                                    value="{{ $user->phone }}">
+                                                    id="phonenumberInput" placeholder="" value="{{ $user->phone }}">
                                                 @error('phone')
                                                     <b class="text-danger">{{ $errors->first('phone') }}</b>
                                                 @enderror
@@ -86,7 +85,7 @@
                                             <div class="mb-3">
                                                 <label for="emailInput" class="form-label">Email</label>
                                                 <input type="email" class="form-control" name="email" id="emailInput"
-                                                    placeholder="Enter your email" value="{{ $user->email }}">
+                                                    placeholder="" value="{{ $user->email }}">
                                                 @error('email')
                                                     <b class="text-danger">{{ $errors->first('email') }}</b>
                                                 @enderror
@@ -97,8 +96,7 @@
                                             <div class="mb-3">
                                                 <label for="JoiningdatInput" class="form-label">Địa chỉ</label>
                                                 <input type="text" class="form-control" name="address"
-                                                    id="JoiningdatInput" value="{{ $user->address }}"
-                                                    placeholder="Select date" />
+                                                    id="JoiningdatInput" value="{{ $user->address }}" placeholder="" />
                                                 @error('address')
                                                     <b class="text-danger">{{ $errors->first('address') }}</b>
                                                 @enderror
@@ -109,19 +107,19 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="choices-status-input" class="form-label">Vai trò</label>
-                                                <select class="form-select" name="role" data-choices
-                                                    data-choices-search-false id="choices-status-input">
+                                                <select class="form-select" name="role">
                                                     <option value="customer" selected>Khách hàng</option>
                                                     <option value="admin">Admin</option>
-                                                    <option value="staff" >Nhân viên</option>
+                                                    <option value="staff">Nhân viên</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-lg-12">
                                             <div class="hstack gap-2 justify-content-end">
+                                                <a href="{{ route('admin.users.index') }}" type="submit"
+                                                    class="btn btn-danger w-sm">Quay lại</a>
                                                 <button type="submit" class="btn btn-primary">Sửa</button>
-                                                <a href="{{route('admin.users.index')}}" type="submit" class="btn btn-danger w-sm">Quay lại</a>
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -171,9 +169,10 @@
                     </div>
                     <!--end col-->
                 </div>
-            </form>
-            <!--end row-->
 
-        </div>
+                <!--end row-->
+
+            </div>
+        </form>
         <!-- container-fluid -->
     @endsection
