@@ -6,7 +6,9 @@ use App\Models\Catalogue;
 use Closure;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Cart;
 
 class ShareCategories
 {
@@ -20,6 +22,14 @@ class ShareCategories
         $categories = Catalogue::whereNull('parent_id')
             ->with('children')
             ->get();
+        
+        if(Auth::check()){
+            $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+
+            $cartItems = $cart->items->count();
+
+            View::share('numCartItem', $cartItems);
+        }
 
         View::share('categories', $categories);
 

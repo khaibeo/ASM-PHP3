@@ -52,7 +52,7 @@ class OrderController extends Controller
 
     public function editStatus($id)
     {
-        $order = OrderModel::find($id);
+        $order = Order::find($id);
         if (!$order) {
             return redirect()->route('admin.orders.index');
         }
@@ -65,7 +65,7 @@ class OrderController extends Controller
             'order_status' => 'required|string|max:255',
         ]);
 
-        $order = OrderModel::find($id);
+        $order = Order::find($id);
         if (!$order) {
             return redirect()->route('admin.orders.index');
         }
@@ -80,7 +80,7 @@ class OrderController extends Controller
 
     public function delete($id)
     {
-        $order = OrderModel::getSingle($id);
+        $order = Order::find($id);
         $order->delete();
         return redirect()->route('admin.orders.index');
     }

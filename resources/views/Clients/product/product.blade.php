@@ -196,7 +196,7 @@
                                     <div class="grid_item">
                                         <span class="ribbon off">-30%</span>
                                         <figure>
-                                            <a href="product-detail-1.html">
+                                            <a href="{{ route('product.detail', $item->slug) }}">
                                                 @php
                                                     $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL)
                                                         ? $item->thumbnail

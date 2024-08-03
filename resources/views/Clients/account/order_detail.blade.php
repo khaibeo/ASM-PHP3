@@ -10,7 +10,7 @@ Chi tiết đơn hàng
             <div class="card" >
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h5 class="card-title flex-grow-1 mb-0">Đơn Hàng #{{ $order->id }}</h5>
+                        <h5 class="card-title flex-grow-1 mb-0">Đơn Hàng #{{ $order->id }} - {{getOrderStatus($order->order_status)}}</h5>
                         <div class="flex-shrink-0">
                             <a href="{{ route('user.order') }}" class="btn btn-success">Quay Lại</a>
                         </div>
@@ -110,9 +110,9 @@ Chi tiết đơn hàng
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mb-0 vstack gap-3">
-                        <li>Họ và tên: {{ $order->name }}</li>
-                        <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $order->email }}</li>
-                        <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>{{ $order->phone }}</li>
+                        <li>{{ $order->name }}</li>
+                        <li>{{ $order->email }}</li>
+                        <li>{{ $order->phone }}</li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +136,7 @@ Chi tiết đơn hàng
                 <div class="card-body">
                     <ul class="list-unstyled vstack gap-2 fs-13 mb-0">
                         <li >Tổng tiền: {{ currencyFormat($order->total_product_price) }}</li>
-                        <li> giảm giá: {{ currencyFormat($order->discount_amount) }}</li>
+                        <li> Giảm giá: {{ currencyFormat($order->discount_amount) }}</li>
                         <li class="fw-bold fs-14">Thành tiền: {{ currencyFormat($order->total_amount) }}</li>
                     </ul>
                 </div>
