@@ -149,6 +149,7 @@ Route::prefix('admin')
                 Route::get('/detail/{id}', 'detail')->name('detail');
                 Route::get('/delete/{id}', 'delete')->middleware('can:admin')->name('delete');
                 Route::get('/print/{id}', 'print')->name('print');
+                Route::get('/export', 'showExport')->name('export');
             });
 
         // Mã giảm giá

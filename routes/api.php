@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\VoucherController;
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/vouchers/import', [VoucherController::class, 'import'])->name('import-vouchers');
+Route::get('/orders/export', [OrderController::class, 'export'])->name('export-orders');
+

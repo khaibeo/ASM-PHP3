@@ -57,6 +57,9 @@
             const fileInput = document.getElementById('excelFile');
             const messageDiv = document.getElementById('message');
 
+            const btn = document.getElementById('upload-file');
+            var textOld = btn.textContent;
+
             if (!fileInput.files.length) {
                 showMessage('Vui lòng chọn một file Excel', 'error');
                 return;
@@ -67,6 +70,7 @@
             formData.append('file', file);
 
             try {
+                btn.textContent = 'Đang nhập';
                 const response = await fetch('/api/vouchers/import', {
                     method: 'POST',
                     body: formData,
@@ -75,10 +79,13 @@
                 const result = await response.json();
 
                 if (response.ok) {
+                    btn.textContent = textOld;
+
                     showMessage(`
                         Import thành công!<br>
                     `, 'success');
                 } else {
+                    btn.textContent = textOld;
                     if (result.errors && Array.isArray(result.errors)) {
                         showDetailedErrors(result.errors);
                     } else {
@@ -86,6 +93,7 @@
                     }
                 }
             } catch (error) {
+                btn.textContent = textOld;
                 showMessage(`Đã xảy ra lỗi: ${error.message}`, 'error');
             }
         }
