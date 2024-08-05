@@ -223,17 +223,23 @@ class ProductController extends Controller
 
             // Xóa các variant_attribute_values liên quan
             $variantIds = $product->variants->pluck('id')->toArray();
-            DB::table('variant_attribute_values')
-                ->whereIn('variant_id', $variantIds)
+
+            // DB::table('variant_attribute_values')
+            //     ->whereIn('variant_id', $variantIds)
+            //     ->delete();
+
+            // Xóa các sản phẩm khỏi giỏ hàng
+            DB::table('cart_items')
+                ->whereIn('product_variant_id', $variantIds)
                 ->delete();
 
             // Xóa các product_variants
-            $product->variants()->delete();
+            // $product->variants()->delete();
 
             //Xóa ảnh đại diện
-            if($product->thumbnail && Storage::disk('public')->exists($product->thumbnail)){
-                Storage::disk('public')->delete($product->thumbnail);
-            }
+            // if($product->thumbnail && Storage::disk('public')->exists($product->thumbnail)){
+            //     Storage::disk('public')->delete($product->thumbnail);
+            // }
 
             // Xóa sản phẩm
             $product->delete();

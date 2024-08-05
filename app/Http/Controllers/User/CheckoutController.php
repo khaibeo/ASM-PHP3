@@ -155,17 +155,25 @@ class CheckoutController extends Controller
             : $voucher->discount_value;
 
         // Kiểm tra giá trị giảm tối đa nếu có
-        // if ($voucher->max_discount && $discountValue > $voucher->max_discount) {
-        //     $discountValue = $voucher->max_discount;
-        // }
+        if ($voucher->max_discount_value && $discountValue > $voucher->max_discount_value) {
+            $discountValue = $voucher->max_discount_value;
+        }
 
         // Kiểm tra giá trị đơn hàng tối thiểu
-        // if ($voucher->min_order_value && $total < $voucher->min_order_value) {
-        //     return response()->json([
-        //         'valid' => false,
-        //         'message' => "Giá trị đơn hàng tối thiểu để sử dụng mã này là " . number_format($voucher->min_order_value) . ' đ'
-        //     ]);
-        // }
+        if ($voucher->min_order_value && $total < $voucher->min_order_value) {
+            return response()->json([
+                'valid' => false,
+                'message' => "Giá trị đơn hàng tối thiểu để sử dụng mã này là " . currencyFormat($voucher->min_order_value)
+            ]);
+        }
+
+        // Kiểm tra giá trị đơn hàng tối đa
+        if ($voucher->max_order_value && $total > $voucher->max_order_value) {
+            return response()->json([
+                'valid' => false,
+                'message' => "Giá trị đơn hàng tối đa để sử dụng mã này là " . currencyFormat($voucher->max_order_value)
+            ]);
+        }
 
         return response()->json([
             'valid' => true,

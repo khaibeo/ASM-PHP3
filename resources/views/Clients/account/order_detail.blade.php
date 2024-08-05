@@ -42,11 +42,11 @@ Chi tiết đơn hàng
                                     <td>
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                <img src="{{ Storage::url($item->variant->product->thumbnail) }}"
+                                                <img src="{{ Storage::url($item->variant?->product?->thumbnail) }}"
                                                     alt="" class="img-fluid d-block" width="150px" height="150px">
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h5 class="fs-15"><a href="{{ route('admin.products.edit', $item->variant->product->id) }}"
+                                                <h5 class="fs-15"><a href="{{ route('product.detail', $item->variant?->product?->slug ?? 'khong-xac-dinh') ?? '#' }}"
                                                         class="link-primary">{{ $item->product_name }}</a></h5>
                                                 @foreach ($item->variant->attributeValues as $val)
                                                     <p class="text-muted mb-0">{{$val->attribute->name}}: <span class="fw-medium">{{ $val->value }}</span></p>

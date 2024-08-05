@@ -73,7 +73,7 @@
                                                     @foreach ($order->details as $item)
                                                         <div class="p-2">
                                                             <a href="#">
-                                                                <img src="{{ Storage::url($item->variant->product->thumbnail) }}" class="rounded" width="80" alt="...">
+                                                                <img src="{{ Storage::url($item->variant?->product?->thumbnail) }}" class="rounded" width="80" alt="...">
                                                             </a>
                                                         </div>
                                                     @endforeach

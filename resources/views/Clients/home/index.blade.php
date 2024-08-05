@@ -142,7 +142,7 @@ Trang chủ
 
 		<div class="container margin_60_35">
 			<div class="main_title">
-				<h2>Sản phẩm bán chạy</h2>
+				<h2>Quan tâm nhiều</h2>
 				<span>Products</span>
 			</div>
 			<div class="row small-gutters">

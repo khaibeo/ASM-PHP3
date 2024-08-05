@@ -23,7 +23,13 @@ Thanh toán thất bại
                 <p>Đã có lỗi xảy ra trong quá trình thanh toán, vui lòng thử lại!</p>
 
                 <div>
-                    <a class="btn btn-warning mx-2" href="#">Thanh toán lại</a>
+                    <form class="d-inline-block" action="{{route('changePaymentMethod', $id)}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <button class="btn btn-primary mx-2">Đổi phương thức thanh toán</button>
+                    </form>
+                    
+                    <a class="btn btn-primary mx-2" href="#">Thanh toán lại</a>
                 </div>
                 </div>
             </div>
