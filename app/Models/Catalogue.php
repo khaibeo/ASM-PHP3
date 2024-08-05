@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Catalogue extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
         'image',
