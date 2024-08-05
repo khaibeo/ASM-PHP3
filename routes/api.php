@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::delete('/catalogue/{id}',[CatalogueController::class,'destroy'])->name('catalogues.destroy');
+Route::delete('/catalogue/{id}',[CatalogueController::class,'destroy']);
 
 Route::post('/vouchers/import', [VoucherController::class, 'import'])->name('import-vouchers');
 
