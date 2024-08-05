@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\CatalogueContrller;
+use App\Http\Controllers\Api\CatalogueController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\VoucherController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::delete('/catalogue/{id}',[CatalogueContrller::class,'destroy'])->name('catalogues.destroy');
+Route::delete('/catalogue/{id}',[CatalogueController::class,'destroy'])->name('catalogues.destroy');
 
 Route::post('/vouchers/import', [VoucherController::class, 'import'])->name('import-vouchers');
 
