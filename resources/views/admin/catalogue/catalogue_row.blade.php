@@ -7,7 +7,7 @@
     <td>{{ $catalogue->updated_at }}</td>
     <td>
         <div class="d-flex gap-2">
-            <a href="#" class="btn btn-warning">Sửa</a>
+            <a href="{{route('admin.catalogues.edit', $catalogue->id)}}" class="btn btn-warning">Sửa</a>
             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $catalogue->id }}">Xóa</button>
         </div>
     </td>

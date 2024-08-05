@@ -27,7 +27,7 @@ class CatalogueController extends Controller
     // }
     public function index()
     {
-        $catalogues = Catalogue::with('children')->whereNull('parent_id')->get();
+        $catalogues = Catalogue::with('children')->whereNull('parent_id')->orderBy('id','desc')->get();
         return view('admin.catalogue.index', compact('catalogues'));
     }
     /**

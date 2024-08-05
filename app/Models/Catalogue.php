@@ -10,7 +10,7 @@ class Catalogue extends Model
 {
     use HasFactory;
     
-    protected $filltable = [
+    protected $fillable = [
         'name',
         'image',
         'parent_id',

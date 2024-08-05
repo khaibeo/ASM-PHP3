@@ -48,6 +48,9 @@ class CatalogueContrller extends Controller
      */
     public function destroy(string $id)
     {
+        if ($id == 1) {
+            return response()->json(['error' => 'Không thể xóa danh mục này'], 403);
+        }
         $catalogue = Catalogue::findOrFail($id);
 
         // Cập nhật danh mục con cấp đầu
