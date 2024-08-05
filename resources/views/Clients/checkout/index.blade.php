@@ -188,10 +188,8 @@
             });
 
             function applyVoucher(voucher, total) {
-                var discountAmount = voucher.discount_type === 'percentage' ?
-                    total * (voucher.discount_value / 100) :
-                    voucher.discount_value;
-
+                var discountAmount = voucher.discount_value;
+                
                 var newTotal = total - discountAmount;
 
                 // Cập nhật giao diện

@@ -120,7 +120,7 @@
                                                 <th data-ordering="false">STT</th>
                                                 <th data-ordering="false">Ảnh</th>
                                                 <th data-ordering="false">Tên sản phẩm</th>
-                                                <th data-ordering="false">Giá thường</th>
+                                                <th data-ordering="false">Giá</th>
                                                 <th>Lượt xem</th>
                                                 <th>Trạng thái</th>
                                                 <th>Nổi bật</th>

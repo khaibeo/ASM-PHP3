@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\vouchers\StoreUpdateVoucherRequest;
 use App\Http\Requests\vouchers\StoreVoucherRequest;
+use App\Imports\VoucherImport;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class VoucherController extends Controller
 {
@@ -115,5 +117,67 @@ class VoucherController extends Controller
         $voucher = Voucher::getSingle($id);
         $voucher->delete();
         return redirect()->route('admin.vouchers.index');
+    }
+
+    public function showImport()
+    {
+        return view('admin.voucher.import');
+    }
+
+    //Nhập từ file exel
+    public function import(Request $request)
+    {
+        $request->validate(
+            [
+                'file' => 'required|mimes:xlsx,xls',
+            ],
+            [
+                'file.required' => 'Hãy chọn một file để tải lên',
+                'file.mimes' => 'File không đúng định dạng ( .xlsx, .xls )',
+            ]
+        );
+
+        try {
+            DB::beginTransaction();
+
+            $import = new VoucherImport();
+            $import->import($request->file('file'));
+
+            if (count($import->failures()) > 0) {
+                $failures = $import->failures();
+
+                foreach ($failures as $failure) {
+                    $errorMessages[] = [
+                        'row' => $failure->row(),
+                        'errors' => $failure->errors(),
+                    ];
+                }
+
+                DB::rollBack();
+
+                return response()->json([
+                    'success' => true,
+                    'status' => "422",
+                    'errors' => $errorMessages,
+                    'message' => 'Dữ liệu không hợp lệ'
+                ], 422);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'status' => "200",
+                'message' => 'Thêm thành công'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'status' => "500",
+                'error' => $e->getMessage(),
+                'message' => 'Đã có lỗi xảy ra, vui lòng thử lại'
+            ], 500);;
+        }
     }
 }

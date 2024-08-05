@@ -40,8 +40,8 @@
                                     <a class="btn btn-success add-btn" href="{{ route('admin.vouchers.add') }}"
                                         id="create-btn">
                                         <i class="ri-add-line align-bottom me-1"></i> Thêm </a>
-                                    {{-- <button type="button" class="btn btn-info"><i
-                                            class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
+                                    <a href="{{route('admin.vouchers.import')}}" class="btn btn-info"><i
+                                            class="ri-file-download-line align-bottom me-1"></i> Import</a>
                                 </div>
                             </div>
                         </div>

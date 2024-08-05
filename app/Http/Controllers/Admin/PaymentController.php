@@ -125,4 +125,11 @@ class PaymentController extends Controller
     public function showError($id){
         return view('Clients.checkout.fail', compact('id'));
     }
+
+    public function changePaymentMethod($id)
+    {
+        Order::query()->find($id)->update(['payment_method' => 0, 'order_status' => 'pending']);
+
+        return redirect()->route('checkout.success', $id);
+    }
 }

@@ -71,7 +71,7 @@ Route::controller(UserController::class)
 Route::get('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('payment');
 Route::get('/check_payment', [PaymentController::class, 'checkPayment'])->name('payment.check');
 Route::get('/payment-fail/{id}', [PaymentController::class, 'showError'])->name('payment.fail');
-
+Route::put('/payment/{id}', [PaymentController::class, 'changePaymentMethod'])->name('changePaymentMethod');
 
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
 Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
@@ -159,6 +159,7 @@ Route::prefix('admin')
                 Route::get('/index', 'list')->name('index');
                 Route::get('/add', 'add')->name('add');
                 Route::post('/add', 'insert');
+                Route::get('/import', 'showImport')->name('import');
                 Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::post('/edit/{id}', 'update');
                 Route::get('/delete/{id}', 'delete')->name('delete');

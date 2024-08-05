@@ -26,9 +26,17 @@ class ShareCategories
         if(Auth::check()){
             $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
-            $cartItems = $cart->items->count();
+            $cartItems = $cart->items;
 
-            View::share('numCartItem', $cartItems);
+            $countCart = $cartItems->count();
+
+            $total = $cartItems->sum(function ($item) {
+                $price = $item->variant?->sale_price ?? $item->variant?->regular_price;
+                return $item->quantity * $price;
+            });
+
+            View::share('numCartItem', $countCart);
+            View::share('totalCart', $total);
         }
 
         View::share('categories', $categories);

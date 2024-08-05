@@ -140,9 +140,10 @@
                         <li>
                             <div class="dropdown dropdown-cart">
                                 <a href="{{ route('cart.index') }}"
-                                    class="cart_bt"><strong>{{ $numCartItem }}</strong></a>
+                                    class="cart_bt"><strong>{{ $numCartItem ?? 0}}</strong></a>
                                 <div class="dropdown-menu">
                                     <div class="total_drop">
+										<p class="text-center fw-bold">Tổng tiền: {{currencyFormat($totalCart ?? 0)}} </p>
                                         <a href="{{ route('cart.index') }}" class="btn_1 outline">Xem giỏ hàng</a>
                                         <a href="{{ route('checkout.index') }}" class="btn_1">Thanh toán</a>
                                     </div>
