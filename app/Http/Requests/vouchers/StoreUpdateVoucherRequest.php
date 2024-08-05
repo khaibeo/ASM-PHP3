@@ -30,9 +30,9 @@ class StoreUpdateVoucherRequest extends FormRequest
             'quantity' => 'required|integer|min:1',
             'valid_from' => 'required|date',
             'valid_until' => 'required|date|after_or_equal:valid_from',
-            'min_order_value' => 'required|numeric|min:0',
-            'max_order_value' => 'required|nullable|numeric|gte:min_order_value',
-            'max_discount_value' => 'required|nullable|numeric|min:0',
+            'min_order_value' => 'nullable|numeric|min:0',
+            'max_order_value' => 'nullable|nullable|numeric|gte:min_order_value',
+            'max_discount_value' => 'nullable|nullable|numeric|min:0',
         ];
     }
 

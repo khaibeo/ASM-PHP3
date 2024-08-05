@@ -162,13 +162,10 @@
                         </div>
                         <div class="card-body">
                             <select class="form-select" id="catalogue_id" name="catalogue_id">
-                               
-
-                                @foreach($catalogues as $category)
-                                    <option value="{{ $category->id }}" {{ $product->catalogue_id == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
+                                @foreach ($catalogues as $item)
+                                @php($indent = "")
+                                @include('admin.product.catalogue_edit', ['catalog' => $item])
+                            @endforeach
                             </select>
                         </div>
                         <!-- end card body -->

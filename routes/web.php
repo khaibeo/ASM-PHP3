@@ -27,6 +27,7 @@ Route::get('/product', [ProductController::class, 'index'])->name('product.index
 Route::get('/product-by-category/{id}', [ProductController::class, 'productByCategory'])->name('product.category');
 Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product-review', [ProductController::class, 'review'])->name('product.review');
+Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
 
 //Giỏ hàng
 Route::controller(CartController::class)
@@ -70,11 +71,10 @@ Route::controller(UserController::class)
 Route::get('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('payment');
 Route::get('/check_payment', [PaymentController::class, 'checkPayment'])->name('payment.check');
 Route::get('/payment-fail/{id}', [PaymentController::class, 'showError'])->name('payment.fail');
-
+Route::put('/payment/{id}', [PaymentController::class, 'changePaymentMethod'])->name('changePaymentMethod');
 
 Route::get('/help', [UserController::class, 'help'])->name('user.help');
 Route::get('/voucher', [VoucherController::class, 'list'])->name('voucher.list');
-Route::post('/save-voucher/{id}', [VoucherController::class, 'saveVoucher'])->name('save.voucher');
 
 Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'showFormAuth'])->name('index');
@@ -90,7 +90,7 @@ Route::prefix('auth')->as('auth.')->group(function () {
 //Route admin
 Route::prefix('admin')
     ->as('admin.')
-    // ->middleware(['admin'])
+    ->middleware(['admin'])
     ->group(function () {
         Route::get('/', function () {
             return view("admin.dashboard");
@@ -108,7 +108,7 @@ Route::prefix('admin')
                 Route::get('/{id}', 'edit')->name('edit');
                 Route::put('/{id}', 'update')->name('update');
 
-                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::delete('/{id}', 'destroy')->can('admin')->name('destroy');
             });
 
         // Danh mục sản phẩm
@@ -126,6 +126,7 @@ Route::prefix('admin')
         // Người dùng
         Route::controller(AdminUserController::class)
             ->prefix('users')->as('users.')
+            ->middleware('can:admin')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
 
@@ -142,20 +143,23 @@ Route::prefix('admin')
         Route::controller(OrderController::class)
             ->prefix('orders')->as('orders.')
             ->group(function () {
-                Route::get('/index', 'index')->name('index');
+                Route::get('/', 'index')->name('index');
                 Route::get('/edit-status/{id}', 'editStatus')->name('editStatus');
                 Route::post('/update-status/{id}', 'updateStatus')->name('updateStatus');
                 Route::get('/detail/{id}', 'detail')->name('detail');
-                Route::get('/delete/{id}', 'delete')->name('delete');
+                Route::get('/delete/{id}', 'delete')->middleware('can:admin')->name('delete');
+                Route::get('/print/{id}', 'print')->name('print');
             });
 
         // Mã giảm giá
         Route::controller(AdminVoucherController::class)
             ->prefix('vouchers')->as('vouchers.')
+            ->middleware('can:admin')
             ->group(function () {
                 Route::get('/index', 'list')->name('index');
                 Route::get('/add', 'add')->name('add');
                 Route::post('/add', 'insert');
+                Route::get('/import', 'showImport')->name('import');
                 Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::post('/edit/{id}', 'update');
                 Route::get('/delete/{id}', 'delete')->name('delete');

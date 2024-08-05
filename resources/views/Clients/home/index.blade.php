@@ -142,14 +142,14 @@ Trang chủ
 
 		<div class="container margin_60_35">
 			<div class="main_title">
-				<h2>Sản phẩm bán chạy</h2>
+				<h2>Quan tâm nhiều</h2>
 				<span>Products</span>
 			</div>
 			<div class="row small-gutters">
-				@foreach($products['newest'] as $product)
+				@foreach($products['most_viewed'] as $product)
 				<div class="col-6 col-md-4 col-xl-3">
 					<div class="grid_item">
-						<span class="ribbon new">New</span>
+						<span class="ribbon off">Hot</span>
 						<figure>
 							<a href="">
 								<img class="img-fluid lazy" src="{{\Storage::url($product->thumbnail)}}" data-src="{{\Storage::url($product->thumbnail)}}" alt="{{ $product->name }}" width="290px" height="290px">
@@ -194,11 +194,11 @@ Trang chủ
 				<span>Products</span>
 			</div>
 			<div class="owl-carousel owl-theme products_carousel">
-				@foreach ($products['most_viewed'] as $product)
+				@foreach ($products['newest'] as $product)
 					<div class="item">
 						<div class="grid_item">
 							
-								<span class="ribbon off">Sale</span>
+								<span class="ribbon new">New</span>
 							
 							<figure>
 								<a href="{{ route('product.detail', $product->slug) }}">

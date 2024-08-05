@@ -31,7 +31,6 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-
                             <div class="mb-3">
                                 <label class="form-label" for="project-title-input in">Tên người dùng</label>
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}"
@@ -51,23 +50,21 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="project-title-input">Địa chỉ</label>
-                                <input type="text" class="form-control" value="{{ old('address') }}" name="address"
-                                    id="project-title-input">
+                                <label class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" value="{{ old('address') }}" name="address">
                                 @error('address')
-                                    <b class="text-danger">{{ $errors->first('address') }}</b>
+                                    <b class="text-danger">{{ $errors->first('address') }}</b>  
                                 @enderror
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-lg-6">
                                     <div class="mb-3 mb-lg-0">
-                                        <label for="choices-status-input" class="form-label">Vai trò</label>
-                                        <select class="form-select" data-choices data-choices-search-false
-                                            id="choices-status-input" name="role">
-                                            <option value="customer" selected>Khách hàng</option>
+                                        <label for="    " class="form-label">Vai trò</label>
+                                        <select class="form-select" name="role">
+                                            <option value="customer" selected>Customer</option>
                                             <option value="admin">Admin</option>
-                                            <option value="staff">Nhân viên</option>
+                                            <option value="staff">Staff</option>
                                         </select>
                                     </div>
                                 </div>
@@ -84,8 +81,8 @@
                     <!-- end card -->
 
                     <div class="text-end mb-4">
-                        <button type="submit" class="btn btn-success w-sm">Tạo</button>
                         <a href="{{route('admin.users.index')}}" type="submit" class="btn btn-danger w-sm">Quay lại</a>
+                        <button type="submit" class="btn btn-success w-sm">Tạo</button>
                     </div>
                 </div>
                 <!-- end col -->

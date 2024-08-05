@@ -46,72 +46,51 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="card-body border-bottom-dashed border-bottom">
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-xl-6">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search"
-                                            placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div>
-                                <!--end col-->
-                                <div class="col-xl-6">
-                                    <div class="row g-3">
-                                        <div class="col-sm-4">
-                                            <div class="">
-                                                <input type="text" class="form-control" id="datepicker-range"
-                                                    data-provider="flatpickr" data-date-format="d M, Y"
-                                                    data-range-date="true" placeholder="Select date">
-                                            </div>
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-sm-4">
-                                            <div>
-                                                <select class="form-control" data-plugin="choices" data-choices
-                                                    data-choices-search-false name="choices-single-default" id="idStatus">
-                                                    <option value="">Status</option>
-                                                    <option value="all" selected>All</option>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Block">Block</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
 
-                                        <div class="col-sm-4">
-                                            <div>
-                                                <button type="button" class="btn btn-primary w-100"
-                                                    onclick="SearchData();"> <i
-                                                        class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
+                    <div class="card-body border-bottom-dashed border-bottom mb-3">
+                        <form action="{{ route('admin.users.index') }}" method="get">
+                            <div class="row g-3">
+                                <div class="col-xl-3">
+                                    <div>
+                                        <select class="form-control" name="role" id="role">
+                                            <option value="all" selected>Lọc theo vai trò</option>
+                                            <option value="admin">Quản trị viên</option>
+                                            <option value="staff">Nhân viên</option>
+                                            <option value="customer">Khách hàng</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            <!--end row-->
+
+                                <div class="col-xxl-2 col-sm-4">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary w-100"> <i
+                                                class="ri-equalizer-fill me-1 align-bottom"></i>
+                                            Lọc
+                                        </button>
+                                    </div>
+                                </div>
                         </form>
-                    </div> --}}
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body mt-2">
                                     <table id="example"
                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
                                         style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width: 10px;">
+                                                {{-- <th scope="col" style="width: 10px;">
                                                     <div class="form-check">
                                                         <input class="form-check-input fs-15" type="checkbox" id="checkAll"
                                                             value="option">
                                                     </div>
-                                                </th>
+                                                </th> --}}
                                                 <th data-ordering="false">ID</th>
                                                 <th data-ordering="false">Ảnh</th>
                                                 <th data-ordering="false">Tên</th>
+                                                <th data-ordering="false">Email</th>
                                                 <th data-ordering="false">Vai trò</th>
                                                 <th>Hành động</th>
                                             </tr>
@@ -119,66 +98,57 @@
                                         <tbody>
                                             @foreach ($users as $key => $user)
                                                 <tr>
-                                                    <th scope="row">
+                                                    {{-- <th scope="row">
                                                         <div class="form-check">
                                                             <input class="form-check-input fs-15" type="checkbox"
                                                                 name="checkAll" value="option1">
 
                                                         </div>
-                                                    </th>
+                                                    </th> --}}
                                                     <td>{{ $user->id }}</td>
                                                     <td>
                                                         <img src="{{ Storage::url($user->thumbnail) }}" alt=""
-                                                            width="150px;">
+                                                            height="100" width="100;">
                                                     </td>
                                                     <td>{{ $user->name }}</td>
-                                                    {{-- <td>{{ $user->email }}</td> --}}
+                                                    <td>{{ $user->email }}</td>
 
                                                     <td>
                                                         @if ($user->role == 'admin')
-                                                            <span
-                                                                class="badge bg-info-subtle text-info">Admin</span>
+                                                            <span class="badge bg-info-subtle text-info">Quản trị
+                                                                viên</span>
                                                         @elseif ($user->role == 'customer')
-                                                            <span
-                                                                class="badge bg-info-subtle text-primary">Nhan vien</span>
+                                                            <span class="badge bg-info-subtle text-primary">Khách
+                                                                hàng</span>
                                                         @else
-                                                            <span
-                                                                class="badge bg-warning-subtle text-success">Khach hang</span>
+                                                            <span class="badge bg-warning-subtle text-success">Nhân
+                                                                viên</span>
                                                         @endif
 
                                                     </td>
 
 
                                                     <td>
-                                                     
-                                                          
-                                                        <a href="{{ route('admin.users.edit', $user->id) }}"
-                                                            class="dropdown-item edit-item-btn btn btn-primary"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"> Edit</i>
-                                                           </a>
-
-                                                             
-
-                                                        <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                                            method="POST" class="dropdown-item remove-item-btn ">
-                                                            @method('DELETE')
-                                                            @csrf
-
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted">
-                                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                        <div class="d-flex gap-2">
+                                                            <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                                class="btn btn-primary">Sửa
+                                                            </a>
+    
+                                                            <form action="{{ route('admin.users.destroy', $user->id) }}"
+                                                                method="POST">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger"
                                                                     onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">
-                                                                    Delete</button>
-                                                            </i>
-
-                                                        </form>
-
-                                                        </ul>
+                                                                    Xóa</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                                </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                                </table>
                             </div>
                         </div>
                     </div><!--end col-->
@@ -219,4 +189,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        new DataTable("#example", {
+            "ordering": false
+        });
+    </script>
 @endsection

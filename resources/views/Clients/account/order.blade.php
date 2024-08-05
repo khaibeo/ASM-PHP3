@@ -68,41 +68,12 @@
                                             </div>
                                             <div class="collapse show mt-4" id="orderDetails{{ $order->id }}">
                                                 <hr class="mb-0">
-                                                {{-- <div class="table-responsive">
-                                                    <table class="table table-custom mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Ảnh</th>
-                                                                <th>Tên</th>
-                                                                <th>Size</th>
-                                                                <th>Số lượng</th>
-                                                                <th>Giá</th>
-                                                                <th>Tổng tiền</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($order->items as $item)
-                                                                <tr>
-                                                                    <td>
-                                                                        <a href="#">
-                                                                            <img src="{{ asset('upload/' . $item->product_image) }}" class="rounded" width="40" alt="...">
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>{{ $item->product_name }}</td>
-                                                                    <td>{{ $item->product_size }}</td>
-                                                                    <td>{{ $item->quantity }}</td>
-                                                                    <td>{{ number_format($item->product_sale_price, 0, ',', '.') }}</td>
-                                                                    <td>{{ number_format($item->product_sale_price * $item->quantity, 0, ',', '.') }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div> --}}
+                                                
                                                 <div class="d-flex flex-wrap">
                                                     @foreach ($order->details as $item)
                                                         <div class="p-2">
                                                             <a href="#">
-                                                                <img src="{{ asset('upload/' . $item->product_image) }}" class="rounded" width="80" alt="...">
+                                                                <img src="{{ Storage::url($item->variant?->product?->thumbnail) }}" class="rounded" width="80" alt="...">
                                                             </a>
                                                         </div>
                                                     @endforeach

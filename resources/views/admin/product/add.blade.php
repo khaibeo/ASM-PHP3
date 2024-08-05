@@ -184,10 +184,9 @@
                         </div>
                         <div class="card-body">
                             <select class="form-select" id="catalogue_id" name="catalogue_id">
-                                @foreach ($catalogues as $ct)
-                                    <option value="{{ $ct->id }}"
-                                        {{ old('catalogue_id') == $ct->id ? 'selected' : '' }}>{{ $ct->name }}
-                                    </option>
+                                @foreach ($catalogues as $item)
+                                    @php($indent = "")
+                                    @include('admin.product.catalogue_add', ['catalog' => $item])
                                 @endforeach
                             </select>
                         </div>

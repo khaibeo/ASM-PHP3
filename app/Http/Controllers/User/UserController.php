@@ -32,32 +32,23 @@ class UserController extends Controller
         // Validate dữ liệu đầu vào
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => ['required', 'regex:/^(\+84|0[3|5|7|8|9])+([0-9]{8})$/'], // Sử dụng regex để validate số điện thoại
-            'address' => 'required|string|max:255',
+            'phone' => ['nullable', 'regex:/^(\+84|0[3|5|7|8|9])+([0-9]{8})$/'], // Sử dụng regex để validate số điện thoại
+            'address' => 'nullable|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate ảnh
         ],
         [
-            'name.required' => 'trường này không bỏ trống',
-            'name.string' => 'bạn phải nhập văn bản',
-            'name.max' => 'văn bản không được vượt quá 255 ký tự',
-            
-            'email.required' => 'trường này không bỏ trống',
-            'email.string' => 'bạn phải nhập văn bản',
-            'email.email' => 'bạn phải nhập một địa chỉ email hợp lệ',
-            'email.max' => 'email không được vượt quá 255 ký tự',
-            'email.unique' => 'email này đã được sử dụng',
+            'name.required' => 'Trường này không bỏ trống',
+            'name.string' => 'Bạn phải nhập văn bản',
+            'name.max' => 'Họ và tên không được vượt quá 255 ký tự',
         
-            'phone.required' => 'trường này không bỏ trống',
-            'phone.regex' => 'bạn phải nhập một số điện thoại hợp lệ',
+            'phone.regex' => 'Bạn phải nhập một số điện thoại hợp lệ',
         
-            'address.required' => 'trường này không bỏ trống',
-            'address.string' => 'bạn phải nhập văn bản',
-            'address.max' => 'địa chỉ không được vượt quá 255 ký tự',
+            'address.string' => 'Bạn phải nhập văn bản',
+            'address.max' => 'Địa chỉ không được vượt quá 255 ký tự',
         
-            'thumbnail.image' => 'tệp phải là một hình ảnh',
-            'thumbnail.mimes' => 'ảnh phải có định dạng jpeg, png, jpg, gif, hoặc svg',
-            'thumbnail.max' => 'ảnh không được vượt quá 2048 kilobytes',
+            'thumbnail.image' => 'Tệp phải là một hình ảnh',
+            'thumbnail.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg, gif, hoặc svg',
+            'thumbnail.max' => 'Ảnh không được vượt quá 2 Mb',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +59,6 @@ class UserController extends Controller
 
         // Cập nhật thông tin người dùng
         $user->name = $request->input('name');
-        $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
 
@@ -93,26 +83,12 @@ class UserController extends Controller
         
         $user = Auth::user();
         $user_orders = Order::where('user_id', $user->id)
-        ->orderByRaw("FIELD(order_status, 'shipped', 'processing', 'pending', 'unpaid', 'delivered', 'cancelled')")
         ->orderBy('created_at', 'desc')
         ->get();
        
-        $orders = $user_orders->sortBy(function ($order) {
-            $statusOrder = [
-                'shipped' => 1,
-                'processing' => 2,
-                'pending' => 3,
-                'unpaid' => 4,
-                'delivered' => 5,
-                'cancelled' => 6
-            ];
-            
-            return $statusOrder[$order->order_status] ?? 999; 
-        });
         $orders = $user_orders->map(function ($order) {
-            $order_details = OrderDetail::where('order_id', $order->id)->get();
+            $order_details = OrderItem::with('variant.product')->where('order_id', $order->id)->get();
             $order->total = number_format($order->total, 0, ',', '.') . ' đ';
-
 
             $order->details = $order_details->map(function ($detail) {
                 $detail->price = number_format($detail->price, 0, ',', '.');
@@ -165,22 +141,22 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'old_pass' => ['required', function ($attribute, $value, $fail) use ($user) {
                 if (!Hash::check($value, $user->password)) {
-                    $fail('Mật khẩu cũ không đúng.');
+                    $fail('Mật khẩu cũ không chính xác.');
                 }
             }],
             'new_pass' => 'required|string|min:8|confirmed', 
             'new_pass_confirmation' => 'required_with:new_pass|same:new_pass',
         ], 
         [
-            'old_pass.required' => 'trường này không bỏ trống',
+            'old_pass.required' => 'Hãy nhập mật khẩu cũ',
             
-            'new_pass.required' => 'trường này không bỏ trống',
-            'new_pass.string' => 'bạn phải nhập văn bản',
-            'new_pass.min' => 'mật khẩu mới phải có ít nhất 8 ký tự',
-            'new_pass.confirmed' => 'xác nhận mật khẩu không khớp',
+            'new_pass.required' => 'Hãy nhập mật khẩu mới',
+            'new_pass.string' => 'Mật khẩu phải làm một chuỗi',
+            'new_pass.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự',
+            'new_pass.confirmed' => 'Mật khẩu nhập lại không khớp',
         
-            'new_pass_confirmation.required_with' => 'trường này không bỏ trống khi có mật khẩu mới',
-            'new_pass_confirmation.same' => 'xác nhận mật khẩu phải khớp với mật khẩu mới',
+            'new_pass_confirmation.required_with' => 'Vui lòng nhập lại mật khẩu mới',
+            'new_pass_confirmation.same' => 'Mật khẩu nhập lại không khớp với mật khẩu mới',
         ]);
 
         if ($validator->fails()) {

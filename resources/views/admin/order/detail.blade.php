@@ -34,7 +34,8 @@
                         <div class="d-flex align-items-center">
                             <h5 class="card-title flex-grow-1 mb-0">Đơn Hàng #{{ $order->id }}</h5>
                             <div class="flex-shrink-0">
-                                <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Quay Lại</a>
+                                <a href="{{ route('admin.orders.index') }}" class="btn btn-primary">Quay Lại</a>
+                                <a href="{{ route('admin.orders.print', $order->id) }}" class="btn btn-success">Hóa đơn</a>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -64,11 +65,11 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="{{ Storage::url($item->variant->product->thumbnail) }}"
+                                                    <img src="{{ Storage::url($item->variant?->product?->thumbnail) }}"
                                                         alt="" class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-15"><a href="{{ route('admin.products.edit', $item->variant->product->id) }}"
+                                                    <h5 class="fs-15"><a href="{{ route('admin.products.edit', $item->variant->product->id ?? 99999) }}"
                                                             class="link-primary">{{ $item->product_name }}</a></h5>
                                                     @foreach ($item->variant->attributeValues as $val)
                                                         <p class="text-muted mb-0">{{$val->attribute->name}}: <span class="fw-medium">{{ $val->value }}</span></p>

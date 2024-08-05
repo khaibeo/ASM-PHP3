@@ -22,9 +22,10 @@
 				<div class="alert alert-danger">Đã có lỗi xảy ra, vui lòng thử lại !</div>
 			@endif
 
-			@error('error')
-				<div class="alert alert-danger">{{$message}}</div>
+			@session('error')
+                <div class="alert alert-danger">{{session('error')}}</div>	
 			@enderror
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="all">

@@ -40,92 +40,86 @@
                                     <a class="btn btn-success add-btn" href="{{ route('admin.vouchers.add') }}"
                                         id="create-btn">
                                         <i class="ri-add-line align-bottom me-1"></i> Thêm </a>
-                                    {{-- <button type="button" class="btn btn-info"><i
-                                            class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
+                                    <a href="{{route('admin.vouchers.import')}}" class="btn btn-info"><i
+                                            class="ri-file-download-line align-bottom me-1"></i> Import</a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-header border-bottom-dashed">
-                        <div class="row g-4 align-items-center">
-                            <div class="col-sm">
-                                <div>
-                                    <h5 class="card-title mb-0">Mã giảm giá</h5>
-                                </div>
-                            </div>
-                            <div class="col-sm-auto">
-                                <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <form method="GET" action="{{ route('admin.vouchers.index') }}" class="d-flex gap-2">
-                                        <select name="discount_type" class="form-select">
-                                            <option value="">Chọn loại giảm giá</option>
-                                            <option value="0">Số Lượng</option>
-                                            <option value="1">Phần Trăm</option>
-                                        </select>
-                                        <select name="expiry_status" class="form-select">
-                                            <option value="">Chọn hạn sử dụng</option>
-                                            <option value="active">Còn hạn</option>
-                                            <option value="expired">Hết hạn</option>
-                                        </select>
-                                        <select name="display_status" class="form-select">
-                                            <option value="">Trạng thái hiển thị</option>
-                                            <option value="1">Hiển Thị</option>
-                                            <option value="0">Ẩn</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-primary">Lọc</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="example"
+                                    <form method="GET" action="{{ route('admin.vouchers.index') }}" class="mb-3">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-2 col-sm-6">
+                                                <div>
+                                                    <select name="discount_type" class="form-select">
+                                                        <option value="">Loại giảm giá</option>
+                                                        <option value="0">Số Lượng</option>
+                                                        <option value="1">Phần Trăm</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-xxl-2 col-sm-4">
+                                                <div>
+                                                    <select name="expiry_status" class="form-select">
+                                                        <option value="">Hạn sử dụng</option>
+                                                        <option value="active">Còn hạn</option>
+                                                        <option value="expired">Hết hạn</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-xxl-2 col-sm-4">
+                                                <div>
+                                                    <select name="display_status" class="form-select">
+                                                        <option value="">Trạng thái</option>
+                                                        <option value="1">Hiển Thị</option>
+                                                        <option value="0">Ẩn</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-xxl-2 col-sm-4">
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary w-100"> <i
+                                                            class="ri-equalizer-fill me-1 align-bottom"></i>
+                                                        Lọc
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <table id="example mt-3"
                                         class="table table-bordered dt-responsive nowrap table-striped align-middle"
                                         style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width: 10px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll"
-                                                            value="option">
-                                                    </div>
-                                                </th>
                                                 <th data-ordering="false">ID</th>
-                                                <th data-ordering="false">Tên Mã Giảm Giá</th>
+                                                <th data-ordering="false">Tên Mã</th>
                                                 <th data-ordering="false">Code</th>
-                                                <th data-ordering="false">Mô Tả</th>
                                                 <th data-ordering="false">Loại Giảm Giá</th>
                                                 <th>Giá Giảm</th>
                                                 <th>Số Lượng</th>
                                                 <th>Có Hiệu Lực Từ </th>
                                                 <th>Ngày Hết Hạn</th>
-                                                <th>Giá Trị Đơn Hàng Tối Thiểu</th>
-                                                <th>Giá Trị Đơn Hàng Tối Đa</th>
-                                                <th>Giá Trị Giảm Giá Tối Đa</th>
                                                 <th>Hiển Thị</th>
                                                 <th>Hành Động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($voucher as $voucher)
+                                            @foreach ($vouchers as $voucher)
                                                 <tr>
-                                                    <th scope="row">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input fs-15" type="checkbox"
-                                                                name="checkAll" value="option1">
-                                                        </div>
-                                                    </th>
                                                     <td>{{ $voucher->id }}</td>
                                                     <td>{{ $voucher->name }}</td>
                                                     <td>{{ $voucher->code }}</td>
-                                                    <td>{{ $voucher->description }}</td>
                                                     <td>
                                                         @if ($voucher->discount_type == 0)
-                                                            Số Lượng
+                                                            Trực tiếp
                                                         @else
                                                             Phần Trăm
                                                         @endif
@@ -133,13 +127,10 @@
                                                     <td>{{ $voucher->discount_value }}</td>
                                                     <td>{{ $voucher->quantity }}</td>
                                                     <td><span
-                                                            class="badge bg-warning-subtle text-warning">{{ $voucher->valid_from }}</span>
+                                                            class="badge bg-warning">{{ \Carbon\Carbon::parse( $voucher->valid_from)->format('d/m/Y H:i:s') }}</span>
                                                     </td>
-                                                    <td><span class="badge bg-danger">{{ $voucher->valid_until }}</span>
+                                                    <td><span class="badge bg-danger">{{ \Carbon\Carbon::parse( $voucher->valid_until)->format('d/m/Y H:i:s') }}</span>
                                                     </td>
-                                                    <td>{{ $voucher->min_order_value }}</td>
-                                                    <td>{{ $voucher->max_order_value }}</td>
-                                                    <td>{{ $voucher->max_discount_value }}</td>
                                                     <td>
                                                         @if ($voucher->display_status == 1)
                                                             <span class="badge bg-success">Hiển Thị</span>
@@ -174,6 +165,8 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+
+                                    {{$vouchers->links()}}
                                 </div>
                             </div>
                         </div><!--end col-->

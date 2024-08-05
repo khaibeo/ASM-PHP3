@@ -30,7 +30,7 @@ class StoreVoucherRequest extends FormRequest
             'quantity' => 'required|integer|min:1',
             'valid_from' => 'required|date',
             'valid_until' => 'required|date|after_or_equal:valid_from',
-            'min_order_value' => 'required|numeric|min:0',
+            'min_order_value' => 'nullable|numeric|min:0',
             'max_order_value' => 'nullable|numeric|gte:min_order_value',
             'max_discount_value' => 'nullable|numeric|min:0',
             'display_status' => 'required|in:0,1',  // 0 = Hidden, 1 = Visible

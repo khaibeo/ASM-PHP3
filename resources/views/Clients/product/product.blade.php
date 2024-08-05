@@ -28,7 +28,8 @@
                         <h1>Sản phẩm</h1>
                     </div>
                 </div>
-                <img src="https://hoctiengtrung.com/wp-content/uploads/2017/10/thiet-ke-banner-dep-cho-quang-cao-web-thoi-trang-1.jpeg" height="300px" class="img-fluid" alt="">
+                <img src="https://hoctiengtrung.com/wp-content/uploads/2017/10/thiet-ke-banner-dep-cho-quang-cao-web-thoi-trang-1.jpeg"
+                    height="300px" class="img-fluid" alt="">
             </div>
             <!-- /top_banner -->
             <div id="stick_here"></div>
@@ -177,14 +178,13 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                         </li>
-                                        
+
                                     </ul>
                                 </div>
                             </div>
                             <!-- /filter_type -->
                             <div class="buttons">
-                                <a href="#0" class="btn_1">Lọc</a> <a href="#0"
-                                    class="btn_1 gray">Hủy</a>
+                                <a href="#0" class="btn_1">Lọc</a> <a href="#0" class="btn_1 gray">Hủy</a>
                             </div>
                         </div>
                     </aside>
@@ -196,16 +196,18 @@
                                     <div class="grid_item">
                                         <span class="ribbon off">-30%</span>
                                         <figure>
-                                            <a href="product-detail-1.html">
-												@php
-													$img = filter_var($item->thumbnail, FILTER_VALIDATE_URL) ? $item->thumbnail : asset('storage/' . $item->thumbnail);
-												@endphp
-                                                <img class="img-fluid " src=" {{ $img}}"
+                                            <a href="{{ route('product.detail', $item->slug) }}">
+                                                @php
+                                                    $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL)
+                                                        ? $item->thumbnail
+                                                        : asset('storage/' . $item->thumbnail);
+                                                @endphp
+                                                <img class="img-fluid " src=" {{ $img }}"
                                                     alt="{{ $item->name }}">
                                             </a>
                                             <div data-countdown="2019/05/15" class="countdown"></div>
                                         </figure>
-                                        <a href="{{ route('product.detail',$item->slug) }}">
+                                        <a href="{{ route('product.detail', $item->slug) }}">
                                             <h3>{{ $item->name }}</h3>
                                         </a>
                                         <div class="price_box">
@@ -223,14 +225,15 @@
                                                         class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
                                             <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip"
                                                     data-bs-placement="left" title="Add to cart"><i
-                                                        class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a></li>
+                                                        class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- /grid_item -->
                                 </div>
                             @endforeach
 
-                        
+
                         </div>
                         <!-- /row -->
 
@@ -264,6 +267,7 @@
                         @endif
 
                     </div>
+
                     <!-- /col -->
                 </div>
                 <!-- /row -->

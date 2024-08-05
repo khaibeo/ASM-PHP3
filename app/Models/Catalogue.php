@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Catalogue extends Model
 {
     use HasFactory;
-    
     protected $fillable = [
         'name',
         'image',
@@ -19,7 +18,7 @@ class Catalogue extends Model
 
     public function children()
     {
-        return $this->hasMany(Catalogue::class, 'parent_id')->with('children');
+        return $this->hasMany(Catalogue::class, 'parent_id');
     }
     
     

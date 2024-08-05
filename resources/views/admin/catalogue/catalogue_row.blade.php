@@ -2,7 +2,7 @@
 
 <tr>
     <td>{{ $catalogue->id }}</td>
-    <td>{{ $indent }}<a href="#!">{{ $catalogue->name }}</a></td>
+    <td>{{ $each }}<a href="#!">{{ $catalogue->name }}</a></td>
     <td>{{ $catalogue->created_at }}</td>
     <td>{{ $catalogue->updated_at }}</td>
     <td>
@@ -12,9 +12,14 @@
         </div>
     </td>
 </tr>
-@if ($catalogue->children)
-    @php($indent .= '-')
-    @foreach ($catalogue->children as $child)
+@if($catalogue->children)
+
+    @php($each .= "- ")
+
+    @foreach($catalogue->children as $child)
+
         @include('admin.catalogue.catalogue_row', ['catalogue' => $child])
+
     @endforeach
+
 @endif

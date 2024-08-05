@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['name', 'catalogue_id', 'slug','sku', 'thumbnail', 'sale_price','regular_price','short_description', 'description','is_active','is_featured'];
 
@@ -22,5 +24,9 @@ class Product extends Model
 
     public function catalogue(){
         return $this->belongsTo(Catalogue::class);
+    }
+    public function scopeSearchByName($query, $name)
+    {
+        return $query->where('name', 'like', "%{$name}%");
     }
 }

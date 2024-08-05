@@ -15,8 +15,8 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-order"><a href="javascript: void(0);">Đơn hàng</a></li>
-                            <li class="breadcrumb-order active">Danh sách đơn hàng</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Đơn hàng</a></li>
+                            <li class="breadcrumb-item active">Danh sách đơn hàng</li>
                         </ol>
                     </div>
 
@@ -36,59 +36,45 @@
                         </div>
                     </div>
                     <div class="card-body border border-dashed border-end-0 border-start-0">
-                        <form>
+                        <form method="GET" action="{{route('admin.orders.index')}}">
                             <div class="row g-3">
-                                <div class="col-xxl-5 col-sm-6">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search"
-                                            placeholder="Tìm kiếm ID đơn hàng, khách hàng, trạng thái đơn hàng hoặc thông tin gì đó...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div>
-                                <!--end col-->
-                                <div class="col-xxl-2 col-sm-6">
+                                <div class="col-xxl-3 col-sm-6">
                                     <div>
-                                        <input type="text" class="form-control" data-provider="flatpickr"
-                                            data-date-format="d M, Y" data-range-date="true" id="demo-datepicker"
+                                        <input type="text" class="form-control" name="date" data-provider="flatpickr"
+                                            data-date-format="d-m-Y" data-range-date="true" id="demo-datepicker"
                                             placeholder="Chọn Ngày">
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-2 col-sm-4">
+                                <div class="col-xxl-3 col-sm-4">
                                     <div>
-                                        <select class="form-control" data-choices data-choices-search-false
-                                            name="choices-single-default" id="idStatus">
-                                            <option value="">Status</option>
-                                            <option value="all" selected>All</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Inprogress">Inprogress</option>
-                                            <option value="Cancelled">Cancelled</option>
-                                            <option value="Pickups">Pickups</option>
-                                            <option value="Returns">Returns</option>
-                                            <option value="Delivered">Delivered</option>
+                                        <select class="form-control" name="status" id="order_status">
+                                            <option value="all" selected>Trạng thái</option>
+                                            <option value="pending">Chờ duyệt</option>
+                                            <option value="processing">Đang chuẩn bị</option>
+                                            <option value="shipped">Đang giao hàng</option>
+                                            <option value="delivered">Đã giao</option>
+                                            <option value="cancelled">Đã hủy</option>
+                                            <option value="unpaid">Chưa thanh toán</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-4 col-sm-4">
+                                    <div>
+                                        <select class="form-control" name="payment" id="payment">
+                                            <option value="all" selected>Phương thức thanh toán</option>
+                                            <option value="0">COD</option>
+                                            <option value="1">VNPay</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--end col-->
                                 <div class="col-xxl-2 col-sm-4">
                                     <div>
-                                        <select class="form-control" data-choices data-choices-search-false
-                                            name="choices-single-default" id="idPayment">
-                                            <option value="">Select Payment</option>
-                                            <option value="all" selected>All</option>
-                                            <option value="Mastercard">Mastercard</option>
-                                            <option value="Paypal">Paypal</option>
-                                            <option value="Visa">Visa</option>
-                                            <option value="COD">COD</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--end col-->
-                                <div class="col-xxl-1 col-sm-4">
-                                    <div>
-                                        <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i
+                                        <button type="submit" class="btn btn-primary w-100"> <i
                                                 class="ri-equalizer-fill me-1 align-bottom"></i>
-                                            Filters
+                                            Lọc
                                         </button>
                                     </div>
                                 </div>
@@ -97,6 +83,7 @@
                             <!--end row-->
                         </form>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -107,9 +94,10 @@
                                         <thead>
                                             <tr>
                                                 <th data-ordering="false">ID</th>
-                                                <th data-ordering="false">TÊN NGƯỜI DÙNG</th>
+                                                <th data-ordering="false">TÊN NGƯỜI MUA</th>
                                                 <th>SỐ ĐIỆN THOẠI</th>
                                                 <th>TRẠNG THÁI</th>
+                                                <th>THANH TOÁN</th>
                                                 <th>THÀNH TIỀN</th>
                                                 <th>NGÀY ĐẶT</th>
                                                 <th>HÀNH ĐỘNG</th>
@@ -122,13 +110,15 @@
                                                     <td>{{ $order->name }}</td>
                                                     <td>{{ $order->phone }}</td>
                                                     <td>{{ getOrderStatus($order->order_status) }}</td>
+                                                    <td>{{ $order->payment_method == 0 ? 'COD' : 'VNPay' }}</td>
                                                     <td>{{ currencyFormat($order->total_amount) }}</td>
-                                                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                                                    <td>{{ $order->created_at->format('d-m-Y H:i:s') }}</td>
                                                     <td>
                                                         <ul class="list-unstyled d-flex gap-2">
                                                             <li><a href="{{ route('admin.orders.detail', $order->id) }}"
                                                                     class="btn btn-info">
                                                                     Chi tiết</a></li>
+                                                            @can('admin')
                                                             <li>
                                                                 <a class="btn btn-danger"
                                                                     href="{{ route('admin.orders.delete', $order->id) }}"
@@ -136,6 +126,7 @@
                                                                     Xóa
                                                                 </a>
                                                             </li>
+                                                            @endcan
                                                             {{-- <li>
                                                             <a href="{{ route('admin.orders.editStatus', $order->id) }}" class="dropdown-order remove-order-btn">
                                                                 <i
@@ -199,4 +190,10 @@
 
     <!-- Sweet Alerts js -->
     <script src="{{ asset('administrator/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <script>
+        new DataTable("#example", {
+            "ordering": false
+        });
+    </script>
 @endsection

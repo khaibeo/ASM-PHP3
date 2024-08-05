@@ -24,7 +24,7 @@ Thanh toán
 
                 <div>
                     <a class="btn btn-primary mx-2" href="{{route('home.index')}}">Trang chủ</a>
-                    <a class="btn btn-success mx-2" href="#">Đơn hàng</a>
+                    <a class="btn btn-success mx-2" href="{{route('user.orderdetail', $order->id)}}">Đơn hàng</a>
                 </div>
                 </div>
             </div>
