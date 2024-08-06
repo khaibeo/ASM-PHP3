@@ -14,6 +14,7 @@ use App\Models\Voucher;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
+use App\Models\ProductVariant;
 
 class CheckoutController extends Controller
 {
@@ -24,22 +25,23 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Giỏ hàng của bạn đang trống.');
         }
 
-        $cartItems = $cart->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
+        $cartItems = $cart->items()->with(['variant.product', 'variant.attributeValues.attribute'])->get();
+
 
         $cartItems = $cartItems->map(function ($item) {
             $variantAttributes = $item->variant->attributeValues->map(function ($av) {
                 return $av->attribute->name . ': ' . $av->value;
-            })->implode(', ');  
+            })->implode(', ');
 
             $item->variantAttributes = $variantAttributes;
             return $item;
         });
 
         $user = auth()->user();
-        
+
         $total = $this->calculateCartTotal($cart);
-        
-        return view('Clients.checkout.index', compact('cartItems', 'total','user'));
+
+        return view('Clients.checkout.index', compact('cartItems', 'total', 'user'));
     }
 
     public function process(CheckoutRequest $request)
@@ -50,7 +52,7 @@ class CheckoutController extends Controller
             $cart = Cart::where('user_id', auth()->id())->with('items.variant.product')->firstOrFail();
 
             $defaultStatus = $request->payment_method == 1 ? 'unpaid' : 'pending';
-            
+
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'name' => $request->name,
@@ -66,6 +68,14 @@ class CheckoutController extends Controller
             ]);
 
             foreach ($cart->items as $item) {
+                $variant = ProductVariant::findOrFail($item->variant->id);
+
+                // Kiểm tra số lượng tồn kho
+                if ($variant->stock < $item->quantity) {
+                    DB::rollBack();
+                    return back()->with('error', 'Số lượng yêu cầu vượt quá số lượng tồn kho.');
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_variant_id' => $item->variant->id,
@@ -83,13 +93,20 @@ class CheckoutController extends Controller
             // Xóa sản phẩm khỏi giỏ sau khi đặt hàng thành công
             $cart->items()->delete();
 
-            if($request->voucher){
-                Voucher::query()->find($request->voucher)->decrement('quantity',1);
+            if ($request->voucher) {
+                $voucher = Voucher::query()->find($request->voucher);
+
+                if($voucher->quantity == 0){
+                    DB::rollBack();
+                    return back()->with('error', 'Voucher đã hết lượt sử dụng');
+                }
+                
+                $voucher->decrement('quantity', 1);
             }
 
             DB::commit();
 
-            if($request->payment_method == 1){
+            if ($request->payment_method == 1) {
                 Session::put('total', $request->totalbill);
                 Session::put('orderId', $order->id);
                 Session::put('redirect', true);
@@ -103,7 +120,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.success', ['order' => $order->id]);
         } catch (\Exception $e) {
             DB::rollBack();
-           // dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->back()->with('error', 'Có lỗi xảy ra trong quá trình đặt hàng. Vui lòng thử lại.');
         }
     }

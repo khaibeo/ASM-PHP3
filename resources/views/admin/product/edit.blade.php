@@ -95,57 +95,55 @@
                             <h5 class="card-title mb-0">Biến thể sản phẩm</h5>
                         </div>
                         <div class="card-body">
-                            <div class="container">
-                                <div id="productForm">
-                                    <div id="variants">
-                                        @foreach($product->variants as $index => $variant)
-                                            <div class="variant">
-                                                <h4 class="fs-5">Biến thể {{ $index + 1 }}</h4>
-                                                <div class="row mb-3">
-                                                    <div class="form-group col-4">
-                                                        <label>Giá thường:</label>
-                                                        <input type="number" class="form-control" name="variants[{{ $index }}][regular_price]"
-                                                            step="0.01" value="{{ $variant->regular_price }}" required>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label>Giá sale:</label>
-                                                        <input type="number" class="form-control"
-                                                            name="variants[{{ $index }}][sale_price]" step="0.01" value="{{ $variant->sale_price }}" required>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label>Số lượng:</label>
-                                                        <input type="number" class="form-control" name="variants[{{ $index }}][stock]" value="{{ $variant->stock }}" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="attributes mb-3">
-                                                    @foreach($variant->attributeValues as $attrIndex => $attribute)
-                                                        <div class="row mb-3">
-                                                            <label>Thuộc tính:</label>
-                                                            <div class="form-group col-4">
-                                                                <input type="text" class="form-control col-4"
-                                                                    name="variants[{{ $index }}][attributes][{{ $attrIndex }}][name]"
-                                                                    placeholder="Tên thuộc tính" value="{{ $attribute->attribute->name }}" required>
-                                                            </div>
-
-                                                            <div class="form-group col-4">
-                                                                <input type="text" class="form-control col-4"
-                                                                    name="variants[{{ $index }}][attributes][{{ $attrIndex }}][value]"
-                                                                    placeholder="Giá trị thuộc tính" value="{{ $attribute->value }}" required>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                                <button type="button" class="btn btn-secondary add-attribute">Thêm thuộc tính</button>
-                                                <hr>
+                            <div id="variants-container">
+                                @foreach($product->variants as $index => $variant)
+                                    <div class="variant mb-4" data-variant-id="{{ $variant->id }}">
+                                        <h4 class="fs-5">Biến thể {{ $index + 1 }}</h4>
+                                        <input type="hidden" name="variants[{{ $index }}][id]" value="{{ $variant->id }}">
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-4">
+                                                <label>Giá thường:</label>
+                                                <input type="number" class="form-control" name="variants[{{ $index }}][regular_price]"
+                                                    step="0.01" value="{{ $variant->regular_price }}" required>
                                             </div>
-                                        @endforeach
+                                            <div class="form-group col-md-4">
+                                                <label>Giá sale:</label>
+                                                <input type="number" class="form-control"
+                                                    name="variants[{{ $index }}][sale_price]" step="0.01" value="{{ $variant->sale_price }}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Số lượng:</label>
+                                                <input type="number" class="form-control" name="variants[{{ $index }}][stock]" value="{{ $variant->stock }}" required>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="attributes mb-3">
+                                            @foreach($variant->attributeValues as $attrIndex => $attributeValue)
+                                                <div class="attribute-row row mb-2">
+                                                    <div class="form-group col-md-5">
+                                                        <input type="text" class="form-control"
+                                                            name="variants[{{ $index }}][attributes][{{ $attrIndex }}][name]"
+                                                            placeholder="Tên thuộc tính" value="{{ $attributeValue->attribute->name }}" required>
+                                                    </div>
+                                                    <div class="form-group col-md-5">
+                                                        <input type="text" class="form-control"
+                                                            name="variants[{{ $index }}][attributes][{{ $attrIndex }}][value]"
+                                                            placeholder="Giá trị thuộc tính" value="{{ $attributeValue->value }}" required>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-danger btn-sm remove-attribute">Xóa</button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btn-sm add-attribute">Thêm thuộc tính</button>
+                                        <button type="button" class="btn btn-danger btn-sm remove-variant">Xóa biến thể</button>
+                                        <hr>
                                     </div>
-                                    <button type="button" class="btn btn-secondary mt-3" id="addVariant">Thêm biến thể</button>
-                                </div>
+                                @endforeach
                             </div>
+                            <button type="button" class="btn btn-primary mt-3" id="add-variant">Thêm biến thể mới</button>
                         </div>
-                        <!-- end card body -->
                     </div>
                     <!-- end card -->
 
@@ -287,107 +285,126 @@
     <script src="{{ asset('administrator/assets/js/pages/ecommerce-product-create.init.js') }}"></script>
 
     <script>
-        let variantCount = {{ count($product->variants) }};
-
-        document.getElementById('addVariant').addEventListener('click', function() {
-            const variantsContainer = document.getElementById('variants');
-            const newVariant = document.createElement('div');
-            newVariant.className = 'variant mt-4';
-            newVariant.innerHTML = `
-                <h4 class="fs-5">Biến thể ${++variantCount}</h4>
-                <div class="row mb-3">
-                    <div class="form-group col-4">
-                        <label>Giá thường:</label>
-                        <input type="number" class="form-control" name="variants[${variantCount-1}][regular_price]" step="0.01" required>
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Giá sale:</label>
-                        <input type="number" class="form-control" name="variants[${variantCount-1}][sale_price]" step="0.01" required>
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Số lượng:</label>
-                        <input type="number" class="form-control" name="variants[${variantCount-1}][stock]" required>
-                    </div>
-                </div>
-                                            
-                <div class="attributes mb-3">
-                    <label>Thuộc tính:</label>
+        document.addEventListener('DOMContentLoaded', function() {
+            let variantCount = {{ count($product->variants) }};
+        
+            // Thêm biến thể mới
+            document.getElementById('add-variant').addEventListener('click', function() {
+                const variantsContainer = document.getElementById('variants-container');
+                const newVariant = document.createElement('div');
+                newVariant.className = 'variant mb-4';
+                newVariant.dataset.variantId = 'new_' + Date.now();
+                newVariant.innerHTML = `
+                    <h4 class="fs-5">Biến thể ${++variantCount}</h4>
+                    <input type="hidden" name="variants[${variantCount-1}][id]" value="new_${Date.now()}">
                     <div class="row mb-3">
-                        <div class="form-group col-4">
-                            <input type="text" class="form-control col-4" name="variants[${variantCount-1}][attributes][0][name]" placeholder="Tên thuộc tính" required>
+                        <div class="form-group col-md-4">
+                            <label>Giá thường:</label>
+                            <input type="number" class="form-control" name="variants[${variantCount-1}][regular_price]" step="0.01" required>
                         </div>
-
-                        <div class="form-group col-4">
-                            <input type="text" class="form-control col-4" name="variants[${variantCount-1}][attributes][0][value]" placeholder="Giá trị thuộc tính" required>
+                        <div class="form-group col-md-4">
+                            <label>Giá sale:</label>
+                            <input type="number" class="form-control" name="variants[${variantCount-1}][sale_price]" step="0.01">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Số lượng:</label>
+                            <input type="number" class="form-control" name="variants[${variantCount-1}][stock]" required>
                         </div>
                     </div>
-                </div>
-                <button type="button" class="btn btn-secondary add-attribute">Thêm thuộc tính</button>
-                <hr>
-            `;
-            variantsContainer.appendChild(newVariant);
-            addAttributeListeners();
-        });
-
-        function addAttributeListeners() {
-            document.querySelectorAll('.add-attribute').forEach(button => {
-                button.addEventListener('click', function() {
-                    const attributesContainer = this.previousElementSibling;
-                    const attributeCount = attributesContainer.children.length;
-
-                    const variantIndex = this.closest('.variant').querySelector('input[name$="[stock]"]')
-                        .name.match(/\d+/)[0];
-                    const newAttribute = document.createElement('div');
-                    newAttribute.className = 'row mb-3';
-                    newAttribute.innerHTML = `
-                        <label>Thuộc tính:</label>
-                        <div class="form-group col-4">
-                            <input type="text" class="form-control col-4"
-                                name="variants[${variantIndex}][attributes][${attributeCount}][name]"
-                                placeholder="Tên thuộc tính" required>
-                        </div>
-
-                        <div class="form-group col-4">
-                            <input type="text" class="form-control col-4"
-                                name="variants[${variantIndex}][attributes][${attributeCount}][value]"
-                                placeholder="Giá trị thuộc tính" required>
-                        </div>
-                    `;
-                    attributesContainer.appendChild(newAttribute);
-                });
+                    <div class="attributes mb-3"></div>
+                    <button type="button" class="btn btn-secondary btn-sm add-attribute">Thêm thuộc tính</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-variant">Xóa biến thể</button>
+                    <hr>
+                `;
+                variantsContainer.appendChild(newVariant);
+                addEventListeners(newVariant);
             });
-        }
-
-        addAttributeListeners();
-
-        // Xử lý xóa ảnh gallery
-        // document.querySelectorAll('.remove-gallery').forEach(button => {
-        //     button.addEventListener('click', function() {
-        //         const galleryId = this.getAttribute('data-id');
-        //         if (confirm('Bạn có chắc chắn muốn xóa ảnh này?')) {
-        //             // Gửi request AJAX để xóa ảnh
-        //             fetch(`/admin/product-galleries/${galleryId}`, {
-        //                 method: 'DELETE',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        //                     'Accept': 'application/json',
-        //                     'Content-Type': 'application/json'
-        //                 },
-        //             })
-        //             .then(response => response.json())
-        //             .then(data => {
-        //                 if (data.success) {
-        //                     this.closest('li').remove();
-        //                 } else {
-        //                     alert('Có lỗi xảy ra khi xóa ảnh');
-        //                 }
-        //             })
-        //             .catch(error => {
-        //                 console.error('Error:', error);
-        //                 alert('Có lỗi xảy ra khi xóa ảnh');
-        //             });
-        //         }
-        //     });
-        // });
-    </script>
+        
+            // Thêm thuộc tính mới
+            function addAttribute(variantElement) {
+                const attributesContainer = variantElement.querySelector('.attributes');
+                const attributeCount = attributesContainer.children.length;
+                const variantIndex = Array.from(variantElement.parentNode.children).indexOf(variantElement);
+                
+                const newAttribute = document.createElement('div');
+                newAttribute.className = 'attribute-row row mb-2';
+                newAttribute.innerHTML = `
+                    <div class="form-group col-md-5">
+                        <input type="text" class="form-control" name="variants[${variantIndex}][attributes][${attributeCount}][name]" placeholder="Tên thuộc tính" required>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <input type="text" class="form-control" name="variants[${variantIndex}][attributes][${attributeCount}][value]" placeholder="Giá trị thuộc tính" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger btn-sm remove-attribute">Xóa</button>
+                    </div>
+                `;
+                attributesContainer.appendChild(newAttribute);
+                addEventListeners(newAttribute);
+            }
+        
+            // Xóa biến thể
+            function removeVariant(button) {
+                if (confirm('Bạn có chắc chắn muốn xóa biến thể này?')) {
+                    button.closest('.variant').remove();
+                    updateVariantIndexes();
+                }
+            }
+        
+            // Xóa thuộc tính
+            function removeAttribute(button) {
+                button.closest('.attribute-row').remove();
+                updateAttributeIndexes(button.closest('.variant'));
+            }
+        
+            // Cập nhật lại các index cho biến thể
+            function updateVariantIndexes() {
+                document.querySelectorAll('.variant').forEach((variant, index) => {
+                    variant.querySelector('h4').textContent = `Biến thể ${index + 1}`;
+                    updateInputNames(variant, index);
+                });
+            }
+        
+            // Cập nhật lại các index cho thuộc tính
+            function updateAttributeIndexes(variantElement) {
+                const variantIndex = Array.from(variantElement.parentNode.children).indexOf(variantElement);
+                variantElement.querySelectorAll('.attribute-row').forEach((attribute, attrIndex) => {
+                    updateInputNames(attribute, variantIndex, attrIndex);
+                });
+            }
+        
+            // Cập nhật tên các input
+            function updateInputNames(element, variantIndex, attrIndex = null) {
+                element.querySelectorAll('input').forEach(input => {
+                    let name = input.getAttribute('name');
+                    name = name.replace(/variants\[\d+\]/, `variants[${variantIndex}]`);
+                    if (attrIndex !== null) {
+                        name = name.replace(/attributes\[\d+\]/, `attributes[${attrIndex}]`);
+                    }
+                    input.setAttribute('name', name);
+                });
+            }
+        
+            // Thêm event listeners cho các nút
+            function addEventListeners(element) {
+                const addAttributeBtn = element.querySelector('.add-attribute');
+                if (addAttributeBtn) {
+                    addAttributeBtn.addEventListener('click', () => addAttribute(element));
+                }
+        
+                const removeVariantBtn = element.querySelector('.remove-variant');
+                if (removeVariantBtn) {
+                    removeVariantBtn.addEventListener('click', () => removeVariant(removeVariantBtn));
+                }
+        
+                const removeAttributeBtns = element.querySelectorAll('.remove-attribute');
+                removeAttributeBtns.forEach(btn => {
+                    btn.addEventListener('click', () => removeAttribute(btn));
+                });
+            }
+        
+            // Thêm event listeners cho các phần tử hiện có
+            document.querySelectorAll('.variant').forEach(addEventListeners);
+        });
+        </script>
 @endsection

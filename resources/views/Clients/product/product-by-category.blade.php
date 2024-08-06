@@ -89,15 +89,15 @@
                             @foreach ($products as $item)
                                 <div class="col-6 col-md-4">
                                     <div class="grid_item">
-                                        <span class="ribbon off">-30%</span>
+                                        {{-- <span class="ribbon off">-30%</span> --}}
                                         <figure>
                                             <a href="product-detail-1.html">
                                                 @php
                                                     $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL) ? $item->thumbnail : asset('storage/' . $item->thumbnail);
                                                 @endphp
-                                                <img class="img-fluid" src="{{ $img }}" alt="{{ $item->name }}">
+                                                <img class="img-fluid" style="max-height: 290px" src="{{ $img }}" alt="{{ $item->name }}">
                                             </a>
-                                            <div data-countdown="2019/05/15" class="countdown"></div>
+                                            {{-- <div data-countdown="2019/05/15" class="countdown"></div> --}}
                                         </figure>
                                         <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
                                             <h3>{{ $item->name }}</h3>
@@ -106,11 +106,7 @@
                                             <span class="new_price">{{ number_format($item->regular_price, 0, '', '.') }}₫</span>
                                             <span class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
                                         </div>
-                                        <ul>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                        </ul>
+                                        
                                     </div>
                                     <!-- /grid_item -->
                                 </div>

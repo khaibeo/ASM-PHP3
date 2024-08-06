@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,7 +36,7 @@ class UserController extends Controller
                 'password' => 'required',
                 'role' => 'nullable|in:admin,customer,staff',
                 'address' => 'nullable',
-                'phone' => ['nullable','unique:users' ,'regex:/^(\+84|0[3|5|7|8|9])+([0-9]{8})$/'],
+                'phone' => ['nullable', 'unique:users', 'regex:/^(\+84|0[3|5|7|8|9])+([0-9]{8})$/'],
             ],
             [
                 'name.required' => 'Tên không được để trống',
@@ -126,9 +128,13 @@ class UserController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    // xóa ngườii dùng
+    // xóa người dùng
     public function destroy(string $id)
     {
+        if (Auth::user()->id == $id) {
+            abort(403);
+        }
+
         $user = User::find($id);
         if (!$user) {
             return redirect()->route('admin.users.index');
@@ -137,6 +143,9 @@ class UserController extends Controller
         if ($user->thumbnail) {
             Storage::disk('public')->delete($user->thumbnail);
         }
+
+        //Set null user_id cho bảng đơn hàng
+        Order::query()->where('user_id', $id)->update(['user_id' => null]);
 
         $user->delete();
         return redirect()->route('admin.users.index');

@@ -194,7 +194,7 @@
                             @foreach ($products as $item)
                                 <div class="col-6 col-md-4">
                                     <div class="grid_item">
-                                        <span class="ribbon off">-30%</span>
+                                        {{-- <span class="ribbon off">-30%</span> --}}
                                         <figure>
                                             <a href="{{ route('product.detail', $item->slug) }}">
                                                 @php
@@ -202,10 +202,10 @@
                                                         ? $item->thumbnail
                                                         : asset('storage/' . $item->thumbnail);
                                                 @endphp
-                                                <img class="img-fluid " src=" {{ $img }}"
+                                                <img class="img-fluid" style="max-height: 290px" src=" {{ $img }}"
                                                     alt="{{ $item->name }}">
                                             </a>
-                                            <div data-countdown="2019/05/15" class="countdown"></div>
+                                            {{-- <div data-countdown="2019/05/15" class="countdown"></div> --}}
                                         </figure>
                                         <a href="{{ route('product.detail', $item->slug) }}">
                                             <h3>{{ $item->name }}</h3>
@@ -216,7 +216,7 @@
                                             <span
                                                 class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
                                         </div>
-                                        <ul>
+                                        {{-- <ul>
                                             <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip"
                                                     data-bs-placement="left" title="Add to favorites"><i
                                                         class="ti-heart"></i><span>Thêm vào yêu thích</span></a></li>
@@ -227,7 +227,7 @@
                                                     data-bs-placement="left" title="Add to cart"><i
                                                         class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                     <!-- /grid_item -->
                                 </div>

@@ -65,9 +65,9 @@ class VoucherController extends Controller
         $voucher->quantity = trim($request->quantity);
         $voucher->valid_from = trim($request->valid_from);
         $voucher->valid_until = trim($request->valid_until);
-        $voucher->min_order_value = trim($request->min_order_value);
-        $voucher->max_order_value = trim($request->max_order_value);
-        $voucher->max_discount_value = trim($request->max_discount_value);
+        $voucher->min_order_value = $request->min_order_value ?? 0;
+        $voucher->max_order_value = $request->max_order_value ?? null;
+        $voucher->max_discount_value = $request->max_discount_value ?? null;
         $voucher->display_status = $request->has('display_status') ? 1 : 0;
         $voucher->save();
 

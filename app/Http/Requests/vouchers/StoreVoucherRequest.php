@@ -24,7 +24,7 @@ class StoreVoucherRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:100',
-            'description' => 'required|string|max:500',
+            'description' => 'nullable|string|max:500',
             'discount_type' => 'required|in:0,1',
             'discount_value' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
@@ -42,7 +42,6 @@ class StoreVoucherRequest extends FormRequest
         return [
             'name.required' => 'Tên không được để trống',
             'name.max' => 'Tên không được dài quá 255 ký tự',
-            'description.required' => 'Mô tả không được để trống',
             'description.max' => 'Mô tả không được dài quá 500 ký tự',
             'code.required' => 'Mã code không được để trống',
             'code.max' => 'Mã code không được dài quá 100 ký tự',

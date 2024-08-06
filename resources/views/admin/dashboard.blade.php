@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                             <div class="flex-grow-1">
-                                <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
+                                <h4 class="fs-16 mb-1">Xin chào, {{Auth::user()->name}}!</h4>
                                 <p class="text-muted mb-0">Here's what's happening with your store today.</p>
                             </div>
                             <div class="mt-3 mt-lg-0">
@@ -31,12 +31,12 @@
                                         </div>
                                         <!--end col-->
                                         <div class="col-auto">
-                                            <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i> Add Product</button>
+                                            <a href="{{route('admin.products.add')}}" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i> Thêm sản phẩm</a>
                                         </div>
                                         <!--end col-->
-                                        <div class="col-auto">
+                                        {{-- <div class="col-auto">
                                             <button type="button" class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i class="ri-pulse-line"></i></button>
-                                        </div>
+                                        </div> --}}
                                         <!--end col-->
                                     </div>
                                     <!--end row-->
@@ -48,7 +48,7 @@
                 </div>
                 <!--end row-->
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <!-- card -->
                         <div class="card card-animate">
@@ -164,7 +164,7 @@
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-                </div> <!-- end row-->
+                </div> --}}
 
                 <div class="row">
                     <div class="col-xl-8">
@@ -228,7 +228,7 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
 
-                    <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
                         <!-- card -->
                         <div class="card card-height-100">
                             <div class="card-header align-items-center d-flex">
@@ -266,7 +266,7 @@
                             <!-- end card body -->
                         </div>
                         <!-- end card -->
-                    </div>
+                    </div> --}}
                     <!-- end col -->
                 </div>
 
@@ -477,7 +477,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-6">
+                    {{-- <div class="col-xl-6">
                         <div class="card card-height-100">
                             <div class="card-header align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">Top Sellers</h4>
@@ -666,11 +666,11 @@
 
                             </div> <!-- .card-body-->
                         </div> <!-- .card-->
-                    </div> <!-- .col-->
+                    </div> <!-- .col--> --}}
                 </div> <!-- end row-->
 
                 <div class="row">
-                    <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
                         <div class="card card-height-100">
                             <div class="card-header align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source</h4>
@@ -692,7 +692,7 @@
                                 <div id="store-visits-source" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                             </div>
                         </div> <!-- .card-->
-                    </div> <!-- .col-->
+                    </div> <!-- .col--> --}}
 
                     <div class="col-xl-8">
                         <div class="card">
@@ -852,7 +852,7 @@
 
         </div> <!-- end col -->
 
-        <div class="col-auto layout-rightside-col">
+        {{-- <div class="col-auto layout-rightside-col">
             <div class="overlay"></div>
             <div class="layout-rightside">
                 <div class="card h-100 rounded-0">
@@ -1279,7 +1279,7 @@
                 </div> <!-- end card-->
             </div> <!-- end .rightbar-->
 
-        </div> <!-- end col -->
+        </div> <!-- end col --> --}}
     </div>
 
 </div>

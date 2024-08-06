@@ -133,15 +133,18 @@
                                                             <a href="{{ route('admin.users.edit', $user->id) }}"
                                                                 class="btn btn-primary">Sửa
                                                             </a>
-    
-                                                            <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                                                method="POST">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">
-                                                                    Xóa</button>
-                                                            </form>
+
+                                                            @if (Auth::user()->id !== $user->id)
+                                                                <form action="{{ route('admin.users.destroy', $user->id) }}"
+                                                                    method="POST">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">
+                                                                        Xóa</button>
+                                                                </form>
+                                                            @endif
+
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -17,6 +17,8 @@ class CartController extends Controller
 
         $cartItems = $cart->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
 
+        // dd($cartItems);
+
         $cartItems = $cartItems->map(function ($item) {
             $variantAttributes = $item->variant->attributeValues->map(function ($av) {
                 return $av->attribute->name . ': ' . $av->value;
