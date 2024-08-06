@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Catalogue;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class CatalogueContrller extends Controller
+class CatalogueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -48,11 +47,12 @@ class CatalogueContrller extends Controller
      */
     public function destroy(string $id)
     {
+       
         if ($id == 1) {
             return response()->json(['error' => 'Không thể xóa danh mục này'], 403);
         }
         $catalogue = Catalogue::findOrFail($id);
-
+        //return response()->json($catalogue);
         // Cập nhật danh mục con cấp đầu
         Catalogue::where('parent_id', $catalogue->id)->update(['parent_id' => null]);
     
