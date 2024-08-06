@@ -19,7 +19,6 @@
                             <li class="breadcrumb-item active">Danh sách đơn hàng</li>
                         </ol>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -32,6 +31,13 @@
                         <div class="row align-orders-center gy-3">
                             <div class="col-sm">
                                 <h5 class="card-title mb-0">Lịch Sử Đơn Hàng</h5>
+                            </div>
+
+                            <div class="col-sm-auto">
+                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                    <a href="{{route('admin.orders.export')}}" class="btn btn-info"><i
+                                            class="ri-file-download-line align-bottom me-1"></i> Export</a>
+                                </div>
                             </div>
                         </div>
                     </div>
