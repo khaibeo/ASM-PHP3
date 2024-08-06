@@ -1,3 +1,5 @@
+<!-- index.blade.php -->
+
 @extends('admin.layout')
 
 @section('title')
@@ -59,13 +61,8 @@
                                         style="width:100%">
                                         <thead>
                                             <tr>
-                                                {{-- <th scope="col" style="width: 10px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
-                                                    </div>
-                                                </th> --}}
-                                                <th data-ordering="false">ID</th>
-                                                <th data-ordering="false">Tên danh mục</th>
+                                                <th>ID</th>
+                                                <th>Tên danh mục</th>
                                                 <th>Thời gian tạo</th>
                                                 <th>Thời gian cập nhật</th>
                                                 <th>Thao tác</th>
@@ -98,13 +95,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
     <!--datatable responsive css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
-
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
 
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!--datatable js-->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -120,8 +115,42 @@
     <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
 
     <script>
-        new DataTable("#example", {
-            "ordering": false
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chọn tất cả các nút xóa
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const catalogueId = this.getAttribute('data-id');
+                    if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+                        // Gửi yêu cầu AJAX
+                        deleteCatalogue(catalogueId);
+                    }
+                });
+            });
         });
+
+        function deleteCatalogue(id) {
+            fetch(`http://127.0.0.1:8000/api/catalogue/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Danh mục đã được xóa thành công');
+                    // Xóa hàng khỏi bảng
+                    document.querySelector(`button[data-id="${id}"]`).closest('tr').remove();
+                } else {
+                    alert('Có lỗi xảy ra, vui lòng thử lại.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
     </script>
 @endsection
