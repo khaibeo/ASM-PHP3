@@ -30,7 +30,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card" id="customerList">
@@ -99,7 +99,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!--datatable js-->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -115,13 +116,12 @@
     <script src="{{ asset('administrator/assets/js/pages/datatables.init.js') }}"></script>
 
     <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Chọn tất cả các nút xóa
             const deleteButtons = document.querySelectorAll('.btn-delete');
 
             deleteButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const catalogueId = this.getAttribute('data-id');
                     if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
                         // Gửi yêu cầu AJAX
@@ -133,24 +133,29 @@
 
         function deleteCatalogue(id) {
             fetch(`http://127.0.0.1:8000/api/catalogue/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Danh mục đã được xóa thành công');
-                    // Xóa hàng khỏi bảng
-                    document.querySelector(`button[data-id="${id}"]`).closest('tr').remove();
-                } else {
-                    alert('Có lỗi xảy ra, vui lòng thử lại.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Danh mục đã được xóa thành công');
+                        // Xóa hàng khỏi bảng
+                        document.querySelector(`button[data-id="${id}"]`).closest('tr').remove();
+                    } else {
+                        alert('Có lỗi xảy ra, vui lòng thử lại.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
+    </script>
 
+    <script>
+        new DataTable("#example", {
+            "ordering": false
+        });
     </script>
 @endsection

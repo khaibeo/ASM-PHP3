@@ -115,7 +115,7 @@ Trang chủ
 			<!-- /products_carousel -->
 		</div>
 
-		<div class="featured lazy" data-bg="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg">
+		<div class="featured lazy" data-bg="{{ Storage::url('banner3.png') }}">
 			<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 				<div class="container margin_60">
 					<div class="row justify-content-center justify-content-md-start">
@@ -124,10 +124,10 @@ Trang chủ
 							<p>Lightweight cushioning and durable support with a Phylon midsole</p>
 							<div class="feat_text_block">
 								<div class="price_box">
-									<span class="new_price">$90.00</span>
-									<span class="old_price">$170.00</span>
+									<span class="new_price">990.000 đ</span>
+									<span class="old_price">1.000.000 đ</span>
 								</div>
-								<a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a>
+								<a class="btn_1" href="#" role="button">Mua ngay</a>
 							</div>
 						</div>
 					</div>

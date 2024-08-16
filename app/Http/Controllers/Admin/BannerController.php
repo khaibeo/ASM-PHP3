@@ -50,8 +50,8 @@ class BannerController extends Controller
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
-                ->withInput()
-                ->with('slide_count', count($request->image_url));
+                ->withInput();
+                // ->with('slide_count', count($request->image_url));
         }
         // Kiểm tra tổng số ảnh không vượt quá 5
         if (count($request->image_url) > 5) {

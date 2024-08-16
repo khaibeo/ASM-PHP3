@@ -33,7 +33,7 @@ class CatalogueController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required|string|max:100',
-            'image' => 'required|image',
+            'image' => 'nullable|image',
         ], [
             'name.required' => 'Trường tên là bắt buộc.',
             'name.string' => 'Trường tên phải là chuỗi.',
@@ -50,7 +50,7 @@ class CatalogueController extends Controller
 
         DB::table('catalogues')->insert([
             'name' => $validate['name'],
-            'image' => $validate['image'],
+            'image' => $validate['image'] ?? null,
             'parent_id' => $validate['parent_id'],
             'is_active' => $validate['is_active'], // giá trị mặc định
             'created_at' => now(),
@@ -65,7 +65,9 @@ class CatalogueController extends Controller
      */
     public function edit(string $id)
     {
-
+        if($id == 1){
+            abort(403);
+        }
         $catalogue = DB::table('catalogues')->where('id', $id)->first();
         $catalogues = Catalogue::query()->with('children')->orderBy('id','desc')->whereNull('parent_id')->whereNot('id',$id)->get();
         if (!$catalogue) {
@@ -80,6 +82,10 @@ class CatalogueController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if($id == 1){
+            return redirect()->route('admin.catalogues.index')->with('error', 'Bạn không thể sửa danh mục này');
+        }
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'image' => 'image',

@@ -6,9 +6,11 @@
     <td>{{ $catalogue->created_at }}</td>
     <td>{{ $catalogue->updated_at }}</td>
     <td>
-        <div class="d-flex gap-2">
-            <a href="{{route('admin.catalogues.edit', $catalogue->id)}}" class="btn btn-warning">Sửa</a>
-            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $catalogue->id }}">Xóa</button>
+        <div class="d-flex gap-2"> 
+            @if ($catalogue->id !== 1)
+                <a href="{{route('admin.catalogues.edit', $catalogue->id)}}" class="btn btn-warning">Sửa</a>
+                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $catalogue->id }}">Xóa</button>
+            @endif
         </div>
     </td>
 </tr>

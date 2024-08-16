@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function productByCategory(Request $request, $id)
     {
 
-        $categoryBySlug = Catalogue::where('id', $id)->first();
+        $categoryBySlug = Catalogue::where('id', $id)->firstOrFail();
         // dd($categoryBySlug);
        
         // Lấy danh sách sản phẩm theo danh mục

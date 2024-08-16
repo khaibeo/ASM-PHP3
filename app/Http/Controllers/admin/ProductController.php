@@ -194,6 +194,9 @@ class ProductController extends Controller
 
         return back()->with('success', 'Sản phẩm đã được cập nhật thành công.');
     } catch (\Exception $e) {
+        if ($request->hasFile('thumbnail') && Storage::disk('public')->exists($thumbnailPath)) {
+            Storage::disk('public')->delete($thumbnailPath);
+        }
         DB::rollBack();
         return back()->with('error', 'Có lỗi xảy ra khi cập nhật sản phẩm: ' . $e->getMessage());
     }
