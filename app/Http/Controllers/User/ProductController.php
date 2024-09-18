@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('is_active', 1)->latest('id')->paginate(9);
+        $products = Product::where('is_active', 1)->latest('id')->paginate(12);
         // dd($products);
         return view('Clients.product.product', compact('products'));
     }
@@ -20,26 +20,16 @@ class ProductController extends Controller
     {
 
         $categoryBySlug = Catalogue::where('id', $id)->firstOrFail();
-        // dd($categoryBySlug);
        
         // Lấy danh sách sản phẩm theo danh mục
-        $productsByCategory = Product::where('catalogue_id', $categoryBySlug->id)->latest('id')->paginate(9);
-        // dd($productsByCategory);
+        $productsByCategory = Product::where('catalogue_id', $categoryBySlug->id)->latest('id')->paginate(12);
+    
         // Trả về view và truyền dữ liệu vào view
         return view('Clients.product.product-by-category', [
             'category' => $categoryBySlug,
             'products' => $productsByCategory
         ]);
     }
-
-    // public function category($slug)
-    // {
-    //     // Giả sử bạn có một model Category và Product với mối quan hệ tương ứng
-    //     $category = Product::where('slug', $slug)->firstOrFail();
-    //     // $products = $category->products()->paginate(9); // Giới hạn 9 sản phẩm mỗi trang
-
-    //     return view('product.category', compact('category', 'products'));
-    // }
 
     public function detail($slug)
     {

@@ -27,7 +27,8 @@
                         <h1>{{ $category->name }} </h1>
                     </div>
                 </div>
-                <img src="https://thegioidohoa.com/wp-content/uploads/2015/10/thiet-ke-banner-an-tuong-cho-web-thoi-trang1.jpg" class="img-fluid" alt="">
+                <img src="https://thegioidohoa.com/wp-content/uploads/2015/10/thiet-ke-banner-an-tuong-cho-web-thoi-trang1.jpg"
+                    class="img-fluid" alt="">
             </div>
             <!-- /top_banner -->
             <div id="stick_here"></div>
@@ -37,20 +38,14 @@
                         <li>
                             <div class="sort_select">
                                 <select name="sort" id="sort">
-                                    <option value="popularity" selected="selected">Sort by popularity</option>
-                                    <option value="rating">Sort by average rating</option>
-                                    <option value="date">Sort by newness</option>
-                                    <option value="price">Sort by price: low to high</option>
-                                    <option value="price-desc">Sort by price: high to low</option>
+                                    <option value="new">Mới nhất</option>
+                                    <option value="price">Giá tăng dần</option>
+                                    <option value="price-desc">Giá giảm dần</option>
                                 </select>
                             </div>
                         </li>
                         <li>
-                            <a href="#0"><i class="ti-view-grid"></i></a>
-                            <a href="listing-row-1-sidebar-left.html"><i class="ti-view-list"></i></a>
-                        </li>
-                        <li>
-                            <a href="#0" class="open_filters">
+                            <a href="#" class="open_filters">
                                 <i class="ti-filter"></i><span>Filters</span>
                             </a>
                         </li>
@@ -60,84 +55,62 @@
             <!-- /toolbox -->
 
             <div class="container margin_30">
-                <div class="row">
-                    <aside class="col-lg-3" id="sidebar_fixed">
-                        <div class="filter_col">
-                            <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Danh mục</a></h4>
-                                <div class="collapse show" id="filter_1">
-                                    <ul>
-                                        @foreach ($categories as $cat)
-                                            <li>
-                                                <label class="container_check">
-                                                    <a href="{{ $cat->id }}">{{ $cat->name }}</a>
-                                                    <small>{{ $cat->products_count }}</small>
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                
+<div class="row">
+                    @foreach ($products as $item)
+                        <div class="col-lg-3">
+                            <div class="grid_item">
+                                {{-- <span class="ribbon off">-30%</span> --}}
+                                <figure>
+                                    <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
+                                        @php
+                                            $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL)
+                                                ? $item->thumbnail
+                                                : asset('storage/' . $item->thumbnail);
+                                        @endphp
+                                        <img class="img-fluid" style="max-height: 290px" src="{{ $img }}"
+                                            alt="{{ $item->name }}">
+                                    </a>
+                                    {{-- <div data-countdown="2019/05/15" class="countdown"></div> --}}
+                                </figure>
+                                <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
+                                    <h3>{{ $item->name }}</h3>
+                                </a>
+                                <div class="price_box">
+                                    <span class="new_price">{{ number_format($item->regular_price, 0, '', '.') }}₫</span>
+                                    <span class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
                                 </div>
-                                <!-- /filter_type -->
                             </div>
-                            <!-- /filter_type -->
+                            <!-- /grid_item -->
                         </div>
-                    </aside>
-                    <!-- /col -->
-                    <div class="col-lg-9">
-                        <div class="row small-gutters">
-                            @foreach ($products as $item)
-                                <div class="col-6 col-md-4">
-                                    <div class="grid_item">
-                                        {{-- <span class="ribbon off">-30%</span> --}}
-                                        <figure>
-                                            <a href="product-detail-1.html">
-                                                @php
-                                                    $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL) ? $item->thumbnail : asset('storage/' . $item->thumbnail);
-                                                @endphp
-                                                <img class="img-fluid" style="max-height: 290px" src="{{ $img }}" alt="{{ $item->name }}">
-                                            </a>
-                                            {{-- <div data-countdown="2019/05/15" class="countdown"></div> --}}
-                                        </figure>
-                                        <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
-                                            <h3>{{ $item->name }}</h3>
-                                        </a>
-                                        <div class="price_box">
-                                            <span class="new_price">{{ number_format($item->regular_price, 0, '', '.') }}₫</span>
-                                            <span class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
-                                        </div>
-                                        
-                                    </div>
-                                    <!-- /grid_item -->
-                                </div>
-                            @endforeach
-                        </div>
-                        <!-- /row -->
-                        @if ($products->total() > 9)
-                            @php
-                                $totalPages = ceil($products->total() / 9);
-                                $currentPage = $products->currentPage();
-                                $start_page = max(1, $currentPage - 3);
-                                $end_page = min($totalPages, $currentPage + 3);
-                            @endphp
+                    @endforeach
+                    <!-- /row -->
+                    @if ($products->total() > 12)
+                        @php
+                            $totalPages = ceil($products->total() / 12);
+                            $currentPage = $products->currentPage();
+                            $start_page = max(1, $currentPage - 3);
+                            $end_page = min($totalPages, $currentPage + 3);
+                        @endphp
 
-                            <div class="pagination__wrapper">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="?page={{ max(1, $currentPage - 1) }}" class="prev" title="previous page">&laquo;</a>
+                        <div class="pagination__wrapper">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="?page={{ max(1, $currentPage - 1) }}" class="prev"
+                                        title="previous page">&laquo;</a>
+                                </li>
+                                @for ($i = $start_page; $i <= $end_page; $i++)
+                                    <li class="{{ $i == $currentPage ? 'active' : '' }}">
+                                        <a href="?page={{ $i }}">{{ $i }}</a>
                                     </li>
-                                    @for ($i = $start_page; $i <= $end_page; $i++)
-                                        <li class="{{ $i == $currentPage ? 'active' : '' }}">
-                                            <a href="?page={{ $i }}">{{ $i }}</a>
-                                        </li>
-                                    @endfor
-                                    <li>
-                                        <a href="?page={{ min($totalPages, $currentPage + 1) }}" class="next" title="next page">&raquo;</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
+                                @endfor
+                                <li>
+                                    <a href="?page={{ min($totalPages, $currentPage + 1) }}" class="next"
+                                        title="next page">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
                     <!-- /col -->
                 </div>
                 <!-- /row -->
