@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\OrderModel;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -83,6 +84,9 @@ class OrderController extends Controller
     public function delete($id)
     {
         $order = Order::find($id);
+
+        OrderItem::query()->where('order_id',$id)->delete();
+        
         $order->delete();
         return redirect()->route('admin.orders.index');
     }

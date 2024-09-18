@@ -98,17 +98,13 @@ Trang chủ
 							</a>
 							<div class="price_box">
 								@if($product->sale_price)
-									<span class="new_price">${{ number_format($product->sale_price, 2) }}</span>
-									<span class="old_price">${{ number_format($product->regular_price, 2) }}</span>
+									<span class="new_price">{{ currencyFormat($product->sale_price) }}</span>
+									<span class="old_price">{{ currencyFormat($product->regular_price) }}</span>
 								@else
-									<span class="new_price">${{ number_format($product->regular_price, 2) }}</span>
+									<span class="new_price">{{ currencyFormat($product->regular_price) }}</span>
 								@endif
 							</div>
-							<ul>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-							</ul>
+							
 						</div>
 						<!-- /grid_item -->
 					</div>
@@ -119,7 +115,7 @@ Trang chủ
 			<!-- /products_carousel -->
 		</div>
 
-		<div class="featured lazy" data-bg="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg">
+		<div class="featured lazy" data-bg="{{ Storage::url('banner3.png') }}">
 			<div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
 				<div class="container margin_60">
 					<div class="row justify-content-center justify-content-md-start">
@@ -128,10 +124,10 @@ Trang chủ
 							<p>Lightweight cushioning and durable support with a Phylon midsole</p>
 							<div class="feat_text_block">
 								<div class="price_box">
-									<span class="new_price">$90.00</span>
-									<span class="old_price">$170.00</span>
+									<span class="new_price">990.000 đ</span>
+									<span class="old_price">1.000.000 đ</span>
 								</div>
-								<a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a>
+								<a class="btn_1" href="#" role="button">Mua ngay</a>
 							</div>
 						</div>
 					</div>
@@ -166,17 +162,13 @@ Trang chủ
 						</a>
 						<div class="price_box">
 							@if($product->sale_price)
-								<span class="new_price">{{ $product->sale_price }}</span>
-								<span class="old_price">{{ $product->regular_price }}</span>
+								<span class="new_price">{{ currencyFormat($product->sale_price)  }}</span>
+								<span class="old_price">{{ currencyFormat($product->regular_price)  }}</span>
 							@else
-								<span class="new_price">{{ $product->regular_price }}</span>
+								<span class="new_price">{{ currencyFormat($product->regular_price)  }}</span>
 							@endif
 						</div>
-						<ul>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-							<li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-						</ul>
+						
 					</div>
 					<!-- /grid_item -->
 				</div>
@@ -216,17 +208,13 @@ Trang chủ
 							</a>
 							<div class="price_box">
 								@if($product->sale_price)
-									<span class="new_price">${{ number_format($product->sale_price, 2) }}</span>
-									<span class="old_price">${{ number_format($product->regular_price, 2) }}</span>
+									<span class="new_price">{{ currencyFormat($product->sale_price) }}</span>
+									<span class="old_price">{{ currencyFormat($product->regular_price) }}</span>
 								@else
-									<span class="new_price">${{ number_format($product->regular_price, 2) }}</span>
+									<span class="new_price">{{ currencyFormat($product->regular_price) }}</span>
 								@endif
 							</div>
-							<ul>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-								<li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-							</ul>
+							
 						</div>
 						<!-- /grid_item -->
 					</div>

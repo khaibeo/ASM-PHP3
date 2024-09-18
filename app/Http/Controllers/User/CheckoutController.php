@@ -14,6 +14,7 @@ use App\Models\Voucher;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
+use App\Models\ProductVariant;
 
 class CheckoutController extends Controller
 {
@@ -24,22 +25,23 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Giỏ hàng của bạn đang trống.');
         }
 
-        $cartItems = $cart->items()->with(['variant.product','variant.attributeValues.attribute'])->get();
+        $cartItems = $cart->items()->with(['variant.product', 'variant.attributeValues.attribute'])->get();
+
 
         $cartItems = $cartItems->map(function ($item) {
             $variantAttributes = $item->variant->attributeValues->map(function ($av) {
                 return $av->attribute->name . ': ' . $av->value;
-            })->implode(', ');  
+            })->implode(', ');
 
             $item->variantAttributes = $variantAttributes;
             return $item;
         });
 
         $user = auth()->user();
-        
+
         $total = $this->calculateCartTotal($cart);
-        
-        return view('Clients.checkout.index', compact('cartItems', 'total','user'));
+
+        return view('Clients.checkout.index', compact('cartItems', 'total', 'user'));
     }
 
     public function process(CheckoutRequest $request)
@@ -50,7 +52,24 @@ class CheckoutController extends Controller
             $cart = Cart::where('user_id', auth()->id())->with('items.variant.product')->firstOrFail();
 
             $defaultStatus = $request->payment_method == 1 ? 'unpaid' : 'pending';
-            
+
+            $totalProductPrice = $this->calculateCartTotal($cart);
+            $discountValue = 0;
+
+            $voucher = Voucher::where('code', $request->voucher)->first();
+
+            if ($voucher) {
+                if($voucher->quantity == 0){
+                    return back()->with('error', 'Voucher đã hết lượt sử dụng');
+                }
+                
+                $voucher->decrement('quantity', 1);
+
+                $discountValue = $this->processVoucher($voucher,$totalProductPrice);
+            }
+
+            $totalBill =  $totalProductPrice - $discountValue;
+
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'name' => $request->name,
@@ -60,12 +79,20 @@ class CheckoutController extends Controller
                 'note' => $request->note,
                 'payment_method' => $request->payment_method,
                 'order_status' => $defaultStatus,
-                'total_product_price' => $request->totalProduct,
-                'discount_amount' => $request->discountedValue ?? 0,
-                'total_amount' => $request->totalbill,
+                'total_product_price' => $totalProductPrice,
+                'discount_amount' => $discountValue,
+                'total_amount' => $totalBill,
             ]);
 
             foreach ($cart->items as $item) {
+                $variant = ProductVariant::findOrFail($item->variant->id);
+
+                // Kiểm tra số lượng tồn kho
+                if ($variant->stock < $item->quantity) {
+                    DB::rollBack();
+                    return back()->with('error', 'Số lượng yêu cầu vượt quá số lượng tồn kho.');
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_variant_id' => $item->variant->id,
@@ -83,14 +110,10 @@ class CheckoutController extends Controller
             // Xóa sản phẩm khỏi giỏ sau khi đặt hàng thành công
             $cart->items()->delete();
 
-            if($request->voucher){
-                Voucher::query()->find($request->voucher)->decrement('quantity',1);
-            }
-
             DB::commit();
 
-            if($request->payment_method == 1){
-                Session::put('total', $request->totalbill);
+            if ($request->payment_method == 1) {
+                Session::put('total', $totalBill);
                 Session::put('orderId', $order->id);
                 Session::put('redirect', true);
 
@@ -103,7 +126,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.success', ['order' => $order->id]);
         } catch (\Exception $e) {
             DB::rollBack();
-           // dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->back()->with('error', 'Có lỗi xảy ra trong quá trình đặt hàng. Vui lòng thử lại.');
         }
     }
@@ -120,6 +143,44 @@ class CheckoutController extends Controller
             $price = $item->variant->sale_price ?? $item->variant->regular_price;
             return $item->quantity * $price;
         });
+    }
+
+    public function processVoucher($voucher, $total)
+    {
+        $isValid = true;
+
+        if ($voucher->quantity <= 0) {
+            $isValid = false;
+        }
+
+        if (Carbon::now()->isAfter($voucher->valid_until)) {
+            $isValid = false;
+        }
+
+        $discountValue = $voucher->discount_type == '1'
+            ? $total * ($voucher->discount_value / 100)
+            : $voucher->discount_value;
+
+        // Kiểm tra giá trị giảm tối đa nếu có
+        if ($voucher->max_discount_value && $discountValue > $voucher->max_discount_value) {
+            $discountValue = $voucher->max_discount_value;
+        }
+
+        // Kiểm tra giá trị đơn hàng tối thiểu
+        if ($voucher->min_order_value && $total < $voucher->min_order_value) {
+            $isValid = false;
+        }
+
+        // Kiểm tra giá trị đơn hàng tối đa
+        if ($voucher->max_order_value && $total > $voucher->max_order_value) {
+            $isValid = false;
+        }
+
+        if(!$isValid){
+            return 0;
+        }
+        
+        return $discountValue;
     }
 
     public function checkVoucher(Request $request)
@@ -180,6 +241,7 @@ class CheckoutController extends Controller
             'discount_type' => $voucher->discount_type,
             'discount_value' => $discountValue,
             'id' => $voucher->id,
+            'code' => $voucher->code,
             'message' => 'Mã giảm giá hợp lệ.'
         ]);
     }

@@ -20,7 +20,7 @@ class PaymentController extends Controller
         $vnp_TxnRef = '#' . session('orderId');
         $vnp_OrderInfo = 'Thanh toán đơn hàng #' . session('orderId');
         $vnp_OrderType = 'Shop quần áo';
-        $vnp_Amount = session('total') * 100000;
+        $vnp_Amount = session('total') * 100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];

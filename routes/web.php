@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\User\CartController;
@@ -92,9 +93,7 @@ Route::prefix('admin')
     ->as('admin.')
     ->middleware(['admin'])
     ->group(function () {
-        Route::get('/', function () {
-            return view("admin.dashboard");
-        })->name('dashboard');
+        Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 
         // Sản phẩm
         Route::controller(AdminProductController::class)

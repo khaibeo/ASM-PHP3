@@ -129,12 +129,13 @@
 
                 $inc.on('click', function() {
                     var value = parseInt($input.val(), 10);
+                    
                     $input.val(value).trigger('change');
                 });
 
                 $dec.on('click', function() {
                     var value = parseInt($input.val(), 10);
-                    if (value > 1) {
+                    if (value > 0) {
                         $input.val(value).trigger('change');
                     }
                 });
@@ -160,7 +161,7 @@
                         $('#cart-total').text(response.total);
                     },
                     error: function(xhr) {
-                        console.error('Error:', xhr);
+                        // console.error('Error:', xhr);
                         alert('Có lỗi xảy ra khi cập nhật số lượng. Vui lòng thử lại sau.');
                     }
                 });

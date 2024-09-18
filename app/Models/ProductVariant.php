@@ -23,7 +23,7 @@ class ProductVariant extends Model
 
     public function cartItems()
     {
-        return $this->hasMany(CartItem::class,'product_variant_id');
+        return $this->hasMany(CartItem::class,'product_variant_id','id');
     }
     
 }

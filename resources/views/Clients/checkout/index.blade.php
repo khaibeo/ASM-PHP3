@@ -195,7 +195,7 @@
                 // Cập nhật giao diện
                 $('#discounted').text(formatCurrency(discountAmount));
                 $('#subtotal').text(formatCurrency(newTotal));
-                $('#voucher').val(voucher.id);
+                $('#voucher').val(voucher.code);
                 $('#discountedValue').val(discountAmount);
                 $('#totalbill').val(newTotal);
 

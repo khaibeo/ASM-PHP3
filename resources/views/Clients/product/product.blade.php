@@ -61,216 +61,62 @@
             <div class="container margin_30">
 
                 <div class="row">
-                    <aside class="col-lg-3" id="sidebar_fixed">
-                        <div class="filter_col">
-                            <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Thể loại</a></h4>
-                                <div class="collapse show" id="filter_1">
-                                    <ul>
-                                        <li>
-
-                                            <label class="container_check">Nam <small>12</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Nữ <small>24</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Quần<small>23</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Váy <small>11</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /filter_type -->
-                            </div>
-                            <!-- /filter_type -->
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Màu sắc</a></h4>
-                                <div class="collapse show" id="filter_2">
-                                    <ul>
-                                        <li>
-                                            <label class="container_check">Xanh dương <small>06</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Đỏ <small>12</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Cam <small>17</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Đen <small>43</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
+                    @foreach ($products as $item)
+                        <div class="col-lg-3">
+                            <div class="grid_item">
+                                {{-- <span class="ribbon off">-30%</span> --}}
+                                <figure>
+                                    <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
+                                        @php
+                                            $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL)
+                                                ? $item->thumbnail
+                                                : asset('storage/' . $item->thumbnail);
+                                        @endphp
+                                        <img class="img-fluid" style="max-height: 290px" src="{{ $img }}"
+                                            alt="{{ $item->name }}">
+                                    </a>
+                                    {{-- <div data-countdown="2019/05/15" class="countdown"></div> --}}
+                                </figure>
+                                <a href="{{ route('product.detail', ['slug' => $item->slug]) }}">
+                                    <h3>{{ $item->name }}</h3>
+                                </a>
+                                <div class="price_box">
+                                    <span class="new_price">{{ number_format($item->regular_price, 0, '', '.') }}₫</span>
+                                    <span class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
                                 </div>
                             </div>
-                            <!-- /filter_type -->
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter_3" data-bs-toggle="collapse" class="closed">Thương hiệu</a></h4>
-                                <div class="collapse" id="filter_3">
-                                    <ul>
-                                        <li>
-                                            <label class="container_check">Adidas <small>11</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Nike <small>08</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Vans <small>05</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">Puma <small>18</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /filter_type -->
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter_4" data-bs-toggle="collapse" class="closed">Giá</a></h4>
-                                <div class="collapse" id="filter_4">
-                                    <ul>
-                                        <li>
-                                            <label class="container_check">150000 - 250000<small>11</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="container_check">250000 — 500000<small>08</small>
-                                                <input type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /filter_type -->
-                            <div class="buttons">
-                                <a href="#0" class="btn_1">Lọc</a> <a href="#0" class="btn_1 gray">Hủy</a>
-                            </div>
+                            <!-- /grid_item -->
                         </div>
-                    </aside>
-                    <!-- /col -->
-                    <div class="col-lg-9">
-                        <div class="row small-gutters">
-                            @foreach ($products as $item)
-                                <div class="col-6 col-md-4">
-                                    <div class="grid_item">
-                                        <span class="ribbon off">-30%</span>
-                                        <figure>
-                                            <a href="{{ route('product.detail', $item->slug) }}">
-                                                @php
-                                                    $img = filter_var($item->thumbnail, FILTER_VALIDATE_URL)
-                                                        ? $item->thumbnail
-                                                        : asset('storage/' . $item->thumbnail);
-                                                @endphp
-                                                <img class="img-fluid " src=" {{ $img }}"
-                                                    alt="{{ $item->name }}">
-                                            </a>
-                                            <div data-countdown="2019/05/15" class="countdown"></div>
-                                        </figure>
-                                        <a href="{{ route('product.detail', $item->slug) }}">
-                                            <h3>{{ $item->name }}</h3>
-                                        </a>
-                                        <div class="price_box">
-                                            <span
-                                                class="new_price">{{ number_format($item->regular_price, 0, '', '.') }}₫</span>
-                                            <span
-                                                class="old_price">{{ number_format($item->sale_price, 0, '', '.') }}₫</span>
-                                        </div>
-                                        <ul>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="left" title="Add to favorites"><i
-                                                        class="ti-heart"></i><span>Thêm vào yêu thích</span></a></li>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="left" title="Add to compare"><i
-                                                        class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="left" title="Add to cart"><i
-                                                        class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- /grid_item -->
-                                </div>
-                            @endforeach
+                    @endforeach
+                    <!-- /row -->
+                    @if ($products->total() > 12)
+                        @php
+                            $totalPages = ceil($products->total() / 12);
+                            $currentPage = $products->currentPage();
+                            $start_page = max(1, $currentPage - 3);
+                            $end_page = min($totalPages, $currentPage + 3);
+                        @endphp
 
-
+                        <div class="pagination__wrapper">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="?page={{ max(1, $currentPage - 1) }}" class="prev"
+                                        title="previous page">&laquo;</a>
+                                </li>
+                                @for ($i = $start_page; $i <= $end_page; $i++)
+                                    <li class="{{ $i == $currentPage ? 'active' : '' }}">
+                                        <a href="?page={{ $i }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+                                <li>
+                                    <a href="?page={{ min($totalPages, $currentPage + 1) }}" class="next"
+                                        title="next page">&raquo;</a>
+                                </li>
+                            </ul>
                         </div>
-                        <!-- /row -->
-
-
-                        @if ($products->total() > 9)
-                            @php
-                                $totalPages = ceil($products->total() / 9);
-                                $currentPage = $products->currentPage();
-                                $start_page = max(1, $currentPage - 3);
-                                $end_page = min($totalPages, $currentPage + 3);
-                            @endphp
-
-                            <div class="pagination__wrapper">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="?page={{ max(1, $currentPage - 1) }}" class="prev"
-                                            title="previous page">&laquo;</a>
-                                    </li>
-                                    @for ($i = $start_page; $i <= $end_page; $i++)
-                                        <li class="{{ $i == $currentPage ? 'active' : '' }}">
-                                            <a href="?page={{ $i }}">{{ $i }}</a>
-                                        </li>
-                                    @endfor
-
-                                    <li>
-                                        <a href="?page={{ min($totalPages, $currentPage + 1) }}" class="next"
-                                            title="next page">&raquo;</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @endif
-
-                    </div>
-
+                    @endif
                     <!-- /col -->
                 </div>
-                <!-- /row -->
 
             </div>
             <!-- /container -->

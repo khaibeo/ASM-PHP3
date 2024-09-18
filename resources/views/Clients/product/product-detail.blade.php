@@ -31,6 +31,8 @@
                     <div class="all">
                         <div class="slider">
                             <div class="owl-carousel owl-theme main">
+                                <div style="background-image: url({{ asset(\Storage::url($product->thumbnail)) }});"
+                                    class="item-box"></div>
                                 @foreach ($product->galleries as $image)
                                     <div style="background-image: url({{ asset(\Storage::url($image->image)) }});"
                                         class="item-box"></div>
@@ -41,6 +43,8 @@
                         </div>
                         <div class="slider-two">
                             <div class="owl-carousel owl-theme thumbs">
+                                <div style="background-image: url({{ asset(\Storage::url($product->thumbnail)) }});"
+                                    class="item active"></div>
                                 @foreach ($product->galleries as $key => $image)
                                     <div style="background-image: url({{ asset(\Storage::url($image->image)) }});"
                                         class="item {{ $key == 0 ? 'active' : '' }}"></div>
